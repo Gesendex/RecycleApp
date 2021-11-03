@@ -23,6 +23,7 @@ namespace RecycleApp
         public MainWindow()
         {
             InitializeComponent();
+            int a;
         }
     }
 }
