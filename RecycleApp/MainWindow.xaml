@@ -21,7 +21,6 @@
             <RadioButton Style="{StaticResource MainMenuCheckBox}"/>
             <RadioButton Style="{StaticResource MainMenuCheckBox}"/>
             <RadioButton Style="{StaticResource MainMenuCheckBox}"/>
-
         </StackPanel>
         <Frame Opacity="0.7" Grid.Row="1" Source="/Pages/EmptyPage.xaml" 
                Name="FrameMain" NavigationUIVisibility="Hidden"></Frame>
