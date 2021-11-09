@@ -5,12 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RecycleApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <StackPanel>
-            <TextBox x:Name="response" Height="150" Width="500" Margin="20"/>
-            <TextBox x:Name="deserialize" Height="150" Width="500" Margin="20"/>
-            <Button x:Name="getRequest" Content="Отправить запрос" Width="200" Click="getRequest_Click"/>
+        Title="RecycleApp" Height="500" Width="1000">
+    <Grid >
+        <Grid.Background>
+            <ImageBrush ImageSource="Images/Recycle.jpg"/>
+        </Grid.Background>
+        <Grid.RowDefinitions >
+            <RowDefinition Height="50"/>
+            <RowDefinition/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Rectangle Grid.Row="0" Opacity="0.9" Style="{StaticResource TopBar}"/>
+        <StackPanel   Orientation="Horizontal">
+            <RadioButton IsChecked="True" Style="{StaticResource MainMenuCheckBox}"/>
+            <RadioButton Style="{StaticResource MainMenuCheckBox}"/>
+            <RadioButton Style="{StaticResource MainMenuCheckBox}"/>
+            <RadioButton Style="{StaticResource MainMenuCheckBox}"/>
+
         </StackPanel>
+        <Frame Opacity="0.7" Grid.Row="1" Source="/Pages/EmptyPage.xaml" 
+               Name="FrameMain" NavigationUIVisibility="Hidden"></Frame>
+        <Rectangle Grid.Row="2" Opacity="0.9" Style="{StaticResource BottomBar}"/>
+
     </Grid>
 </Window>

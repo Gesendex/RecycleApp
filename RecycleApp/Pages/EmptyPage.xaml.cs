@@ -12,18 +12,15 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Net;
-using System.IO;
-using System.Text.Json;
 
-namespace RecycleApp
+namespace RecycleApp.Pages
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Логика взаимодействия для EmptyPage.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class EmptyPage : Page
     {
-        public MainWindow()
+        public EmptyPage()
         {
             InitializeComponent();
         }
