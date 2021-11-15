@@ -29,7 +29,7 @@ namespace RecycleApi.Controllers
             return await db.GarbageCollectionPoints.FirstOrDefaultAsync(p => p.Id==id);
         }
         [HttpGet("GetByTypeOfGarbage/{id}")]
-        public async Task<IEnumerable<GarbageCollectionPoint>> GetByTypeOfGarbage(int id)
+        public async Task<IEnumerable<GarbageCollectionPoint>> GetByTypeOfGarbageId(int id)
         {
             return await db.GarbageTypeSets.Where(p => p.IdTypeOfGarbage == id).Select(p => p.IdGarbageCollectionPointNavigation).ToListAsync();
         }
