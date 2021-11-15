@@ -8,15 +8,13 @@ namespace Recycle.Models
 {
     public partial class RecycleContext : DbContext
     {
-        private string _connectionString;
         public RecycleContext()
         {
 
         }
-        public RecycleContext(DbContextOptions<RecycleContext> options, string connectionString)
+        public RecycleContext(DbContextOptions<RecycleContext> options)
             : base(options)
         {
-            _connectionString = connectionString;
         }
 
         public virtual DbSet<Client> Clients { get; set; }
@@ -29,11 +27,7 @@ namespace Recycle.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer(_connectionString);
-            }
+            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
