@@ -11,23 +11,23 @@ namespace RecycleApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CompanyController : ControllerBase
+    public class ClientController : ControllerBase
     {
         RecycleContext db;
-        public CompanyController(RecycleContext db)
+        public ClientController(RecycleContext db)
         {
             this.db = db;
         }
         #region Get
         [HttpGet("GetAll")]
-        public async Task<IEnumerable<Company>> GetAll()
+        public async Task<IEnumerable<Client>> GetAll()
         {
-            return await db.Companies.ToListAsync();
+            return await db.Clients.ToListAsync();
         }
         [HttpGet("GetById/{id}")]
-        public async Task<Company> GetById(int id)
+        public async Task<Client> GetById(int id)
         {
-            return await db.Companies.FirstOrDefaultAsync(p => p.Id == id);
+            return await db.Clients.FirstOrDefaultAsync(p => p.Id == id);
         }
         #endregion
     }

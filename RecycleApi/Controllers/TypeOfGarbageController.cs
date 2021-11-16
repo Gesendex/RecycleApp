@@ -21,12 +21,12 @@ namespace RecycleApi.Controllers
         }
         #region Get
         [HttpGet("GetAll")]
-        public async Task< IEnumerable<TypeOfGarbage>> GetAll()
+        public async Task<IEnumerable<TypeOfGarbage>> GetAll()
         {
             return await db.TypeOfGarbages.ToListAsync();
         }
         [HttpGet("GetById/{id}")]
-        public async Task<TypeOfGarbage>GetByIdAsync(int id)
+        public async Task<TypeOfGarbage> GetById(int id)
         {
             return await db.TypeOfGarbages.FirstOrDefaultAsync(p => p.Id == id);
         }
