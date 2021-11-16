@@ -19,6 +19,7 @@ namespace RecycleApi.Controllers
         {
             this.db = db;
         }
+        #region Get
         [HttpGet("GetAll")]
         public async Task< IEnumerable<TypeOfGarbage>> GetAll()
         {
@@ -29,11 +30,11 @@ namespace RecycleApi.Controllers
         {
             return await db.TypeOfGarbages.FirstOrDefaultAsync(p => p.Id == id);
         }
-        [HttpGet("GetByCollectionPoint/{id}")]
+        [HttpGet("GetByCollectionPointId/{id}")]
         public async Task<IEnumerable<TypeOfGarbage>> GetByCollectionPointId(int id)
         {
             return await db.GarbageTypeSets.Where(p => p.IdGarbageCollectionPoint == id).Select(p => p.IdTypeOfGarbageNavigation).ToListAsync();
         }
-
+        #endregion
     }
 }

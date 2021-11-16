@@ -21,14 +21,14 @@ namespace RecycleApi.Controllers
         [HttpGet("GetAll")]
         public async Task<IEnumerable<GarbageCollectionPoint>> GetAll()
         {
-            return await db.GarbageCollectionPoints.ToListAsync();
+            return await db.GarbageCollectionPoints.ToArrayAsync();
         }
         [HttpGet("GetById/{id}")]
         public async Task<GarbageCollectionPoint> GetById(int id)
         {
-            return await db.GarbageCollectionPoints.FirstOrDefaultAsync(p => p.Id==id);
+            return await db.GarbageCollectionPoints.FirstOrDefaultAsync(p => p.Id == id);
         }
-        [HttpGet("GetByTypeOfGarbage/{id}")]
+        [HttpGet("GetByTypeOfGarbageId/{id}")]
         public async Task<IEnumerable<GarbageCollectionPoint>> GetByTypeOfGarbageId(int id)
         {
             return await db.GarbageTypeSets.Where(p => p.IdTypeOfGarbage == id).Select(p => p.IdGarbageCollectionPointNavigation).ToListAsync();
