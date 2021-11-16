@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
+
 #nullable disable
 
 namespace Recycle.Models
@@ -15,12 +15,11 @@ namespace Recycle.Models
         public int Id { get; set; }
         public string Street { get; set; }
         public string Building { get; set; }
-        public int? IdCompany { get; set; }
+        public int IdCompany { get; set; }
         public byte[] Image { get; set; }
         public string Description { get; set; }
-        [JsonIgnore]
+
         public virtual Company IdCompanyNavigation { get; set; }
-        [JsonIgnore]
         public virtual ICollection<GarbageTypeSet> GarbageTypeSets { get; set; }
     }
 }

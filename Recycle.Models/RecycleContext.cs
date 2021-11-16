@@ -10,8 +10,8 @@ namespace Recycle.Models
     {
         public RecycleContext()
         {
-
         }
+
         public RecycleContext(DbContextOptions<RecycleContext> options)
             : base(options)
         {
@@ -27,7 +27,11 @@ namespace Recycle.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Server=localhost\\SQLExpress;Database=Recycle;Trusted_Connection=True;");
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -40,17 +44,24 @@ namespace Recycle.Models
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.Email).HasMaxLength(100);
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasMaxLength(100);
 
                 entity.Property(e => e.Middlename).HasMaxLength(50);
 
-                entity.Property(e => e.Name).HasMaxLength(50);
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(50);
 
-                entity.Property(e => e.Surname).HasMaxLength(50);
+                entity.Property(e => e.Surname)
+                    .IsRequired()
+                    .HasMaxLength(50);
 
                 entity.HasOne(d => d.IdRoleNavigation)
                     .WithMany(p => p.Clients)
                     .HasForeignKey(d => d.IdRole)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Client_Role");
             });
 
@@ -60,11 +71,14 @@ namespace Recycle.Models
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.Text).HasMaxLength(255);
+                entity.Property(e => e.Text)
+                    .IsRequired()
+                    .HasMaxLength(255);
 
                 entity.HasOne(d => d.IdClientNavigation)
                     .WithMany(p => p.Comments)
                     .HasForeignKey(d => d.IdClient)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Comment_Client");
             });
 
@@ -74,11 +88,15 @@ namespace Recycle.Models
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.Description).HasMaxLength(255);
+                entity.Property(e => e.Description).HasMaxLength(2550);
 
-                entity.Property(e => e.Name).HasMaxLength(50);
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(50);
 
-                entity.Property(e => e.Owner).HasMaxLength(50);
+                entity.Property(e => e.Owner)
+                    .IsRequired()
+                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<GarbageCollectionPoint>(entity =>
@@ -89,7 +107,7 @@ namespace Recycle.Models
 
                 entity.Property(e => e.Building).HasMaxLength(10);
 
-                entity.Property(e => e.Description).HasMaxLength(255);
+                entity.Property(e => e.Description).HasMaxLength(4000);
 
                 entity.Property(e => e.Image).HasColumnType("image");
 
@@ -98,6 +116,7 @@ namespace Recycle.Models
                 entity.HasOne(d => d.IdCompanyNavigation)
                     .WithMany(p => p.GarbageCollectionPoints)
                     .HasForeignKey(d => d.IdCompany)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_GarbageCollectionPoint_Company");
             });
 
@@ -126,9 +145,9 @@ namespace Recycle.Models
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.Role1)
-                    .HasMaxLength(30)
-                    .HasColumnName("Role");
+                entity.Property(e => e.RoleName)
+                    .IsRequired()
+                    .HasMaxLength(30);
             });
 
             modelBuilder.Entity<TypeOfGarbage>(entity =>
@@ -137,7 +156,9 @@ namespace Recycle.Models
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.Type).HasMaxLength(20);
+                entity.Property(e => e.Type)
+                    .IsRequired()
+                    .HasMaxLength(20);
             });
 
             OnModelCreatingPartial(modelBuilder);

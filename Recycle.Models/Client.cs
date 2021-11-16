@@ -17,7 +17,7 @@ namespace Recycle.Models
         public string Middlename { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
-        public int? IdRole { get; set; }
+        public int IdRole { get; set; }
 
         public virtual Role IdRoleNavigation { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }

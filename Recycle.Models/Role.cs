@@ -13,7 +13,7 @@ namespace Recycle.Models
         }
 
         public int Id { get; set; }
-        public string Role1 { get; set; }
+        public string RoleName { get; set; }
 
         public virtual ICollection<Client> Clients { get; set; }
     }
