@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 #nullable disable
 
@@ -14,7 +15,7 @@ namespace Recycle.Models
 
         public int Id { get; set; }
         public string RoleName { get; set; }
-
+        [JsonIgnore]
         public virtual ICollection<Client> Clients { get; set; }
     }
 }

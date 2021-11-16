@@ -28,11 +28,12 @@ namespace RecycleApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var a = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<RecycleContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers();
+            
             services.AddSwaggerGen(c =>
             {
+
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "RecycleApi", Version = "v1" });
             });
         }

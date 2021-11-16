@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 #nullable disable
 
@@ -16,7 +17,7 @@ namespace Recycle.Models
         public string Name { get; set; }
         public string Owner { get; set; }
         public string Description { get; set; }
-
+        [JsonIgnore]
         public virtual ICollection<GarbageCollectionPoint> GarbageCollectionPoints { get; set; }
     }
 }
