@@ -16,7 +16,7 @@ namespace RecycleApp
         {
             try
             {
-                JsonSerializerOptions options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                JsonSerializerOptions options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true, ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve };
                 WebRequest request = HttpWebRequest.Create(ConfigurationManager.AppSettings["HostURL"] + body + parametrs);
                 request.Method = method;
                 var response = await request.GetResponseAsync();

@@ -11,7 +11,7 @@ namespace Recycle.Models
         public int Id { get; set; }
         public int IdClient { get; set; }
         public string Text { get; set; }
-        [JsonIgnore]
+        //[JsonIgnore]
         public virtual Client IdClientNavigation { get; set; }
     }
 }

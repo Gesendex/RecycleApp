@@ -19,9 +19,9 @@ namespace Recycle.Models
         public int IdCompany { get; set; }
         public byte[] Image { get; set; }
         public string Description { get; set; }
-        [JsonIgnore]
+        //[JsonIgnore]
         public virtual Company IdCompanyNavigation { get; set; }
-        [JsonIgnore]
+        //[JsonIgnore]
         public virtual ICollection<GarbageTypeSet> GarbageTypeSets { get; set; }
     }
 }

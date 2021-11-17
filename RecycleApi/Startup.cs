@@ -29,7 +29,7 @@ namespace RecycleApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<RecycleContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(p =>p.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve);
             
             services.AddSwaggerGen(c =>
             {
