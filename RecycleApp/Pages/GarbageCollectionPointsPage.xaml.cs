@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Configuration;
 
 namespace RecycleApp.Pages
 {
@@ -27,27 +28,11 @@ namespace RecycleApp.Pages
         public GarbageCollectionPointsPage()
         {
             InitializeComponent();
+            string text = ConfigurationManager.AppSettings.Get("HostURL");
         }
 
         private async Task<GarbageCollectionPoint> GetGarbageCollectionPointAsync()
         {
-            /*JsonSerializerOptions options = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            };
-
-            WebRequest request = HttpWebRequest.Create($"https://localhost:44373/api/GarbageCollectionPoint/GetById/1");
-            request.Method = "GET";
-            var response = await request.GetResponseAsync();
-            var stream = response.GetResponseStream();
-            string text;
-            using (StreamReader sr = new StreamReader(stream))
-            {
-                text = sr.ReadToEnd();
-            }
-            var result = JsonSerializer.Deserialize<GarbageCollectionPoint>(text, options);
-            return result;*/
-
             JsonSerializerOptions options = new JsonSerializerOptions {  PropertyNameCaseInsensitive = true };
             WebRequest request = HttpWebRequest.Create($"https://localhost:44373/api/GarbageCollectionPoint/GetById/1");
             request.Method = "GET";
