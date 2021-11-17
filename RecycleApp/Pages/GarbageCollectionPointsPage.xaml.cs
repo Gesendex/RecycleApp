@@ -28,20 +28,12 @@ namespace RecycleApp.Pages
         public GarbageCollectionPointsPage()
         {
             InitializeComponent();
-            string text = ConfigurationManager.AppSettings.Get("HostURL");
+            
         }
 
-        private async Task<GarbageCollectionPoint> GetGarbageCollectionPointAsync()
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            JsonSerializerOptions options = new JsonSerializerOptions {  PropertyNameCaseInsensitive = true };
-            WebRequest request = HttpWebRequest.Create($"https://localhost:44373/api/GarbageCollectionPoint/GetById/1");
-            request.Method = "GET";
-            var response = await request.GetResponseAsync();
-            return await JsonSerializer.DeserializeAsync<GarbageCollectionPoint>(response.GetResponseStream(), options);
-        }
-        private async void Button_Click(object sender, RoutedEventArgs e)
-        {
-            var a = await GetGarbageCollectionPointAsync();
+            LWGarbagePoints.ItemsSource = await RequestHandler.GetGarbageCollectionPointAsync<IEnumerable<GarbageCollectionPoint>>("GET", "/api/GarbageCollectionPoint/GetAll");
         }
     }
 }

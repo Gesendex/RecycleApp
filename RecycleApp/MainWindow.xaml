@@ -22,7 +22,7 @@
             <RadioButton Style="{StaticResource MainMenuCheckBox}"/>
             <RadioButton Style="{StaticResource MainMenuCheckBox}"/>
         </StackPanel>
-        <Frame Opacity="0.7" Grid.Row="1" Source="/Pages/GarbageCollectionPointsPage.xaml" 
+        <Frame Opacity="1" Grid.Row="1" Source="/Pages/GarbageCollectionPointsPage.xaml" 
                Name="FrameMain" NavigationUIVisibility="Hidden"></Frame>
         <Rectangle Grid.Row="2" Opacity="0.9" Style="{StaticResource BottomBar}"/>
 

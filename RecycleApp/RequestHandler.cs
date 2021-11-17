@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -10,13 +12,21 @@ namespace RecycleApp
 {
     public class RequestHandler
     {
-        public async Task<T> GetGarbageCollectionPointAsync<T>()
+        public async static Task<T> GetGarbageCollectionPointAsync<T>(string method, string body, string parametrs = "")
         {
-            JsonSerializerOptions options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            WebRequest request = HttpWebRequest.Create($"https://localhost:44373/api/GarbageCollectionPoint/GetById/1");
-            request.Method = "GET";
-            var response = await request.GetResponseAsync();
-            return await JsonSerializer.DeserializeAsync<T>(response.GetResponseStream(), options);
+            try
+            {
+                JsonSerializerOptions options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                WebRequest request = HttpWebRequest.Create(ConfigurationManager.AppSettings["HostURL"] + body + parametrs);
+                request.Method = method;
+                var response = await request.GetResponseAsync();
+                return await JsonSerializer.DeserializeAsync<T>(response.GetResponseStream(), options);
+            }
+            catch
+            {
+                return default(T);
+            }
+            
         }
     }
 }
