@@ -1,7 +1,11 @@
-﻿using System;
+﻿using Recycle.Models;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,6 +27,36 @@ namespace RecycleApp.Pages
         public GarbageCollectionPointsPage()
         {
             InitializeComponent();
+        }
+
+        private async Task<GarbageCollectionPoint> GetGarbageCollectionPointAsync()
+        {
+            /*JsonSerializerOptions options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
+            WebRequest request = HttpWebRequest.Create($"https://localhost:44373/api/GarbageCollectionPoint/GetById/1");
+            request.Method = "GET";
+            var response = await request.GetResponseAsync();
+            var stream = response.GetResponseStream();
+            string text;
+            using (StreamReader sr = new StreamReader(stream))
+            {
+                text = sr.ReadToEnd();
+            }
+            var result = JsonSerializer.Deserialize<GarbageCollectionPoint>(text, options);
+            return result;*/
+
+            JsonSerializerOptions options = new JsonSerializerOptions {  PropertyNameCaseInsensitive = true };
+            WebRequest request = HttpWebRequest.Create($"https://localhost:44373/api/GarbageCollectionPoint/GetById/1");
+            request.Method = "GET";
+            var response = await request.GetResponseAsync();
+            return await JsonSerializer.DeserializeAsync<GarbageCollectionPoint>(response.GetResponseStream(), options);
+        }
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var a = await GetGarbageCollectionPointAsync();
         }
     }
 }

@@ -7,7 +7,6 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/StyleDictionaries/MainMenuElementsStyles.xaml"/>
-                <ResourceDictionary Source="/StyleDictionaries/ColorsDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
             

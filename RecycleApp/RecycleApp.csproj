@@ -15,6 +15,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Recycle.Models\Recycle.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Images\Recycle.jpg" />
   </ItemGroup>
 
