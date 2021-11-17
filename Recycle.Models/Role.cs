@@ -15,7 +15,7 @@ namespace Recycle.Models
 
         public int Id { get; set; }
         public string RoleName { get; set; }
-        //[JsonIgnore]
+        [JsonIgnore]
         public virtual ICollection<Client> Clients { get; set; }
     }
 }

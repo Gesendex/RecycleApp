@@ -18,9 +18,9 @@ namespace Recycle.Models
         public string Surname { get; set; }
         public string Email { get; set; }
         public int IdRole { get; set; }
-        //[JsonIgnore]
+        [JsonIgnore]
         public virtual Role IdRoleNavigation { get; set; }
-        //[JsonIgnore]
+        [JsonIgnore]
         public virtual ICollection<Comment> Comments { get; set; }
     }
 }

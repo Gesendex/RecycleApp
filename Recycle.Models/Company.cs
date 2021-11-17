@@ -17,7 +17,7 @@ namespace Recycle.Models
         public string Name { get; set; }
         public string Owner { get; set; }
         public string Description { get; set; }
-        //[JsonIgnore]
+        [JsonIgnore]
         public virtual ICollection<GarbageCollectionPoint> GarbageCollectionPoints { get; set; }
     }
 }

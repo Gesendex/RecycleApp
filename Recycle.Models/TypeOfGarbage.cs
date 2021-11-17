@@ -15,7 +15,7 @@ namespace Recycle.Models
 
         public int Id { get; set; }
         public string Type { get; set; }
-        //[JsonIgnore]
+        [JsonIgnore]
         public virtual ICollection<GarbageTypeSet> GarbageTypeSets { get; set; }
     }
 }
