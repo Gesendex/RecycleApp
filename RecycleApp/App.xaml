@@ -8,7 +8,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/StyleDictionaries/MainMenuElementsStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <ImageSource x:Key="DefaultImage">/Images/Mock.png</ImageSource>
         </ResourceDictionary>
-            
     </Application.Resources>
 </Application>

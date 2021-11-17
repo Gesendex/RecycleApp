@@ -28,12 +28,12 @@ namespace RecycleApp.Pages
         public GarbageCollectionPointsPage()
         {
             InitializeComponent();
-            
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            LWGarbagePoints.ItemsSource = await RequestHandler.GetGarbageCollectionPointAsync<IEnumerable<GarbageCollectionPoint>>("GET", "/api/GarbageCollectionPoint/GetAll");
+            var src = await RequestHandler.GetGarbageCollectionPointAsync<IEnumerable<GarbageCollectionPoint>>("GET", "/api/GarbageCollectionPoint/GetAll");
+            LWGarbagePoints.ItemsSource = src.ToList();
         }
     }
 }
