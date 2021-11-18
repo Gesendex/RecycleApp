@@ -25,6 +25,11 @@ namespace RecycleApi.Controllers
         {
             return await db.TypeOfGarbages.ToListAsync();
         }
+        [HttpGet("GetAllWithImage")]
+        public async Task<IEnumerable<TypeOfGarbage>> GetAllWithImage()
+        {
+            return await db.TypeOfGarbages.Include(p=>p.TypeImage).ToListAsync();
+        }
         [HttpGet("GetById/{id}")]
         public async Task<TypeOfGarbage> GetById(int id)
         {
