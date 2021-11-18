@@ -11,7 +11,9 @@ namespace Recycle.Models
         public Client()
         {
             Comments = new HashSet<Comment>();
+            Companies = new HashSet<Company>();
         }
+
         public int Id { get; set; }
         public string Name { get; set; }
         public string Middlename { get; set; }
@@ -22,5 +24,7 @@ namespace Recycle.Models
         public virtual Role IdRoleNavigation { get; set; }
         [JsonIgnore]
         public virtual ICollection<Comment> Comments { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<Company> Companies { get; set; }
     }
 }

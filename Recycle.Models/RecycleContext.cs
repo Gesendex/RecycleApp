@@ -23,6 +23,7 @@ namespace Recycle.Models
         public virtual DbSet<GarbageCollectionPoint> GarbageCollectionPoints { get; set; }
         public virtual DbSet<GarbageTypeSet> GarbageTypeSets { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<TypeImage> TypeImages { get; set; }
         public virtual DbSet<TypeOfGarbage> TypeOfGarbages { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -54,9 +55,7 @@ namespace Recycle.Models
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.Property(e => e.Surname)
-                    .IsRequired()
-                    .HasMaxLength(50);
+                entity.Property(e => e.Surname).HasMaxLength(50);
 
                 entity.HasOne(d => d.IdRoleNavigation)
                     .WithMany(p => p.Clients)
@@ -80,6 +79,12 @@ namespace Recycle.Models
                     .HasForeignKey(d => d.IdClient)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Comment_Client");
+
+                entity.HasOne(d => d.IdGarbageCollectionPointNavigation)
+                    .WithMany(p => p.Comments)
+                    .HasForeignKey(d => d.IdGarbageCollectionPoint)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Comment_GarbageCollectionPoint");
             });
 
             modelBuilder.Entity<Company>(entity =>
@@ -94,9 +99,12 @@ namespace Recycle.Models
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.Property(e => e.Owner)
-                    .IsRequired()
-                    .HasMaxLength(50);
+                entity.Property(e => e.Owner).HasMaxLength(50);
+
+                entity.HasOne(d => d.Client)
+                    .WithMany(p => p.Companies)
+                    .HasForeignKey(d => d.ClientId)
+                    .HasConstraintName("FK_Company_Client");
             });
 
             modelBuilder.Entity<GarbageCollectionPoint>(entity =>
@@ -148,6 +156,21 @@ namespace Recycle.Models
                 entity.Property(e => e.RoleName)
                     .IsRequired()
                     .HasMaxLength(30);
+            });
+
+            modelBuilder.Entity<TypeImage>(entity =>
+            {
+                entity.ToTable("TypeImage");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Image).HasColumnType("image");
+
+                entity.HasOne(d => d.IdNavigation)
+                    .WithOne(p => p.TypeImage)
+                    .HasForeignKey<TypeImage>(d => d.Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_TypeImage_TypeOfGarbage");
             });
 
             modelBuilder.Entity<TypeOfGarbage>(entity =>

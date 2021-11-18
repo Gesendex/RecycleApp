@@ -17,6 +17,10 @@ namespace Recycle.Models
         public string Name { get; set; }
         public string Owner { get; set; }
         public string Description { get; set; }
+        public int? ClientId { get; set; }
+
+        [JsonIgnore]
+        public virtual Client Client { get; set; }
         [JsonIgnore]
         public virtual ICollection<GarbageCollectionPoint> GarbageCollectionPoints { get; set; }
     }

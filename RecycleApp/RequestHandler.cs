@@ -12,7 +12,7 @@ namespace RecycleApp
 {
     public class RequestHandler
     {
-        public async static Task<T> GetObjectFromRequestAsync<T>(string method, string body, string parametrs = "")
+        public static async Task<T> GetObjectFromRequestAsync<T>(string method, string body, string parametrs = "")
         {
             try
             {
