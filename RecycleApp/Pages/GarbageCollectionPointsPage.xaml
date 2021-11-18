@@ -14,7 +14,7 @@
         </Grid.ColumnDefinitions>
         <Rectangle Fill="White" Grid.ColumnSpan="2" Opacity="0.9"/>
         <DockPanel Grid.Column="0">
-            <ListView Name="LWGarbagePoints" Margin="10">
+            <ListView Name="LWGarbagePoints" Margin="10" SelectionChanged="LWGarbagePoints_SelectionChanged ">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <VirtualizingStackPanel HorizontalAlignment="Stretch"/>
@@ -31,17 +31,17 @@
                                 </Grid.ColumnDefinitions>
                                 <Image Margin="5" Width="75" Height="75" Source="{Binding Image, TargetNullValue={StaticResource DefaultImage}}" Grid.Column="0"/>
                                 <StackPanel Grid.Column="1" Margin="5,0">
-                                    <TextBlock Text="Компания:"/>
-                                    <TextBlock Text="{Binding IdCompanyNavigation.Name}"/>
+                                    <TextBlock  FontSize="14"  Text="Название пункта сбора мусора:"/>
+                                    <TextBlock  FontSize="14"  Text="{Binding IdCompanyNavigation.Name}"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Grid.Column="2" Margin="5,0">
                                     <StackPanel Margin="5,0">
-                                        <TextBlock Text="Адрес:"/>
-                                        <TextBlock Text="{Binding Street}"/>
+                                        <TextBlock  FontSize="14"  Text="Адрес:"/>
+                                        <TextBlock  FontSize="14"  Text="{Binding Street}"/>
                                     </StackPanel>
                                     <StackPanel Margin="5,0">
-                                        <TextBlock Text=""/>
-                                        <TextBlock Text="{Binding Building}"/>
+                                        <TextBlock  FontSize="14" Text=""/>
+                                        <TextBlock  FontSize="14" Text="{Binding Building}"/>
                                     </StackPanel>
                                 </StackPanel>
                                 
@@ -51,9 +51,9 @@
                 </ListView.ItemTemplate>
             </ListView>
         </DockPanel>
-        <StackPanel Grid.Column="1">
-            <Button Content="Получить из АПИ" Margin="10"/>
-            <TextBox x:Name="TBreqest" Height="200" Margin="10"/>
-        </StackPanel>
+        <DockPanel Grid.Column="1">
+            <Image x:Name="SelectedImage" DockPanel.Dock="Top" Source="/Images/Recycle.jpg" Stretch="Uniform" Margin="10"/>
+            <TextBox x:Name="TXBDescription" Margin="10" FontSize="16" IsReadOnly="True" TextWrapping="Wrap"/>
+        </DockPanel>
     </Grid>
 </Page>

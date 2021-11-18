@@ -32,8 +32,12 @@ namespace RecycleApp.Pages
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            var src = await RequestHandler.GetGarbageCollectionPointAsync<IEnumerable<GarbageCollectionPoint>>("GET", "/api/GarbageCollectionPoint/GetAll");
-            LWGarbagePoints.ItemsSource = src.ToList();
+            LWGarbagePoints.ItemsSource = await RequestHandler.GetObjectFromRequestAsync<IEnumerable<GarbageCollectionPoint>>("GET", "/api/GarbageCollectionPoint/GetAll");
+        }
+
+        private void LWGarbagePoints_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            TXBDescription.Text = ((sender as ListView).SelectedItem as GarbageCollectionPoint).Description;
         }
     }
 }

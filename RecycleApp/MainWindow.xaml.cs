@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Net;
 using System.IO;
 using System.Text.Json;
+using RecycleApp.Pages;
 
 namespace RecycleApp
 {
@@ -26,6 +27,22 @@ namespace RecycleApp
         public MainWindow()
         {
             InitializeComponent();
+            rbEmpty.IsChecked = true;
+        }
+
+        private void rbEmpty_Checked(object sender, RoutedEventArgs e)
+        {
+            FrameMain.Navigate(new EmptyPage());
+        }
+
+        private void rbGCPoints_Checked(object sender, RoutedEventArgs e)
+        {
+            FrameMain.Navigate(new GarbageCollectionPointsPage());
+        }
+
+        private void rbTypeOfGarbage_Checked(object sender, RoutedEventArgs e)
+        {
+            FrameMain.Navigate(new GarbageTypeInfoPage());
         }
     }
 }
