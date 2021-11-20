@@ -1,7 +1,13 @@
-﻿using System;
+﻿using Recycle.Models;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,6 +29,19 @@ namespace RecycleApp.Pages
         public EmptyPage()
         {
             InitializeComponent();
+        }
+
+        private async void btnTest_Click(object sender, RoutedEventArgs e)
+        {
+            GarbageCollectionPoint gcp = new GarbageCollectionPoint()
+            {
+                Building = "aaa",
+                Street = "bbb",
+                Id = 11,
+                IdCompany = 2
+            };
+            var response = await RequestHandler.PostRequestAsync<GarbageCollectionPoint>(gcp, "/api/GarbageCollectionPoint");
+            
         }
     }
 }

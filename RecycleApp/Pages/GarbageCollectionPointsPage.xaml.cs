@@ -39,5 +39,12 @@ namespace RecycleApp.Pages
         {
             TXBDescription.Text = ((sender as ListView).SelectedItem as GarbageCollectionPoint).Description;
         }
+
+        private void BtnEdit_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            var currentGCP = button.DataContext as GarbageCollectionPoint;
+            NavigationService.Navigate(new EditGarbageCollectionPointEditPage(currentGCP));
+        }
     }
 }

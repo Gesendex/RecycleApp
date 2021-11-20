@@ -7,6 +7,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/StyleDictionaries/MainMenuElementsStyles.xaml"/>
+                <ResourceDictionary Source="/StyleDictionaries/EditPageStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <ImageSource x:Key="DefaultImage">/Images/Mock.png</ImageSource>
         </ResourceDictionary>

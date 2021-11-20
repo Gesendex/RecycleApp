@@ -33,8 +33,9 @@
                                 <StackPanel Grid.Column="1" Margin="5,0">
                                     <TextBlock  FontSize="14"  Text="Название пункта сбора мусора:"/>
                                     <TextBlock  FontSize="14"  Text="{Binding IdCompanyNavigation.Name}"/>
+                                    <Button x:Name="BtnEdit" HorizontalAlignment="Left" Content="Изменить" Width="200" Click="BtnEdit_Click"/>
                                 </StackPanel>
-                                <StackPanel Orientation="Horizontal" Grid.Column="2" Margin="5,0">
+                                <StackPanel Orientation="Horizontal" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Column="2" Margin="5,0">
                                     <StackPanel Margin="5,0">
                                         <TextBlock  FontSize="14"  Text="Адрес:"/>
                                         <TextBlock  FontSize="14"  Text="{Binding Street}"/>

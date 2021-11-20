@@ -1,0 +1,47 @@
+﻿<Page x:Class="RecycleApp.Pages.EditGarbageCollectionPointEditPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:RecycleApp.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="EditGarbageCollectionPointEditPage">
+
+    <Grid>
+        <Rectangle Fill="White" Opacity="0.9"/>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Компания" Style="{StaticResource TBEditPage}"/>
+                    <ComboBox Name="CBCompany" Style="{StaticResource CBEditPage}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </StackPanel>
+                <TextBlock Text="Адрес:" HorizontalAlignment="Left" Style="{StaticResource TBEditPage}"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Улица" Style="{StaticResource TBEditPage}"/>
+                    <TextBox Name="TBStreet" Style="{StaticResource TBxEditPage}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Дом" Style="{StaticResource TBEditPage}"/>
+                    <TextBox Name="TBBuilding" Style="{StaticResource TBxEditPage}"/>
+                </StackPanel>
+                <TextBlock Text="Описание:" HorizontalAlignment="Left" Style="{StaticResource TBEditPage}"/>
+                <TextBox Name="TBxDescription" TextWrapping="Wrap" Width="350" Height="100" Margin="5"/>
+            </StackPanel>
+            <StackPanel>
+                <Border Margin="5" Width="200" Height="200" BorderThickness="1"
+                        BorderBrush="Gray">
+                    <Image Name="ImageGC"></Image>
+                </Border>
+                <Button Name="BtnSelectImage" Content="Выбрать изображение" Style="{StaticResource BtnEditPage}" Click="BtnSelectImage_Click"/>
+                <Button Name="BtnSave" Content="Сохранить" Style="{StaticResource BtnEditPage}" Click="BtnSave_Click"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>

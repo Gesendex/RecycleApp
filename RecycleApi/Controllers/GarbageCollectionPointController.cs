@@ -33,6 +33,19 @@ namespace RecycleApi.Controllers
         {
             return await db.GarbageTypeSets.Where(p => p.IdTypeOfGarbage == id).Select(p => p.IdGarbageCollectionPointNavigation).ToListAsync();
         }
+        [HttpPost]
+        public async Task<ActionResult> Post([FromBody]GarbageCollectionPoint model)
+        {
+            var fromDB = await db.GarbageCollectionPoints.FirstOrDefaultAsync(p => p.Id == model.Id);
+            if (fromDB == null)
+                return NotFound();
+            fromDB.IdCompany = model.IdCompany;
+            fromDB.Image = model.Image;
+            fromDB.Street = model.Street;
+            fromDB.Building = model.Building;
+
+            return Ok();
+        }
     }
 }
 
