@@ -10,8 +10,6 @@
 
     <Grid>
         <Rectangle Fill="White" Opacity="0.9"/>
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Button x:Name="btnTest" Click="btnTest_Click" Content="Отправить пост запрос"/>
-        </StackPanel>
+        
     </Grid>
 </Page>

@@ -38,6 +38,7 @@ namespace RecycleApp.Pages
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             LWGarbageType.ItemsSource = await RequestHandler.GetObjectFromRequestAsync<IEnumerable<TypeOfGarbage>>("GET", "/api/TypeOfGarbage/GetAllWithImage");
+            LWGarbageType.SelectedIndex = 0;
         }
     }
 }

@@ -23,15 +23,17 @@
     </Style>
     <Style x:Key="MainMenuCheckBox" TargetType="RadioButton">
         <Setter Property="Height" Value="50"/>
-        <Setter Property="Width" Value="150"/>
-        <Setter Property="Background" Value="DarkGray"/>
+        <Setter Property="Width" Value="200"/>
+        <Setter Property="Foreground" Value="#fffffc"/>
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="Background" Value="#007056"/>
         <Setter Property="Margin" Value="5,0,0,0"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="RadioButton">
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
-                            <Setter Property="Background" Value="DarkSlateGray"/>
+                                <Setter Property="Background" Value="#0db58e"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Cursor" Value="Hand"/>
@@ -39,7 +41,7 @@
                     </ControlTemplate.Triggers>
                     <Grid>
                         <Border CornerRadius="20" Background="{TemplateBinding Background}" BorderThickness="0" BorderBrush="DarkGray">
-                            <ContentPresenter VerticalAlignment="Center" 
+                            <ContentPresenter VerticalAlignment="Center"
                                                  HorizontalAlignment="Center"/>
                         </Border>
                     </Grid>

@@ -17,14 +17,14 @@
         </Grid.RowDefinitions>
         <Rectangle Grid.Row="0" Opacity="0.9" Style="{StaticResource TopBar}"/>
         <StackPanel   Orientation="Horizontal">
-            <RadioButton x:Name="rbEmpty" Style="{StaticResource MainMenuCheckBox}" Checked="rbEmpty_Checked"/>
-            <RadioButton x:Name="rbGCPoints" Style="{StaticResource MainMenuCheckBox}" Checked="rbGCPoints_Checked"/>
-            <RadioButton x:Name="rbTypeOfGarbage" Style="{StaticResource MainMenuCheckBox}" Checked="rbTypeOfGarbage_Checked"/>
-            <RadioButton x:Name="rb" Style="{StaticResource MainMenuCheckBox}"/>
+            <RadioButton x:Name="rbEmpty" Content="О приложении" Style="{StaticResource MainMenuCheckBox}" Checked="rbEmpty_Checked"/>
+            <RadioButton x:Name="rbGCPoints" Content="Список точек сбора мусора" Style="{StaticResource MainMenuCheckBox}" Checked="rbGCPoints_Checked"/>
+            <RadioButton x:Name="rbTypeOfGarbage" Content="Типы собираемого мусора" Style="{StaticResource MainMenuCheckBox}" Checked="rbTypeOfGarbage_Checked"/>
+            <RadioButton x:Name="rb" Content="О приложении" Style="{StaticResource MainMenuCheckBox}"/>
         </StackPanel>
         <Frame Opacity="1" Grid.Row="1" 
                Name="FrameMain" NavigationUIVisibility="Hidden"></Frame>
         <Rectangle Grid.Row="2" Opacity="0.9" Style="{StaticResource BottomBar}"/>
-
+        
     </Grid>
 </Window>

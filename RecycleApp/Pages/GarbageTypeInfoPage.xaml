@@ -10,8 +10,8 @@
 
     <Grid >
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220"/>
             <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="6*"/>
         </Grid.ColumnDefinitions>
         <Rectangle Fill="White" Grid.ColumnSpan="2" Opacity="0.9"/>
         <DockPanel Grid.Column="0">
@@ -26,7 +26,7 @@
                         <Border>
                             <Grid>
                                 <StackPanel>
-                                    <TextBlock FontSize="16" Text="{Binding Type}"/>
+                                    <TextBlock FontSize="16" Text="{Binding Type}" HorizontalAlignment="Center"/>
                                     <Image Source="{Binding TypeImage.MainImage}" Stretch="Uniform" Margin="5"/>
                                 </StackPanel>
                             </Grid>
@@ -36,7 +36,10 @@
             </ListView>
         </DockPanel>
         <DockPanel Grid.Column="1">
-            <Image x:Name="SelectedImage" DockPanel.Dock="Top" Stretch="Uniform" Margin="10" Height="150"/>
+            <StackPanel DockPanel.Dock="Right">
+                <TextBlock Text="Маркировка:" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Image x:Name="SelectedImage"  Stretch="Uniform" Margin="10" Width="250"/>
+            </StackPanel>
             <TextBox x:Name="TXBDescription" Margin="10" FontSize="16" IsReadOnly="True" TextWrapping="Wrap"/>
         </DockPanel>
     </Grid>
