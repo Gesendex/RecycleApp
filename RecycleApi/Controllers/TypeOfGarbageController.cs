@@ -18,6 +18,7 @@ namespace RecycleApi.Controllers
         public TypeOfGarbageController(RecycleContext db)
         {
             this.db = db;
+
         }
         #region Get
         [HttpGet("GetAll")]
@@ -28,7 +29,7 @@ namespace RecycleApi.Controllers
         [HttpGet("GetAllWithImage")]
         public async Task<IEnumerable<TypeOfGarbage>> GetAllWithImage()
         {
-            return await db.TypeOfGarbages.Include(p=>p.TypeImage).ToListAsync();
+            return await db.TypeOfGarbages.Include(p => p.TypeImage).ToListAsync();
         }
         [HttpGet("GetById/{id}")]
         public async Task<TypeOfGarbage> GetById(int id)

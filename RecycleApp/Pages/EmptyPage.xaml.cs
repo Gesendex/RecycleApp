@@ -38,10 +38,11 @@ namespace RecycleApp.Pages
                 Building = "aaa",
                 Street = "bbb",
                 Id = 11,
-                IdCompany = 2
+                IdCompany = 2,
+                Image = null
             };
             var response = await RequestHandler.PostRequestAsync<GarbageCollectionPoint>(gcp, "/api/GarbageCollectionPoint");
-            
+            int a = 1;
         }
     }
 }

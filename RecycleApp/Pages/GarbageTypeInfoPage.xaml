@@ -27,7 +27,7 @@
                             <Grid>
                                 <StackPanel>
                                     <TextBlock FontSize="16" Text="{Binding Type}"/>
-                                    <Image Source="/Images/Mock.png" Stretch="Uniform" Margin="5"/>
+                                    <Image Source="{Binding TypeImage.MainImage}" Stretch="Uniform" Margin="5"/>
                                 </StackPanel>
                             </Grid>
                         </Border>
@@ -36,7 +36,7 @@
             </ListView>
         </DockPanel>
         <DockPanel Grid.Column="1">
-            <Image x:Name="SelectedImage" DockPanel.Dock="Top" Source="/Images/Recycle.jpg" Stretch="Uniform" Margin="10" Height="100"/>
+            <Image x:Name="SelectedImage" DockPanel.Dock="Top" Stretch="Uniform" Margin="10" Height="150"/>
             <TextBox x:Name="TXBDescription" Margin="10" FontSize="16" IsReadOnly="True" TextWrapping="Wrap"/>
         </DockPanel>
     </Grid>

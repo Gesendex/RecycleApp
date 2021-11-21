@@ -41,7 +41,7 @@ namespace RecycleApp
                 JsonSerializerOptions options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
                 using (StreamWriter streamWriter = new StreamWriter(requestStream))
                 {
-                    var json = JsonSerializer.Serialize<T>(value, options);
+                    var json = JsonSerializer.Serialize(value, options);
                     await streamWriter.WriteLineAsync(json);
                     await streamWriter.FlushAsync();
                 }

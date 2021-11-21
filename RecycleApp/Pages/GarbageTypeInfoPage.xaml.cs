@@ -28,12 +28,16 @@ namespace RecycleApp.Pages
 
         private void LWGarbageType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            var lw = sender as ListView;
+            if ((lw.SelectedItem as TypeOfGarbage).TypeImage.SubImage != null)
+                SelectedImage.Source = new ImageSourceConverter().ConvertFrom((lw.SelectedItem as TypeOfGarbage).TypeImage.SubImage) as ImageSource;
+            else
+                SelectedImage.Source = null;
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            LWGarbageType.ItemsSource = await RequestHandler.GetObjectFromRequestAsync<IEnumerable<TypeOfGarbage>>("GET", "/api/TypeOfGarbage/GetAll");
+            LWGarbageType.ItemsSource = await RequestHandler.GetObjectFromRequestAsync<IEnumerable<TypeOfGarbage>>("GET", "/api/TypeOfGarbage/GetAllWithImage");
         }
     }
 }

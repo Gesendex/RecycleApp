@@ -24,7 +24,7 @@ namespace RecycleApp.Pages
     
     public partial class EditGarbageCollectionPointEditPage : Page
     {
-        private GarbageCollectionPoint _currentGCP = null; 
+        private GarbageCollectionPoint _currentGCP = null;
         private byte[] _mainImageData;
         public EditGarbageCollectionPointEditPage()
         {
@@ -38,7 +38,7 @@ namespace RecycleApp.Pages
             TBBuilding.Text = _currentGCP.Building;
             TBStreet.Text = _currentGCP.Street;
             TBxDescription.Text = _currentGCP.Description;
-            CBCompany.IsReadOnly = true;
+            CBCompany.IsEnabled = false;
             if(_currentGCP.Image != null)
             {
                 ImageGC.Source = new ImageSourceConverter().ConvertFrom(_currentGCP.Image) as ImageSource;
@@ -47,7 +47,7 @@ namespace RecycleApp.Pages
         private async void SetCompanyAsync()
         {
             CBCompany.ItemsSource = await RequestHandler.GetObjectFromRequestAsync<IEnumerable<Company>>("GET", "/api/Company/GetAll");
-            CBCompany.SelectedIndex = CBCompany.ItemsSource.OfType<Company>().ToList().FindIndex(p => p.Id == _currentGCP.Id);
+            CBCompany.SelectedIndex = CBCompany.ItemsSource.OfType<Company>().ToList().FindIndex(p => p.Id == _currentGCP.IdCompany);
         }
 
         private void BtnSelectImage_Click(object sender, RoutedEventArgs e)
@@ -60,13 +60,22 @@ namespace RecycleApp.Pages
                 ImageGC.Source = new ImageSourceConverter().ConvertFrom(_mainImageData) as ImageSource;
             }
         }
-        private void BtnSave_Click(object sender, RoutedEventArgs e)
+        private async void BtnSave_Click(object sender, RoutedEventArgs e)
         {
             if(RequeredFieldsCheck())
             {
                 if (_currentGCP != null)
                 {
-
+                    GarbageCollectionPoint gcp = new GarbageCollectionPoint()
+                    {
+                        Building = TBBuilding.Text,
+                        Street = TBStreet.Text,
+                        Image = _mainImageData,
+                        Description = TBxDescription.Text,
+                        IdCompany = (CBCompany.SelectedItem as Company).Id,
+                        Id = _currentGCP.Id
+                    };
+                    var response = await RequestHandler.PostRequestAsync<GarbageCollectionPoint>(gcp, "/api/GarbageCollectionPoint");
                 }
             }
             
