@@ -44,7 +44,7 @@ namespace RecycleApp.Pages
         {
             var button = sender as Button;
             var currentGCP = button.DataContext as GarbageCollectionPoint;
-            NavigationService.Navigate(new EditGarbageCollectionPointEditPage(currentGCP));
+            NavigationService.Navigate(new GarbageCollectionPointEditPage(currentGCP));
         }
     }
 }

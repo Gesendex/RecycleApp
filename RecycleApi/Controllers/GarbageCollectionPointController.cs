@@ -21,7 +21,7 @@ namespace RecycleApi.Controllers
         [HttpGet("GetAll")]
         public async Task<IEnumerable<GarbageCollectionPoint>> GetAll()
         {
-            return await db.GarbageCollectionPoints.Include(p =>p.IdCompanyNavigation).ToArrayAsync();
+            return await db.GarbageCollectionPoints.Include(p =>p.IdCompanyNavigation).Include(p => p.GarbageTypeSets).ToArrayAsync();
         }
         [HttpGet("GetById/{id}")]
         public async Task<GarbageCollectionPoint> GetById(int id)

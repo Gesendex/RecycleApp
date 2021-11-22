@@ -24,7 +24,6 @@ namespace Recycle.Models
         public virtual Company IdCompanyNavigation { get; set; }
         [JsonIgnore]
         public virtual ICollection<Comment> Comments { get; set; }
-        [JsonIgnore]
         public virtual ICollection<GarbageTypeSet> GarbageTypeSets { get; set; }
     }
 }

@@ -22,15 +22,16 @@ namespace RecycleApp.Pages
     /// Логика взаимодействия для EditGarbageCollectionPointEditPage.xaml
     /// </summary> 
     
-    public partial class EditGarbageCollectionPointEditPage : Page
+    public partial class GarbageCollectionPointEditPage : Page
     {
         private GarbageCollectionPoint _currentGCP = null;
         private byte[] _mainImageData;
-        public EditGarbageCollectionPointEditPage()
+        private TypeOfGarbage[] _types;
+        public GarbageCollectionPointEditPage()
         {
             InitializeComponent();
         }
-        public EditGarbageCollectionPointEditPage(GarbageCollectionPoint GCP)
+        public GarbageCollectionPointEditPage(GarbageCollectionPoint GCP)
         {
             InitializeComponent();
             _currentGCP = GCP;
@@ -44,6 +45,12 @@ namespace RecycleApp.Pages
                 ImageGC.Source = new ImageSourceConverter().ConvertFrom(_currentGCP.Image) as ImageSource;
             }
         }
+
+        private async void SetTypeSet()
+        {
+            
+        }
+
         private async void SetCompanyAsync()
         {
             CBCompany.ItemsSource = await RequestHandler.GetObjectFromRequestAsync<IEnumerable<Company>>("GET", "/api/Company/GetAll");
@@ -66,6 +73,19 @@ namespace RecycleApp.Pages
             {
                 if (_currentGCP != null)
                 {
+                    List<GarbageTypeSet> typeSet = new List<GarbageTypeSet>();
+                    if ((bool)glassCHbx.IsChecked)
+                        typeSet.Add(new GarbageTypeSet() { IdGarbageCollectionPoint = _currentGCP.Id, IdTypeOfGarbage = 1 });
+                    if ((bool)plasticCHbx.IsChecked)
+                        typeSet.Add(new GarbageTypeSet() { IdGarbageCollectionPoint = _currentGCP.Id, IdTypeOfGarbage = 2 });
+                    if ((bool)paperCHbx.IsChecked)
+                        typeSet.Add(new GarbageTypeSet() { IdGarbageCollectionPoint = _currentGCP.Id, IdTypeOfGarbage = 3 });
+                    if ((bool)metalCHbx.IsChecked)
+                        typeSet.Add(new GarbageTypeSet() { IdGarbageCollectionPoint = _currentGCP.Id, IdTypeOfGarbage = 4 });
+                    if ((bool)pacCHbx.IsChecked)
+                        typeSet.Add(new GarbageTypeSet() { IdGarbageCollectionPoint = _currentGCP.Id, IdTypeOfGarbage = 5 });
+                    if ((bool)dangCHbx.IsChecked)
+                        typeSet.Add(new GarbageTypeSet() { IdGarbageCollectionPoint = _currentGCP.Id, IdTypeOfGarbage = 6 });
                     GarbageCollectionPoint gcp = new GarbageCollectionPoint()
                     {
                         Building = TBBuilding.Text,
@@ -73,7 +93,8 @@ namespace RecycleApp.Pages
                         Image = _mainImageData,
                         Description = TBxDescription.Text,
                         IdCompany = (CBCompany.SelectedItem as Company).Id,
-                        Id = _currentGCP.Id
+                        Id = _currentGCP.Id,
+                        GarbageTypeSets = typeSet
                     };
                     var response = await RequestHandler.PostRequestAsync<GarbageCollectionPoint>(gcp, "/api/GarbageCollectionPoint");
                 }
@@ -98,6 +119,12 @@ namespace RecycleApp.Pages
                 return false;
             }
             return true;
+        }
+
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            _types = (await RequestHandler.GetObjectFromRequestAsync<IEnumerable<TypeOfGarbage>>("GET", "/api/TypeOfGarbage/GetAll", "")).ToArray();
+
         }
     }
 }
