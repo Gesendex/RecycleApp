@@ -18,7 +18,7 @@ namespace Recycle.Models
         public string Owner { get; set; }
         public string Description { get; set; }
         public int? ClientId { get; set; }
-
+        public byte[] Image { get; set; }
         [JsonIgnore]
         public virtual Client Client { get; set; }
         [JsonIgnore]

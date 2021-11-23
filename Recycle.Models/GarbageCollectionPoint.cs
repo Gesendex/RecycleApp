@@ -20,7 +20,6 @@ namespace Recycle.Models
         public int IdCompany { get; set; }
         public byte[] Image { get; set; }
         public string Description { get; set; }
-
         public virtual Company IdCompanyNavigation { get; set; }
         [JsonIgnore]
         public virtual ICollection<Comment> Comments { get; set; }

@@ -30,6 +30,7 @@ namespace Recycle.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
+                optionsBuilder.UseSqlServer("Server=localhost\\SQLExpress;Database=Recycle;Trusted_Connection=True;");
             }
         }
 
@@ -41,8 +42,6 @@ namespace Recycle.Models
             {
                 entity.ToTable("Client");
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Email)
                     .IsRequired()
                     .HasMaxLength(100);
@@ -52,6 +51,10 @@ namespace Recycle.Models
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50);
+
+                entity.Property(e => e.Password)
+                    .IsRequired()
+                    .HasMaxLength(30);
 
                 entity.Property(e => e.Surname).HasMaxLength(50);
 
@@ -65,8 +68,6 @@ namespace Recycle.Models
             modelBuilder.Entity<Comment>(entity =>
             {
                 entity.ToTable("Comment");
-
-                entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.Property(e => e.Text)
                     .IsRequired()
@@ -89,15 +90,17 @@ namespace Recycle.Models
             {
                 entity.ToTable("Company");
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Description).HasMaxLength(2550);
+
+                entity.Property(e => e.Image).HasColumnType("image");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.Property(e => e.Owner).HasMaxLength(50);
+                entity.Property(e => e.Owner)
+                    .IsRequired()
+                    .HasMaxLength(50);
 
                 entity.HasOne(d => d.Client)
                     .WithMany(p => p.Companies)
@@ -108,8 +111,6 @@ namespace Recycle.Models
             modelBuilder.Entity<GarbageCollectionPoint>(entity =>
             {
                 entity.ToTable("GarbageCollectionPoint");
-
-                entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.Property(e => e.Building).HasMaxLength(10);
 
@@ -149,8 +150,6 @@ namespace Recycle.Models
             {
                 entity.ToTable("Role");
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.RoleName)
                     .IsRequired()
                     .HasMaxLength(30);
@@ -176,8 +175,6 @@ namespace Recycle.Models
             modelBuilder.Entity<TypeOfGarbage>(entity =>
             {
                 entity.ToTable("TypeOfGarbage");
-
-                entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.Property(e => e.Type)
                     .IsRequired()
