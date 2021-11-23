@@ -42,6 +42,27 @@ namespace RecycleApi.Controllers
                 return NotFound();
             return Ok(user);
         }
+
+        [HttpPut("Registration")]
+        public async Task<ActionResult<Client>> Registration([FromBody] Client newClient)
+        {
+            if(newClient.Password == null || newClient.Email == null || 
+                (await db.Roles.FindAsync( newClient.IdRole).AsTask()) == null || 
+                newClient.Name == null)
+                return BadRequest();
+            newClient.Id = 0;
+            try
+            {
+                await db.Clients.AddAsync(newClient);
+                await db.SaveChangesAsync();
+                return Ok(await db.Clients.FirstOrDefaultAsync(p => p.Email == newClient.Email));
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+            
+        }
         #endregion
     }
 }
