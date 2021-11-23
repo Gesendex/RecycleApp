@@ -52,7 +52,7 @@ namespace RecycleApp
             }
             catch (WebException a)
             {
-                MessageBox.Show(a.Message, "Ошибка" );
+                MessageBox.Show(a.Message, "Ошибка");
                 return false;
             }
             catch
@@ -60,7 +60,40 @@ namespace RecycleApp
                 MessageBox.Show("Непредвиденная ошибка", "Ошибка");
                 return false;
             }
+        }
+        public static async Task<Return> PostOrPutRequestAsync<Return,T>(T value, string body,string method)
+        {
+            try
+            {
+                WebRequest request = (HttpWebRequest)WebRequest.CreateHttp(ConfigurationManager.AppSettings["HostURL"] + body);
+                request.Method = method;
+                request.ContentType = "application/json";
+                var requestStream = await request.GetRequestStreamAsync();
+                JsonSerializerOptions options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
+                using (StreamWriter streamWriter = new StreamWriter(requestStream))
+                {
+                    var json = JsonSerializer.Serialize(value, options);
+                    await streamWriter.WriteLineAsync(json);
+                    await streamWriter.FlushAsync();
+                }
+                var response = await request.GetResponseAsync();
+                if ((response as HttpWebResponse).StatusCode == HttpStatusCode.OK)
+                {
+                    return await JsonSerializer.DeserializeAsync<Return>(response.GetResponseStream(), options);
+                }
+                return default(Return);
+            }
+            catch (WebException a)
+            {
+                MessageBox.Show(a.Message, "Ошибка");
+                return default(Return);
+            }
+            catch
+            {
+                MessageBox.Show("Непредвиденная ошибка", "Ошибка");
+                return default(Return);
+            }
 
         }
-        }
+    }
 }

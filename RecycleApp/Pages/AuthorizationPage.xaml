@@ -19,7 +19,7 @@
                 <TextBlock Text="Пароль:" Style="{StaticResource TextBlockAuthorizationWindow}"/>
                 <PasswordBox Name="PSboxPassword" Style="{StaticResource PasswordBoxAuthorizationWindow}"/>
             </StackPanel>
-            <Button x:Name="BtnAuthorization" Content="Авторизоваться" Style="{StaticResource BtnAuthorizationWindow}"/>
+            <Button x:Name="BtnAuthorization" Content="Авторизоваться" Style="{StaticResource BtnAuthorizationWindow}" Click="BtnAuthorization_Click"/>
             <TextBlock x:Name="RegistrationLink"  Style="{StaticResource TextBlockAuthorizationWindow}" >
                 <Hyperlink NavigateUri="RegistrationPage.xaml">Регистрация</Hyperlink>
             </TextBlock>

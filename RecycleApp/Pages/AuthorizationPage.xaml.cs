@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Recycle.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,24 @@ namespace RecycleApp.Pages
         public AuthorizationPage()
         {
             InitializeComponent();
+        }
+        private bool FieldValidation()
+        {
+            if (!FieldValidator.IsValidEmail(TXBEmail.Text) || string.IsNullOrWhiteSpace(TXBEmail.Text))
+                return false;
+            if (string.IsNullOrWhiteSpace(PSboxPassword.Password) || PSboxPassword.Password.Length < 6)
+                return false;
+            return true;
+        }
+        private async void BtnAuthorization_Click(object sender, RoutedEventArgs e)
+        {
+            FieldValidation();
+            string[] userData = { TXBEmail.Text, PSboxPassword.Password };
+            var response = await RequestHandler.PostOrPutRequestAsync<Client, string[]>(userData, "/api/Client/Authorization","POST");
+            App.CurrentUser = response;
+            Window window = new MainWindow();
+            window.Show();
+            Window.GetWindow(this).Close();
         }
     }
 }

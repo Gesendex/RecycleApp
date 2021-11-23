@@ -1,5 +1,4 @@
-﻿using Recycle.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -14,6 +13,6 @@ namespace RecycleApp
     /// </summary>
     public partial class App : Application
     {
-        public Client CurrentUser { get; set; } = null;
+        public static Recycle.Models.Client CurrentUser { get; set; } = null;
     }
 }
