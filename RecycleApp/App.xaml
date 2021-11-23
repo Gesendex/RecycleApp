@@ -2,12 +2,13 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:RecycleApp"
-             StartupUri="MainWindow.xaml">
+             StartupUri="AuthorizationWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/StyleDictionaries/MainMenuElementsStyles.xaml"/>
                 <ResourceDictionary Source="/StyleDictionaries/EditPageStyles.xaml"/>
+                <ResourceDictionary Source="/StyleDictionaries/AuthorizationWindowStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <ImageSource x:Key="DefaultImage">/Images/Mock.png</ImageSource>
         </ResourceDictionary>
