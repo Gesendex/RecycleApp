@@ -29,6 +29,19 @@ namespace RecycleApi.Controllers
         {
             return await db.Clients.FirstOrDefaultAsync(p => p.Id == id);
         }
+
+        [HttpPost("Authorization")]
+        public async Task<ActionResult<Client>> Authorization([FromBody] string[] clientData )
+        {
+            if (clientData == null || clientData.Length != 2)
+                return BadRequest();
+            if(clientData[0].Length < 6 || clientData[1].Length < 6)
+                return BadRequest();
+            var user = await db.Clients.FirstOrDefaultAsync(p => p.Email == clientData[0] && p.Password == clientData[1]);
+            if (user == null)
+                return NotFound();
+            return Ok(user);
+        }
         #endregion
     }
 }
