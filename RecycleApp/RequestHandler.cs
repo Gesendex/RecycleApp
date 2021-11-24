@@ -29,7 +29,37 @@ namespace RecycleApp
             }
 
         }
-
+        public static async Task<bool> PutRequestAsync<T>(T value, string body)
+        {
+            try
+            {
+                WebRequest request = (HttpWebRequest)WebRequest.CreateHttp(ConfigurationManager.AppSettings["HostURL"] + body);
+                request.Method = "PUT";
+                request.ContentType = "application/json";
+                var requestStream = await request.GetRequestStreamAsync();
+                JsonSerializerOptions options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
+                using (StreamWriter streamWriter = new StreamWriter(requestStream))
+                {
+                    var json = JsonSerializer.Serialize(value, options);
+                    await streamWriter.WriteLineAsync(json);
+                    await streamWriter.FlushAsync();
+                }
+                var response = await request.GetResponseAsync();
+                if ((response as HttpWebResponse).StatusCode == HttpStatusCode.OK)
+                    return true;
+                return false;
+            }
+            catch (WebException a)
+            {
+                MessageBox.Show(a.Message, "Ошибка");
+                return false;
+            }
+            catch
+            {
+                MessageBox.Show("Непредвиденная ошибка", "Ошибка");
+                return false;
+            }
+        }
         public static async Task<bool> PostRequestAsync<T>(T value, string body)
         {
             try
@@ -61,7 +91,7 @@ namespace RecycleApp
                 return false;
             }
         }
-        public static async Task<Return> PostOrPutRequestAsync<Return,T>(T value, string body,string method)
+        public static async Task<Return> PostRequestAsync<Return,T>(T value, string body,string method)
         {
             try
             {

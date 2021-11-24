@@ -25,6 +25,11 @@ namespace RecycleApp.Pages
         {
             InitializeComponent();
         }
+        public AuthorizationPage(string email)
+        {
+            InitializeComponent();
+            TXBEmail.Text = email;
+        }
         private bool FieldValidation()
         {
             if (!FieldValidator.IsValidEmail(TXBEmail.Text) || string.IsNullOrWhiteSpace(TXBEmail.Text))
@@ -35,13 +40,23 @@ namespace RecycleApp.Pages
         }
         private async void BtnAuthorization_Click(object sender, RoutedEventArgs e)
         {
-            FieldValidation();
+            this.IsEnabled = false;
+            if(!FieldValidation())
+            {
+                MessageBox.Show("Некорректный логин или пароль", "");
+                this.IsEnabled = true;
+                return;
+            }
             string[] userData = { TXBEmail.Text, PSboxPassword.Password };
-            var response = await RequestHandler.PostOrPutRequestAsync<Client, string[]>(userData, "/api/Client/Authorization","POST");
-            App.CurrentUser = response;
-            Window window = new MainWindow();
-            window.Show();
-            Window.GetWindow(this).Close();
+            var response = await RequestHandler.PostRequestAsync<Client, string[]>(userData, "/api/Client/Authorization","POST");
+            if(response != null)
+            {
+                App.CurrentUser = response;
+                Window window = new MainWindow();
+                window.Show();
+                Window.GetWindow(this).Close();
+            }
+            this.IsEnabled = true;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Recycle.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,5 +25,43 @@ namespace RecycleApp.Pages
         {
             InitializeComponent();
         }
+        private bool FieldValidation()
+        {
+            if (string.IsNullOrWhiteSpace(TXBName.Text) || TXBName.Text.Length < 2)
+                return false;
+            if (CBRole.SelectedItem == null )
+                return false;
+            if (!FieldValidator.IsValidEmail(TXBEmail.Text) || string.IsNullOrWhiteSpace(TXBEmail.Text))
+                return false;
+            if (string.IsNullOrWhiteSpace(PSboxPassword.Password) || PSboxPassword.Password.Length < 6)
+                return false;
+            return true;
+        }
+        private async void BtnRegistration_Click(object sender, RoutedEventArgs e)
+        {
+            if(FieldValidation())
+            {
+                Client client = new Client()
+                {
+                    Id = 0,
+                    Name = TXBName.Text,
+                    Surname = TXBSurname.Text,
+                    Middlename = TXBMiddlename.Text,
+                    Email = TXBEmail.Text,
+                    IdRole = CBRole.SelectedIndex + 1,
+                    Password = PSboxPassword.Password
+                };
+                var response = await RequestHandler.PutRequestAsync(client, "/api/Client/Registration");
+                if (response)
+                {
+                    NavigationService.Navigate(new AuthorizationPage(client.Email));
+                }
+            }
+            
+
+
+
+            
+        }    
     }
 }

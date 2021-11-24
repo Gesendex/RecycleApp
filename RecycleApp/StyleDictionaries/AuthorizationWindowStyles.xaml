@@ -2,33 +2,39 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Style x:Key="PasswordBoxAuthorizationWindow" TargetType="PasswordBox">
         <Setter Property="Width" Value="200" />
-        <Setter Property="FontSize" Value="16" />
-        <Setter Property="Margin" Value="10" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="Margin" Value="8" />
         <Setter Property="Padding" Value="3"/>
     </Style>
 
     <Style x:Key="TextBoxAuthorizationWindow" TargetType="TextBox">
         <Setter Property="Width" Value="200" />
-        <Setter Property="FontSize" Value="16" />
-        <Setter Property="Margin" Value="10" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="Margin" Value="8" />
+        <Setter Property="Padding" Value="3"/>
+    </Style>
+    <Style x:Key="ComboBoxAuthorizationWindow" TargetType="ComboBox">
+        <Setter Property="Width" Value="200" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="Margin" Value="8" />
         <Setter Property="Padding" Value="3"/>
     </Style>
     <Style x:Key="TextBlockAuthorizationWindow" TargetType="TextBlock">
         <Setter Property="Width" Value="100" />
-        <Setter Property="FontSize" Value="16" />
-        <Setter Property="Margin" Value="10" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="Margin" Value="8" />
         <Setter Property="Padding" Value="3"/>
     </Style>
     <Style x:Key="BtnAuthorizationWindow" TargetType="Button">
         <Setter Property="Width" Value="200" />
-        <Setter Property="FontSize" Value="16" />
-        <Setter Property="Margin" Value="10" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="Margin" Value="8" />
         <Setter Property="Padding" Value="3"/>
     </Style>
     <Style x:Key="LabelAuthorizationWindow" TargetType="Label">
         <Setter Property="HorizontalAlignment" Value="Center" />
-        <Setter Property="FontSize" Value="16" />
-        <Setter Property="Margin" Value="10" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="Margin" Value="8" />
         <Setter Property="Padding" Value="3"/>
     </Style>
 </ResourceDictionary>

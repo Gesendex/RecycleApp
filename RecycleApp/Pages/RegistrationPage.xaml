@@ -11,19 +11,35 @@
     <Grid>
         <Rectangle Fill="White"/>
         <StackPanel  VerticalAlignment="Center" HorizontalAlignment="Center" >
+
             <StackPanel Orientation="Horizontal">
-                <TextBlock Width="200" Text="Почта:" Style="{StaticResource TextBlockAuthorizationWindow}"/>
+                <TextBlock Width="200" Text="Имя*:" Style="{StaticResource TextBlockAuthorizationWindow}"/>
+                <TextBox Name="TXBName" Style="{StaticResource TextBoxAuthorizationWindow}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Width="200" Text="Фамилия:" Style="{StaticResource TextBlockAuthorizationWindow}"/>
+                <TextBox Name="TXBSurname" Style="{StaticResource TextBoxAuthorizationWindow}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Width="200" Text="Отчество:" Style="{StaticResource TextBlockAuthorizationWindow}"/>
+                <TextBox Name="TXBMiddlename" Style="{StaticResource TextBoxAuthorizationWindow}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Width="200" Text="Роль*:" Style="{StaticResource TextBlockAuthorizationWindow}"/>
+                <ComboBox Name="CBRole" Style="{StaticResource ComboBoxAuthorizationWindow}">
+                    <ComboBoxItem Tag="1" Content="Пользователь" IsSelected="True"/>
+                    <ComboBoxItem Tag="2" Content="Владелец компании"/>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Width="200" Text="Почта*:" Style="{StaticResource TextBlockAuthorizationWindow}"/>
                 <TextBox Name="TXBEmail" Style="{StaticResource TextBoxAuthorizationWindow}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <TextBlock Width="200" Text="Пароль:" Style="{StaticResource TextBlockAuthorizationWindow}"/>
+                <TextBlock Width="200" Text="Пароль*:" Style="{StaticResource TextBlockAuthorizationWindow}"/>
                 <PasswordBox Name="PSboxPassword" Style="{StaticResource PasswordBoxAuthorizationWindow}"/>
             </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock  Width="200" Style="{StaticResource TextBlockAuthorizationWindow}" Text="Подтверждение пароля:"/>
-                <PasswordBox Name="PSboxPasswordConfirm" Style="{StaticResource PasswordBoxAuthorizationWindow}"/>
-            </StackPanel>
-            <Button x:Name="BtnRegistration" Content="Зарегистрироваться" Style="{StaticResource BtnAuthorizationWindow}"/>
+            <Button x:Name="BtnRegistration" Content="Зарегистрироваться" Style="{StaticResource BtnAuthorizationWindow}" Click="BtnRegistration_Click"/>
             <TextBlock x:Name="AuthorizationLink"  Style="{StaticResource TextBlockAuthorizationWindow}" >
                 <Hyperlink NavigateUri="AuthorizationPage.xaml">Авторизация</Hyperlink>
             </TextBlock>
