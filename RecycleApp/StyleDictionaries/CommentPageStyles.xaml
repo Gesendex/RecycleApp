@@ -1,0 +1,28 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="TextBlockCommentPageTitle" TargetType="TextBlock">
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="Width" Value="auto" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="10" />
+    </Style>
+    <Style x:Key="TextBlockCommentPageComment" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="Width" Value="auto" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="Margin" Value="10" />
+    </Style>
+    <Style x:Key="ButtonCommentPageComment" TargetType="Button">
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="Padding" Value="6" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="10" />
+    </Style>
+    <Style x:Key="TextBoxCommentPageComment" TargetType="TextBox">
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="Padding" Value="6" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="10" />
+    </Style>
+</ResourceDictionary>

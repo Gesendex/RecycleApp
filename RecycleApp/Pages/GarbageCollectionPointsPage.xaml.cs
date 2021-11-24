@@ -49,7 +49,9 @@ namespace RecycleApp.Pages
 
         private void BtnComment_Click(object sender, RoutedEventArgs e)
         {
-
+            var button = sender as Button;
+            var currentGCP = button.DataContext as GarbageCollectionPoint;
+            NavigationService.Navigate(new CommentsPage(currentGCP));
         }
     }
 }

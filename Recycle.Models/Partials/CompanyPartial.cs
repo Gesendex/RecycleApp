@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace Recycle.Models
 {
-    public partial class Client
+    public partial class GarbageCollectionPoint
     {
         [JsonIgnore]
-        public string FullName => this.Name + " " + this.Surname + " " + this.Middlename;
-
+        public string Address => this.Street + ", " + this.Building;
     }
 }
