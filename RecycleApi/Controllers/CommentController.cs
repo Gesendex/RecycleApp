@@ -40,6 +40,31 @@ namespace RecycleApi.Controllers
         {
             return await db.Comments.Include(p => p.IdClientNavigation).Where(p => p.IdGarbageCollectionPoint == id).ToListAsync();
         }
+
+        [HttpPut("WriteComment")]
+        public async Task<ActionResult<Comment>> WriteComment([FromBody] Comment com)
+        {
+            if (com == null)
+                return BadRequest();
+            if (await db.Comments.FindAsync(com.IdClient) == null || string.IsNullOrWhiteSpace(com.Text) || 
+                await db.GarbageCollectionPoints.FindAsync(com.IdGarbageCollectionPoint) == null)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                com.Id = 0;
+                var newField = await db.Comments.AddAsync(com);
+                await db.SaveChangesAsync();
+                return (newField.Entity);
+            }
+            catch(Exception)
+            {
+                return BadRequest();
+            }
+
+        }
+
         #endregion
     }
 }

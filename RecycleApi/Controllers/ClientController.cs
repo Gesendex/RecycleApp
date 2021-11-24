@@ -53,9 +53,9 @@ namespace RecycleApi.Controllers
             newClient.Id = 0;
             try
             {
-                await db.Clients.AddAsync(newClient);
+                var a = await db.Clients.AddAsync(newClient);
                 await db.SaveChangesAsync();
-                return Ok(await db.Clients.FirstOrDefaultAsync(p => p.Email == newClient.Email));
+                return Ok(a.Entity);
             }
             catch (Exception)
             {
