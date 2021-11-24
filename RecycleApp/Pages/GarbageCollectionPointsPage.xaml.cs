@@ -46,5 +46,10 @@ namespace RecycleApp.Pages
             var currentGCP = button.DataContext as GarbageCollectionPoint;
             NavigationService.Navigate(new GarbageCollectionPointEditPage(currentGCP));
         }
+
+        private void BtnComment_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

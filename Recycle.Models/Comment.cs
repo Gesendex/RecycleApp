@@ -12,7 +12,6 @@ namespace Recycle.Models
         public int IdGarbageCollectionPoint { get; set; }
         public int IdClient { get; set; }
         public string Text { get; set; }
-        [JsonIgnore]
         public virtual Client IdClientNavigation { get; set; }
         [JsonIgnore]
         public virtual GarbageCollectionPoint IdGarbageCollectionPointNavigation { get; set; }

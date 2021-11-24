@@ -24,6 +24,9 @@ namespace RecycleApp.Pages
         public AuthorizationPage()
         {
             InitializeComponent();
+            //TODO: Удалить данные для быстрого входа
+            TXBEmail.Text = "Gireev2003@mail.ru";
+            PSboxPassword.Password = "123456";
         }
         public AuthorizationPage(string email)
         {

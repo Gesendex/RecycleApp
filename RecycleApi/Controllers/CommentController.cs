@@ -32,7 +32,13 @@ namespace RecycleApi.Controllers
         [HttpGet("GetAllByClientId/{id}")]
         public async Task<IEnumerable<Comment>> GetAllByClientId(int id)
         {
-            return await db.Comments.Where(p=>p.IdClient == id).ToListAsync();
+            return await db.Comments.Include(p => p.IdClientNavigation).Where(p=>p.IdClient == id).ToListAsync();
+        }
+
+        [HttpGet("GetAllByGCPId/{id}")]
+        public async Task<IEnumerable<Comment>> GetAllByGCPtId(int id)
+        {
+            return await db.Comments.Include(p => p.IdClientNavigation).Where(p => p.IdGarbageCollectionPoint == id).ToListAsync();
         }
         #endregion
     }
