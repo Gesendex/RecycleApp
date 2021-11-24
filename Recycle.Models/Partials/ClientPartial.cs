@@ -11,10 +11,7 @@ namespace Recycle.Models
     public partial class Client
     {
         [JsonIgnore]
-        public string FullName
-        {
-            get { return this.Name + " " + this.Surname + " " + this.Middlename; }
-        }
+        public string FullName => this.Name + " " + this.Surname + " " + this.Middlename;
 
     }
 }
