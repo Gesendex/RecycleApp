@@ -30,7 +30,6 @@ namespace Recycle.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Server=localhost\\SQLExpress;Database=Recycle;Trusted_Connection=True;");
             }
         }
@@ -113,11 +112,15 @@ namespace Recycle.Models
             {
                 entity.ToTable("GarbageCollectionPoint");
 
-                entity.Property(e => e.Building).HasMaxLength(10);
+                entity.Property(e => e.Building)
+                    .IsRequired()
+                    .HasMaxLength(10);
 
                 entity.Property(e => e.Image).HasColumnType("image");
 
-                entity.Property(e => e.Street).HasMaxLength(50);
+                entity.Property(e => e.Street)
+                    .IsRequired()
+                    .HasMaxLength(50);
 
                 entity.HasOne(d => d.IdCompanyNavigation)
                     .WithMany(p => p.GarbageCollectionPoints)

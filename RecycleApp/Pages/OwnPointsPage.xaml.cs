@@ -37,5 +37,10 @@ namespace RecycleApp.Pages
         {
 
         }
+
+        private void BtnComment_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
