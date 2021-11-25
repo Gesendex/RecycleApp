@@ -41,6 +41,8 @@
                                         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
                                             <TextBlock Text="Автор:" Style="{StaticResource TextBlockCommentPageComment}"/>
                                             <TextBlock Text="{Binding IdClientNavigation.FullName}" Style="{StaticResource TextBlockCommentPageComment}"/>
+                                            <TextBlock Text="Дата:" Style="{StaticResource TextBlockCommentPageComment}"/>
+                                            <TextBlock Text="{Binding DateOfCreation}" Style="{StaticResource TextBlockCommentPageComment}"/>
                                         </StackPanel>
 
                                         <TextBox DockPanel.Dock="Bottom"
