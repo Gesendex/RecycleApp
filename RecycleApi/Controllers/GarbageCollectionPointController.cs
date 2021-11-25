@@ -21,7 +21,7 @@ namespace RecycleApi.Controllers
         [HttpGet("GetAll")]
         public async Task<IEnumerable<GarbageCollectionPoint>> GetAll()
         {
-            return await db.GarbageCollectionPoints.Include(p =>p.IdCompanyNavigation).Include(p => p.GarbageTypeSets).ToArrayAsync();
+            return await db.GarbageCollectionPoints.Include(p => p.IdCompanyNavigation).Include(p => p.GarbageTypeSets).ToArrayAsync();
         }
         [HttpGet("GetById/{id}")]
         public async Task<GarbageCollectionPoint> GetById(int id)
@@ -34,7 +34,7 @@ namespace RecycleApi.Controllers
             return await db.GarbageTypeSets.Where(p => p.IdTypeOfGarbage == id).Select(p => p.IdGarbageCollectionPointNavigation).ToListAsync();
         }
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody]GarbageCollectionPoint model)
+        public async Task<ActionResult> Post([FromBody] GarbageCollectionPoint model)
         {
             var fromDB = await db.GarbageCollectionPoints.FirstOrDefaultAsync(p => p.Id == model.Id);
             if (fromDB == null)
@@ -45,6 +45,29 @@ namespace RecycleApi.Controllers
             fromDB.Building = model.Building;
 
             return Ok();
+        }
+        [HttpPut("CreateGCP")]
+        public async Task<ActionResult<GarbageCollectionPoint>> CreateGCP([FromBody] GarbageCollectionPoint gcp)
+        {
+            if (gcp == null)
+                return BadRequest();
+            if (await db.Companies.FindAsync(gcp.IdCompany) == null || string.IsNullOrWhiteSpace(gcp.Address)
+                || string.IsNullOrWhiteSpace(gcp.Building))
+            {
+                return BadRequest();
+            }
+            try
+            {
+                gcp.Id = 0;
+                var newField = await db.GarbageCollectionPoints.AddAsync(gcp);
+                await db.SaveChangesAsync();
+                return (newField.Entity);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+
         }
     }
 }
