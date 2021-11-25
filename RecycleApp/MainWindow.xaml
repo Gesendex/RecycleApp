@@ -20,7 +20,7 @@
             <RadioButton x:Name="rbEmpty" Content="О приложении" Style="{StaticResource MainMenuCheckBox}" Checked="rbEmpty_Checked"/>
             <RadioButton x:Name="rbGCPoints" Content="Список точек сбора мусора" Style="{StaticResource MainMenuCheckBox}" Checked="rbGCPoints_Checked"/>
             <RadioButton x:Name="rbTypeOfGarbage" Content="Типы собираемого мусора" Style="{StaticResource MainMenuCheckBox}" Checked="rbTypeOfGarbage_Checked"/>
-            <RadioButton x:Name="rb" Content="О приложении" Style="{StaticResource MainMenuCheckBox}"/>
+            <RadioButton x:Name="rbOwnPoints" Content="Мои точки" Style="{StaticResource MainMenuCheckBox}" Checked="rbOwnPoints_Checked"/>
         </StackPanel>
         <Frame Opacity="1" Grid.Row="1" 
                Name="FrameMain" NavigationUIVisibility="Hidden"></Frame>

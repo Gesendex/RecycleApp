@@ -28,6 +28,8 @@ namespace RecycleApp
         {
             InitializeComponent();
             rbEmpty.IsChecked = true;
+            if (App.CurrentUser.IdRole == 1)
+                rbOwnPoints.Visibility = Visibility.Collapsed;
         }
 
         private void rbEmpty_Checked(object sender, RoutedEventArgs e)
@@ -43,6 +45,11 @@ namespace RecycleApp
         private void rbTypeOfGarbage_Checked(object sender, RoutedEventArgs e)
         {
             FrameMain.Navigate(new GarbageTypeInfoPage());
+        }
+
+        private void rbOwnPoints_Checked(object sender, RoutedEventArgs e)
+        {
+            FrameMain.Navigate(new OwnPointsPage(App.CurrentUser));
         }
     }
 }
