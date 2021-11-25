@@ -10,6 +10,6 @@ namespace Recycle.Models
     public partial class GarbageCollectionPoint
     {
         [JsonIgnore]
-        public string Address => this.Street + ", " + this.Building;
+        public string FullAddress => this.Street + " " + this.Building; 
     }
 }

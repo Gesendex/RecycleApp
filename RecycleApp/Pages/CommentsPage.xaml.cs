@@ -27,7 +27,7 @@ namespace RecycleApp.Pages
             InitializeComponent();
             _currentGCP = currentGCP;
             TXBGCPCompany.Text += _currentGCP.IdCompanyNavigation.Name;
-            TXBGCPAddress.Text += _currentGCP.Address;
+            TXBGCPAddress.Text += _currentGCP.FullAddress;
             UpdateSource();
 
         }

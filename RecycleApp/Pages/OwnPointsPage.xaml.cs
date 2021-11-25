@@ -28,17 +28,32 @@ namespace RecycleApp.Pages
             _currentClient = client;
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void  Page_Loaded(object sender, RoutedEventArgs e)
         {
-
+            string parametrs = "/" + _currentClient.Id.ToString();
+            LWGarbagePoints.ItemsSource = await RequestHandler.GetObjectFromRequestAsync<IEnumerable<GarbageCollectionPoint>>("GET", "/api/GarbageCollectionPoint/GetByClientId", parametrs);
         }
 
         private void LWGarbagePoints_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            TXBDescription.Text = ((sender as ListView).SelectedItem as GarbageCollectionPoint).Description;
+        }
 
+        private void BtnEdit_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            var currentGCP = button.DataContext as GarbageCollectionPoint;
+            NavigationService.Navigate(new GarbageCollectionPointEditPage(currentGCP));
         }
 
         private void BtnComment_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            var currentGCP = button.DataContext as GarbageCollectionPoint;
+            NavigationService.Navigate(new CommentsPage(currentGCP));
+        }
+
+        private void BtnDelete_Click(object sender, RoutedEventArgs e)
         {
 
         }

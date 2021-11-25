@@ -36,6 +36,7 @@ namespace RecycleApp.Pages
             InitializeComponent();
             _currentGCP = GCP;
             SetCompanyAsync();
+            SetTypeSet();
             TBBuilding.Text = _currentGCP.Building;
             TBStreet.Text = _currentGCP.Street;
             TBxDescription.Text = _currentGCP.Description;
@@ -46,9 +47,52 @@ namespace RecycleApp.Pages
             }
         }
 
+        private void SetCheckBox(int id)
+        {
+            switch (id)
+            {
+                case 1:
+                    {
+                        glassCHbx.IsChecked = true;
+                        break;
+                    }
+                case 2:
+                    {
+                        plasticCHbx.IsChecked = true;
+                        break;
+                    }
+                case 3:
+                    {
+                        paperCHbx.IsChecked = true;
+                        break;
+                    }
+                case 4:
+                    {
+                        metalCHbx.IsChecked = true;
+                        break;
+                    }
+                case 5:
+                    {
+                        pacCHbx.IsChecked = true;
+                        break;
+                    }
+                case 6:
+                    {
+                        dangCHbx.IsChecked = true;
+                        break;
+                    }
+
+            }
+        }
         private async void SetTypeSet()
         {
-            
+            string parametrs = "/" + _currentGCP.Id.ToString();
+            var gcpTypes = await RequestHandler.GetObjectFromRequestAsync<IEnumerable<TypeOfGarbage>>("GET", "/api/TypeOfGarbage/GetByCollectionPointId", parametrs);
+            if (gcpTypes != null)
+                foreach (var item in gcpTypes)
+                {
+                    SetCheckBox(item.Id);
+                }
         }
 
         private async void SetCompanyAsync()
@@ -96,7 +140,11 @@ namespace RecycleApp.Pages
                         Id = _currentGCP.Id,
                         GarbageTypeSets = typeSet
                     };
-                    var response = await RequestHandler.PostRequestAsync<GarbageCollectionPoint>(gcp, "/api/GarbageCollectionPoint");
+                    var response = await RequestHandler.PostRequestAsync<GarbageCollectionPoint>(gcp, "/api/GarbageCollectionPoint/update");
+                    if(response)
+                    {
+                        MessageBox.Show("Данные успешно сохранены!", "Уведомление");
+                    }
                 }
             }
             
