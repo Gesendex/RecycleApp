@@ -22,7 +22,7 @@ namespace RecycleApi.Controllers
         [HttpGet("GetAll")]
         public async Task<IEnumerable<Comment>> GetAll()
         {
-            return await db.Comments.ToListAsync();
+            return await db.Comments.OrderByDescending(p => p.DateOfCreation).ToListAsync();
         }
         [HttpGet("GetById/{id}")]
         public async Task<Comment> GetById(int id)
@@ -32,13 +32,13 @@ namespace RecycleApi.Controllers
         [HttpGet("GetAllByClientId/{id}")]
         public async Task<IEnumerable<Comment>> GetAllByClientId(int id)
         {
-            return await db.Comments.Include(p => p.IdClientNavigation).Where(p=>p.IdClient == id).ToListAsync();
+            return await db.Comments.Include(p => p.IdClientNavigation).Where(p=>p.IdClient == id).OrderByDescending(p => p.DateOfCreation).ToListAsync();
         }
 
         [HttpGet("GetAllByGCPId/{id}")]
         public async Task<IEnumerable<Comment>> GetAllByGCPtId(int id)
         {
-            return await db.Comments.Include(p => p.IdClientNavigation).Where(p => p.IdGarbageCollectionPoint == id).ToListAsync();
+            return await db.Comments.Include(p => p.IdClientNavigation).Where(p => p.IdGarbageCollectionPoint == id).OrderByDescending(p => p.DateOfCreation).ToListAsync();
         }
 
         [HttpPut("WriteComment")]
@@ -54,6 +54,7 @@ namespace RecycleApi.Controllers
             try
             {
                 com.Id = 0;
+                com.DateOfCreation = DateTime.Now;
                 var newField = await db.Comments.AddAsync(com);
                 await db.SaveChangesAsync();
                 return (newField.Entity);
