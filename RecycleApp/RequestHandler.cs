@@ -29,6 +29,7 @@ namespace RecycleApp
             }
 
         }
+
         public static async Task<bool> PutRequestAsync<T>(T value, string body)
         {
             try
@@ -124,6 +125,29 @@ namespace RecycleApp
                 return default(Return);
             }
 
+        }
+        public static async Task<bool> DeleteRequestAsync(string body, string id)
+        {
+            try
+            {
+                WebRequest request = (HttpWebRequest)WebRequest.CreateHttp(ConfigurationManager.AppSettings["HostURL"] + body + id);
+                request.Method = "DELETE";
+                var requestStream = await request.GetRequestStreamAsync();
+                var response = await request.GetResponseAsync();
+                if ((response as HttpWebResponse).StatusCode == HttpStatusCode.OK)
+                    return true;
+                return false;
+            }
+            catch (WebException a)
+            {
+                MessageBox.Show(a.Message, "Ошибка");
+                return false;
+            }
+            catch
+            {
+                MessageBox.Show("Непредвиденная ошибка", "Ошибка");
+                return false;
+            }
         }
     }
 }
