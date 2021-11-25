@@ -30,6 +30,7 @@ namespace Recycle.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Server=localhost\\SQLExpress;Database=Recycle;Trusted_Connection=True;");
             }
         }
@@ -54,7 +55,7 @@ namespace Recycle.Models
 
                 entity.Property(e => e.Password)
                     .IsRequired()
-                    .HasMaxLength(30);
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.Surname).HasMaxLength(50);
 
@@ -68,6 +69,8 @@ namespace Recycle.Models
             modelBuilder.Entity<Comment>(entity =>
             {
                 entity.ToTable("Comment");
+
+                entity.Property(e => e.DateOfCreation).HasColumnType("datetime");
 
                 entity.Property(e => e.Text)
                     .IsRequired()
@@ -90,8 +93,6 @@ namespace Recycle.Models
             {
                 entity.ToTable("Company");
 
-                entity.Property(e => e.Description).HasMaxLength(2550);
-
                 entity.Property(e => e.Image).HasColumnType("image");
 
                 entity.Property(e => e.Name)
@@ -113,8 +114,6 @@ namespace Recycle.Models
                 entity.ToTable("GarbageCollectionPoint");
 
                 entity.Property(e => e.Building).HasMaxLength(10);
-
-                entity.Property(e => e.Description).HasMaxLength(4000);
 
                 entity.Property(e => e.Image).HasColumnType("image");
 
@@ -178,7 +177,7 @@ namespace Recycle.Models
 
                 entity.Property(e => e.Type)
                     .IsRequired()
-                    .HasMaxLength(20);
+                    .HasMaxLength(50);
             });
 
             OnModelCreatingPartial(modelBuilder);
