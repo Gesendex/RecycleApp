@@ -21,6 +21,7 @@
             <RadioButton x:Name="rbGCPoints" Content="Список точек сбора мусора" Style="{StaticResource MainMenuCheckBox}" Checked="rbGCPoints_Checked"/>
             <RadioButton x:Name="rbTypeOfGarbage" Content="Типы собираемого мусора" Style="{StaticResource MainMenuCheckBox}" Checked="rbTypeOfGarbage_Checked"/>
             <RadioButton x:Name="rbOwnPoints" Content="Мои точки" Style="{StaticResource MainMenuCheckBox}" Checked="rbOwnPoints_Checked"/>
+            <Button x:Name="BtnExit" Content="Выход" Style="{StaticResource MainMenuButton}" Click="BtnExit_Click"/>
         </StackPanel>
         <Frame Opacity="1" Grid.Row="1" 
                Name="FrameMain" NavigationUIVisibility="Hidden"></Frame>

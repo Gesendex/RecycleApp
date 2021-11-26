@@ -51,5 +51,13 @@ namespace RecycleApp
         {
             FrameMain.Navigate(new OwnPointsPage(App.CurrentUser));
         }
+
+        private void BtnExit_Click(object sender, RoutedEventArgs e)
+        {
+            App.CurrentUser = null;
+            Window w = new AuthorizationWindow();
+            w.Show();
+            Close();
+        }
     }
 }
