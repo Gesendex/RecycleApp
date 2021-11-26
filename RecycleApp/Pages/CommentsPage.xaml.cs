@@ -67,5 +67,12 @@ namespace RecycleApp.Pages
             }
             this.IsEnabled = true;
         }
+        private void BtnBack_Click(object sender, RoutedEventArgs e)
+        {
+            if (NavigationService.CanGoBack)
+            {
+                NavigationService.GoBack();
+            }
+        }
     }
 }

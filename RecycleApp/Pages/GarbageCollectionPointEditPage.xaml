@@ -57,6 +57,7 @@
                 </Border>
                 <Button Name="BtnSelectImage" Content="Выбрать изображение" Style="{StaticResource BtnEditPage}" Click="BtnSelectImage_Click"/>
                 <Button Name="BtnSave" Content="Сохранить" Style="{StaticResource BtnEditPage}" Click="BtnSave_Click"/>
+                <Button Name="BtnBack" Content="Назад" Style="{StaticResource BtnEditPage}" Click="BtnBack_Click"/>
             </StackPanel>
 
         </StackPanel>

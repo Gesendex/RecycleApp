@@ -68,10 +68,17 @@
                            Style="{StaticResource TextBlockCommentPageComment}"/>
                 <Button HorizontalAlignment="Stretch" 
                         DockPanel.Dock="Bottom" 
+                        x:Name="BtnBack" 
+                        Content="Назад"  
+                        Style="{StaticResource ButtonCommentPageComment}" 
+                        Click="BtnBack_Click"/>
+                <Button HorizontalAlignment="Stretch" 
+                        DockPanel.Dock="Bottom" 
                         x:Name="BtnWriteColumn" 
                         Content="Оставить комментарий"  
                         Style="{StaticResource ButtonCommentPageComment}" 
                         Click="BtnWriteColumn_Click"/>
+                
                 <TextBox x:Name="TXBxCommentBody" 
                          HorizontalScrollBarVisibility="Disabled"
                          HorizontalAlignment="Stretch" 

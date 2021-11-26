@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RecycleApp"
         mc:Ignorable="d"
-        Title="RecycleApp" Height="500" Width="1000">
+        Title="RecycleApp" Height="500" Width="1000" MinHeight="500" MinWidth="1000">
     <Grid >
         <Grid.Background>
             <ImageBrush ImageSource="Images/Recycle.jpg"/>
@@ -21,8 +21,9 @@
             <RadioButton x:Name="rbGCPoints" Content="Список точек сбора мусора" Style="{StaticResource MainMenuCheckBox}" Checked="rbGCPoints_Checked"/>
             <RadioButton x:Name="rbTypeOfGarbage" Content="Типы собираемого мусора" Style="{StaticResource MainMenuCheckBox}" Checked="rbTypeOfGarbage_Checked"/>
             <RadioButton x:Name="rbOwnPoints" Content="Мои точки" Style="{StaticResource MainMenuCheckBox}" Checked="rbOwnPoints_Checked"/>
-            <Button x:Name="BtnExit" Content="Выход" Style="{StaticResource MainMenuButton}" Click="BtnExit_Click"/>
         </StackPanel>
+        <Button x:Name="BtnExit" HorizontalAlignment="Right" Content="Выход" Style="{StaticResource MainMenuButton}" Click="BtnExit_Click"/>
+
         <Frame Opacity="1" Grid.Row="1" 
                Name="FrameMain" NavigationUIVisibility="Hidden"></Frame>
         <Rectangle Grid.Row="2" Opacity="0.9" Style="{StaticResource BottomBar}"/>

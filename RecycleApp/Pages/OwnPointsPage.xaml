@@ -29,7 +29,7 @@
                                     <ColumnDefinition Width="1*"/>
                                     <ColumnDefinition Width="1*"/>
                                 </Grid.ColumnDefinitions>
-                                <Image Margin="5" Width="75" Height="75" Source="{Binding IdCompanyNavigation.Image, TargetNullValue={StaticResource DefaultImage}}" Grid.Column="0"/>
+                                <Image Margin="5" Width="75" Height="75" Source="{Binding Image, TargetNullValue={StaticResource DefaultImage}}" Grid.Column="0"/>
                                 <StackPanel Grid.Column="1" Margin="5,0">
                                     <TextBlock  FontSize="14"  Text="Компания сбора мусора:"/>
                                     <TextBlock  FontSize="14"  Text="{Binding IdCompanyNavigation.Name}"/>
@@ -53,7 +53,7 @@
             </ListView>
         </DockPanel>
         <DockPanel Grid.Column="1">
-            <Image x:Name="SelectedImage" DockPanel.Dock="Top" Source="/Images/Recycle.jpg" Stretch="Uniform" Margin="10"/>
+            <Image x:Name="SelectedImage" DockPanel.Dock="Top" Source="/Images/Recycle.jpg" MaxHeight="150" Stretch="Uniform" Margin="10"/>
             <TextBox x:Name="TXBDescription" Margin="10" FontSize="16" IsReadOnly="True" TextWrapping="Wrap"/>
         </DockPanel>
     </Grid>

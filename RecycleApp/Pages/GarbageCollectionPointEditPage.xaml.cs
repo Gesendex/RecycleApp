@@ -176,5 +176,11 @@ namespace RecycleApp.Pages
             _types = (await RequestHandler.GetObjectFromRequestAsync<IEnumerable<TypeOfGarbage>>("GET", "/api/TypeOfGarbage/GetAll", "")).ToArray();
 
         }
+
+        private void BtnBack_Click(object sender, RoutedEventArgs e)
+        {
+            if (NavigationService.CanGoBack)
+                NavigationService.GoBack();
+        }
     }
 }
