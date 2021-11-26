@@ -29,10 +29,12 @@ namespace RecycleApp.Pages
         private void LWGarbageType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var lw = sender as ListView;
-            if ((lw.SelectedItem as TypeOfGarbage).TypeImage.SubImage != null)
-                SelectedImage.Source = new ImageSourceConverter().ConvertFrom((lw.SelectedItem as TypeOfGarbage).TypeImage.SubImage) as ImageSource;
+            var selectedItem = (lw.SelectedItem as TypeOfGarbage);
+            if (selectedItem.TypeImage.SubImage != null)
+                SelectedImage.Source = new ImageSourceConverter().ConvertFrom(selectedItem.TypeImage.SubImage) as ImageSource;
             else
                 SelectedImage.Source = null;
+            TXBDescription.Text = selectedItem?.Description;
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
