@@ -53,9 +53,15 @@ namespace RecycleApp.Pages
             NavigationService.Navigate(new CommentsPage(currentGCP));
         }
 
-        private void BtnDelete_Click(object sender, RoutedEventArgs e)
+        private async void BtnDelete_Click(object sender, RoutedEventArgs e)
         {
-
+            this.IsEnabled = false;
+            var button = sender as Button;
+            var currentGCP = button.DataContext as GarbageCollectionPoint;
+            await RequestHandler.DeleteRequestAsync("/api/GarbageCollectionPoint/DeleteGCP", "/" + currentGCP.Id); 
+            string parametrs = "/" + _currentClient.Id.ToString();
+            LWGarbagePoints.ItemsSource = await RequestHandler.GetObjectFromRequestAsync<IEnumerable<GarbageCollectionPoint>>("GET", "/api/GarbageCollectionPoint/GetByClientId", parametrs);
+            this.IsEnabled = true;
         }
     }
 }

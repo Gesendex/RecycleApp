@@ -92,20 +92,22 @@ namespace RecycleApi.Controllers
             }
 
         }
-        [HttpDelete("DeleteGCP")]
+        [HttpDelete("DeleteGCP/{id}")]
         public async Task<ActionResult> DeleteGCP(int id)
         {
-            
             try
             {
                 var gcp = await db.GarbageCollectionPoints.FindAsync(id);
                 if (gcp == null)
                     return NotFound();
+
+                db.GarbageTypeSets.RemoveRange(db.GarbageTypeSets.Where(p => p.IdGarbageCollectionPoint == id));
+                db.Comments.RemoveRange(db.Comments.Where(p => p.IdGarbageCollectionPoint == id));
                 db.GarbageCollectionPoints.Remove(gcp);
                 await db.SaveChangesAsync();
                 return Ok();
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return BadRequest();
             }

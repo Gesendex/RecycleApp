@@ -113,6 +113,7 @@ namespace RecycleApp.Pages
         }
         private async void BtnSave_Click(object sender, RoutedEventArgs e)
         {
+            this.IsEnabled = false;
             if(RequeredFieldsCheck())
             {
                 if (_currentGCP != null)
@@ -147,7 +148,8 @@ namespace RecycleApp.Pages
                     }
                 }
             }
-            
+            this.IsEnabled = true;
+
         }
         private bool RequeredFieldsCheck()
         {
