@@ -10,6 +10,24 @@
 
     <Grid>
         <Rectangle Fill="White" Opacity="0.9"/>
+        <StackPanel Margin="40" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <FlowDocumentScrollViewer VerticalScrollBarVisibility="Disabled"
+                                      HorizontalScrollBarVisibility="Disabled"
+                                      Width="700"
+                                      Height="300">
+                <FlowDocument>
+                    <Paragraph Style="{StaticResource MainText}">
+                        Данный проект направлен на создание информационной системы, в рамках которой люди, обеспокоенные ситуацией с мусором, смогут научиться разделять отходы и сдавать их на переработку. Программа облегчит процесс сортировки мусора, предоставляя доступ к базе пунктов раздельного сбора.
+                    </Paragraph>
+                    <Paragraph Style="{StaticResource MainText}">
+                        Настоящий проект будет полезен не только экоактивистам, но и владельцам малого бизнеса, которые хотят, чтобы отходы производства не причиняли вред окружающей среде, а отправлялись на переработку.
+                    </Paragraph>
+                    <Paragraph  Style="{StaticResource MainText}">
+                        Тема сортировки отходов и переработки мусора является крайне актуальной на сегодняшний день, поскольку мусор может привести к глобальной экологической катастрофе, если не предпринимать никаких мер.
+                    </Paragraph>
+                </FlowDocument>
+            </FlowDocumentScrollViewer>
+        </StackPanel>
         
     </Grid>
 </Page>

@@ -10,6 +10,7 @@
                 <ResourceDictionary Source="/StyleDictionaries/EditPageStyles.xaml"/>
                 <ResourceDictionary Source="/StyleDictionaries/AuthorizationWindowStyles.xaml"/>
                 <ResourceDictionary Source="/StyleDictionaries/CommentPageStyles.xaml"/>
+                <ResourceDictionary Source="/StyleDictionaries/LoadPageStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <ImageSource x:Key="DefaultImage">/Images/Mock.png</ImageSource>
         </ResourceDictionary>
