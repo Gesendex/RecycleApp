@@ -67,5 +67,10 @@ namespace RecycleApp.Pages
             LWGarbagePoints.ItemsSource = await RequestHandler.GetObjectFromRequestAsync<IEnumerable<GarbageCollectionPoint>>("GET", "/api/GarbageCollectionPoint/GetByClientId", parametrs);
             this.IsEnabled = true;
         }
+
+        private void btnCreateNew_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new GarbageCollectionPointEditPage());
+        }
     }
 }

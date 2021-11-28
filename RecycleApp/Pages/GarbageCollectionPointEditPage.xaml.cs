@@ -30,6 +30,8 @@ namespace RecycleApp.Pages
         public GarbageCollectionPointEditPage()
         {
             InitializeComponent();
+            SetAllCompanyAsync();
+            CBCompany.IsEnabled = false;
         }
         public GarbageCollectionPointEditPage(GarbageCollectionPoint GCP)
         {
@@ -39,7 +41,8 @@ namespace RecycleApp.Pages
             SetTypeSet();
             TBBuilding.Text = _currentGCP.Building;
             TBStreet.Text = _currentGCP.Street;
-            TBxDescription.Text = _currentGCP.Description;
+            TBxDescription.Text = _currentGCP?.Description;
+            _mainImageData = GCP.Image;
             CBCompany.IsEnabled = false;
             if(_currentGCP.Image != null)
             {
@@ -95,6 +98,11 @@ namespace RecycleApp.Pages
                 }
         }
 
+        private async void SetAllCompanyAsync()
+        {
+            CBCompany.ItemsSource = await RequestHandler.GetObjectFromRequestAsync<IEnumerable<Company>>("GET", "/api/Company/GetAll");
+            CBCompany.SelectedIndex = CBCompany.ItemsSource.OfType<Company>().ToList().FindIndex(p => p.ClientId == App.CurrentUser.Id);
+        }
         private async void SetCompanyAsync()
         {
             CBCompany.ItemsSource = await RequestHandler.GetObjectFromRequestAsync<IEnumerable<Company>>("GET", "/api/Company/GetAll");
@@ -143,6 +151,37 @@ namespace RecycleApp.Pages
                     };
                     var response = await RequestHandler.PostRequestAsync<GarbageCollectionPoint>(gcp, "/api/GarbageCollectionPoint/update");
                     if(response)
+                    {
+                        MessageBox.Show("Данные успешно сохранены!", "Уведомление");
+                    }
+                }
+                else
+                {
+                    List<GarbageTypeSet> typeSet = new List<GarbageTypeSet>();
+                    if ((bool)glassCHbx.IsChecked)
+                        typeSet.Add(new GarbageTypeSet() { IdGarbageCollectionPoint = 0, IdTypeOfGarbage = 1 });
+                    if ((bool)plasticCHbx.IsChecked)
+                        typeSet.Add(new GarbageTypeSet() { IdGarbageCollectionPoint = 0, IdTypeOfGarbage = 2 });
+                    if ((bool)paperCHbx.IsChecked)
+                        typeSet.Add(new GarbageTypeSet() { IdGarbageCollectionPoint = 0, IdTypeOfGarbage = 3 });
+                    if ((bool)metalCHbx.IsChecked)
+                        typeSet.Add(new GarbageTypeSet() { IdGarbageCollectionPoint = 0, IdTypeOfGarbage = 4 });
+                    if ((bool)pacCHbx.IsChecked)
+                        typeSet.Add(new GarbageTypeSet() { IdGarbageCollectionPoint = 0, IdTypeOfGarbage = 5 });
+                    if ((bool)dangCHbx.IsChecked)
+                        typeSet.Add(new GarbageTypeSet() { IdGarbageCollectionPoint = 0, IdTypeOfGarbage = 6 });
+                    GarbageCollectionPoint gcp = new GarbageCollectionPoint()
+                    {
+                        Id = 0,
+                        Building = TBBuilding.Text,
+                        Street = TBStreet.Text,
+                        Image = _mainImageData,
+                        Description = TBxDescription.Text,
+                        IdCompany = CBCompany.ItemsSource.OfType<Company>().FirstOrDefault(p => p.ClientId == App.CurrentUser.Id).Id,
+                        GarbageTypeSets = typeSet
+                    };
+                    var response = await RequestHandler.PutRequestAsync(gcp, "/api/GarbageCollectionPoint/CreateGCP");
+                    if (response)
                     {
                         MessageBox.Show("Данные успешно сохранены!", "Уведомление");
                     }

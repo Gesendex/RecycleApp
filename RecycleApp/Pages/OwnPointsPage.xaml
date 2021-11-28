@@ -14,6 +14,11 @@
         </Grid.ColumnDefinitions>
         <Rectangle Fill="White" Grid.ColumnSpan="2" Opacity="0.9"/>
         <DockPanel Grid.Column="0">
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                <StackPanel Margin="5">
+                    <Button Content="Добавить новую точку" Name="btnCreateNew" Margin="5" Width="200" FontSize="14" Click="btnCreateNew_Click" />
+                </StackPanel>
+            </StackPanel>
             <ListView Name="LWGarbagePoints" Margin="10" SelectionChanged="LWGarbagePoints_SelectionChanged">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
