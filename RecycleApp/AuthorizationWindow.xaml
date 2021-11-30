@@ -5,12 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RecycleApp"
         mc:Ignorable="d"
-        Title="{Binding ElementName=TxtTitle, Path=Text}" Height="450" Width="800">
+        Title="{Binding ElementName=TxtTitle, Path=Text}" 
+        Height="550" Width="800"
+        MinHeight="550" MinWidth="800">
     <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="Images/Recycle.jpg"/>
+        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="6*"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
+        <Rectangle Grid.RowSpan="3" Opacity="0.8" Fill="Gray"/>
         <TextBlock x:Name="TxtTitle" Text="{Binding ElementName=FrameMain, Path=Content.Title}" HorizontalAlignment="Center" FontSize="25" Width="auto" Style="{StaticResource TextBlockAuthorizationWindow}"/>
         <Frame Name="FrameMain" NavigationUIVisibility="Hidden" Grid.Row="1" Source="/Pages/AuthorizationPage.xaml">
 

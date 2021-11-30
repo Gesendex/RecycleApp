@@ -9,7 +9,7 @@
       Title="Регистрация">
 
     <Grid>
-        <Rectangle Fill="White"/>
+        <Rectangle Fill="White" Opacity="0.7"/>
         <StackPanel  VerticalAlignment="Center" HorizontalAlignment="Center" >
 
             <StackPanel Orientation="Horizontal">
