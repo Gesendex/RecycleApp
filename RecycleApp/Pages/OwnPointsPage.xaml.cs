@@ -37,8 +37,8 @@ namespace RecycleApp.Pages
         private void LWGarbagePoints_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectedItem = ((sender as ListView).SelectedItem as GarbageCollectionPoint);
-            TXBDescription.Text = selectedItem.Description;
-            if(selectedItem.Image != null)
+            TXBDescription.Text = selectedItem?.Description;
+            if(selectedItem?.Image != null)
                 SelectedImage.Source = new ImageSourceConverter().ConvertFrom(selectedItem.Image) as ImageSource;
             
         }

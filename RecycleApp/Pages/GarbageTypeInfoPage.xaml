@@ -40,7 +40,7 @@
                 <TextBlock Text="Маркировка:" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 <Image x:Name="SelectedImage"  Stretch="Uniform" Margin="10" Width="250"/>
             </StackPanel>
-            <TextBox x:Name="TXBDescription" Margin="10" FontSize="16" IsReadOnly="True" TextWrapping="Wrap"/>
+            <TextBlock x:Name="TXBDescription" Margin="10" FontSize="16"  TextWrapping="Wrap"/>
         </DockPanel>
     </Grid>
 </Page>
