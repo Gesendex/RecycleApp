@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Recycle.Interfaces.Services;
 using Recycle.Models;
 using System;
 using System.Collections.Generic;
@@ -13,55 +14,54 @@ namespace RecycleApi.Controllers
     [ApiController]
     public class CommentController : ControllerBase
     {
-        RecycleContext db;
-        public CommentController(RecycleContext db)
+        ICommentService commentService;
+        public CommentController(ICommentService commentService)
         {
-            this.db = db;
+            this.commentService = commentService;
         }
         #region Get
         [HttpGet("GetAll")]
-        public async Task<IEnumerable<Comment>> GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            return await db.Comments.OrderByDescending(p => p.DateOfCreation).ToListAsync();
+            var result = await commentService.GetAllAsync();
+            return Ok(result);
         }
         [HttpGet("GetById/{id}")]
-        public async Task<Comment> GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            return await db.Comments.FirstOrDefaultAsync(p => p.Id == id);
+            var result =  await commentService.GetByIdAsync(id);
+            return Ok(result);
         }
         [HttpGet("GetAllByClientId/{id}")]
-        public async Task<IEnumerable<Comment>> GetAllByClientId(int id)
+        public async Task<IActionResult> GetAllByClientId(int id)
         {
-            return await db.Comments.Include(p => p.IdClientNavigation).Where(p=>p.IdClient == id).OrderByDescending(p => p.DateOfCreation).ToListAsync();
+            var result = await commentService.GetAllByClientIdAsync(id);
+            return Ok(result);
         }
 
         [HttpGet("GetAllByGCPId/{id}")]
-        public async Task<IEnumerable<Comment>> GetAllByGCPtId(int id)
+        public async Task<IActionResult> GetAllByGCPtId(int id)
         {
-            return await db.Comments.Include(p => p.IdClientNavigation).Where(p => p.IdGarbageCollectionPoint == id).OrderByDescending(p => p.DateOfCreation).ToListAsync();
+            var result = await commentService.GetAllByGarbageCollectionPointIdAsync(id);
+            return Ok(result);
         }
 
         [HttpPut("WriteComment")]
-        public async Task<ActionResult<Comment>> WriteComment([FromBody] Comment com)
+        public async Task<IActionResult> WriteComment([FromBody] Comment comment)
         {
-            if (com == null)
-                return BadRequest();
-            if (await db.Comments.FindAsync(com.IdClient) == null || string.IsNullOrWhiteSpace(com.Text) || 
-                await db.GarbageCollectionPoints.FindAsync(com.IdGarbageCollectionPoint) == null)
-            {
-                return BadRequest();
-            }
+            
             try
             {
-                com.Id = 0;
-                com.DateOfCreation = DateTime.Now;
-                var newField = await db.Comments.AddAsync(com);
-                await db.SaveChangesAsync();
-                return (newField.Entity);
+                var result =await commentService.AddAsync(comment);
+                return Ok(result);
+            }
+            catch(ArgumentException e)
+            {
+                return BadRequest(e.Message);
             }
             catch(Exception)
             {
-                return BadRequest();
+                return BadRequest("Непредвиденная ошибка");
             }
 
         }

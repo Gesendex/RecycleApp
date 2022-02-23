@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Recycle.Interfaces.Services;
 using Recycle.Models;
 using System;
 using System.Collections.Generic;
@@ -13,21 +14,23 @@ namespace RecycleApi.Controllers
     [ApiController]
     public class RoleController : ControllerBase
     {
-        RecycleContext db;
-        public RoleController(RecycleContext db)
+        IRoleService roleService;
+        public RoleController(IRoleService roleService)
         {
-            this.db = db;
+            this.roleService = roleService;
         }
         #region Get
         [HttpGet("GetAll")]
-        public async Task<IEnumerable<Role>> GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            return await db.Roles.ToListAsync();
+            var result = await roleService.GetAllAsync();
+            return Ok(result);
         }
         [HttpGet("GetById/{id}")]
-        public async Task<Role> GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            return await db.Roles.FirstOrDefaultAsync(p => p.Id == id);
+            var result = await roleService.GetByIdAsync(id);
+            return Ok(result);
         }
         #endregion
     }

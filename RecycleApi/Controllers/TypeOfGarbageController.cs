@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Recycle.Interfaces.Services;
 using Recycle.Models;
 using System;
 using System.Collections.Generic;
@@ -14,32 +15,31 @@ namespace RecycleApi.Controllers
     [ApiController]
     public class TypeOfGarbageController : ControllerBase
     {
-        RecycleContext db;
-        public TypeOfGarbageController(RecycleContext db)
+        ITypeOfGarbageService typeOfGarbageService;
+        public TypeOfGarbageController(ITypeOfGarbageService typeOfGarbageService)
         {
-            this.db = db;
-
+            this.typeOfGarbageService = typeOfGarbageService;
         }
         #region Get
         [HttpGet("GetAll")]
         public async Task<IEnumerable<TypeOfGarbage>> GetAll()
         {
-            return await db.TypeOfGarbages.ToListAsync();
+            return await typeOfGarbageService.GetAllAsync();
         }
         [HttpGet("GetAllWithImage")]
         public async Task<IEnumerable<TypeOfGarbage>> GetAllWithImage()
         {
-            return await db.TypeOfGarbages.Include(p => p.TypeImage).ToListAsync();
+            return await typeOfGarbageService.GetAllWithImageAsync();
         }
         [HttpGet("GetById/{id}")]
         public async Task<TypeOfGarbage> GetById(int id)
         {
-            return await db.TypeOfGarbages.FirstOrDefaultAsync(p => p.Id == id);
+            return await typeOfGarbageService.GetByIdAsync(id);
         }
         [HttpGet("GetByCollectionPointId/{id}")]
         public async Task<IEnumerable<TypeOfGarbage>> GetByCollectionPointId(int id)
         {
-            return await db.GarbageTypeSets.Where(p => p.IdGarbageCollectionPoint == id).Select(p => p.IdTypeOfGarbageNavigation).ToListAsync();
+            throw new NotImplementedException();
         }
         #endregion
     }

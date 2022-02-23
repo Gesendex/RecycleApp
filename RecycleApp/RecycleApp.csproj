@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <None Remove="Images\Mock.png" />
+    <None Remove="Images\Questionmark.svg" />
     <None Remove="Images\Recycle.jpg" />
   </ItemGroup>
 
@@ -20,7 +21,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\Mock.png" />
+    <Resource Include="Images\Mock.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Questionmark.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\Recycle.jpg" />
   </ItemGroup>
 

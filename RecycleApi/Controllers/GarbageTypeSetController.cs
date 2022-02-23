@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Recycle.Interfaces.Services;
 using Recycle.Models;
 using System;
 using System.Collections.Generic;
@@ -13,26 +14,29 @@ namespace RecycleApi.Controllers
     [ApiController]
     public class GarbageTypeSetController : ControllerBase
     {
-        RecycleContext db;
-        public GarbageTypeSetController(RecycleContext db)
+        IGarbageTypeSetService GarbageTypeSetService;
+        public GarbageTypeSetController(IGarbageTypeSetService GarbageTypeSetService)
         {
-            this.db = db;
+            this.GarbageTypeSetService = GarbageTypeSetService;
         }
         #region Get
         [HttpGet("GetAll")]
         public async Task<IEnumerable<GarbageTypeSet>> GetAll()
         {
-            return await db.GarbageTypeSets.ToListAsync();
+            var result = await GarbageTypeSetService.GetAllAsync();
+            return result;
         }
         [HttpGet("GetByTypeOfGarbageId/{id}")]
         public async Task<IEnumerable<GarbageTypeSet>> GetByTypeOfGarbageId(int id)
         {
-            return await db.GarbageTypeSets.Where(p=>p.IdTypeOfGarbage == id).ToListAsync();
+            var result = await GarbageTypeSetService.GetByTypeOfGarbageIdAsync(id);
+            return result;
         }
         [HttpGet("GetByGarbageCollectionPointeId/{id}")]
         public async Task<IEnumerable<GarbageTypeSet>> GetByGarbageCollectionPointeId(int id)
         {
-            return await db.GarbageTypeSets.Where(p => p.IdGarbageCollectionPoint == id).ToListAsync();
+            var result = await GarbageTypeSetService.GetByGarbageCollectionPointeIdAsync(id);
+            return result;
         }
         #endregion
     }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Recycle.Interfaces.Services;
 using Recycle.Models;
 using System;
 using System.Collections.Generic;
@@ -13,21 +14,23 @@ namespace RecycleApi.Controllers
     [ApiController]
     public class CompanyController : ControllerBase
     {
-        RecycleContext db;
-        public CompanyController(RecycleContext db)
+        ICompanyService companyService;
+        public CompanyController(ICompanyService companyService)
         {
-            this.db = db;
+            this.companyService = companyService;
         }
         #region Get
         [HttpGet("GetAll")]
-        public async Task<IEnumerable<Company>> GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            return await db.Companies.ToListAsync();
+            var result = await companyService.GetAllAsync();
+            return Ok(result);
         }
         [HttpGet("GetById/{id}")]
-        public async Task<Company> GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            return await db.Companies.FirstOrDefaultAsync(p => p.Id == id);
+            var result = await companyService.GetByIdAsync(id);
+            return Ok(result);
         }
         #endregion
     }

@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Recycle.Interfaces
+namespace Recycle.Interfaces.Services
 {
     interface IClientService
     {
         public Task Registration(Client client);
-        public Task Authorization(Client client);
+        public Task Authorization(string email, string password);
 
     }
 }
