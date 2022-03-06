@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Recycle.Models;
-using Recycle.Models.AuthorizationModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,19 +11,32 @@ namespace RecycleApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class ClientController : ControllerBase
     {
         RecycleContext db;
-        public UserController(RecycleContext db)
+        public ClientController(RecycleContext db)
         {
             this.db = db;
         }
+        #region Get
+        [HttpGet("GetAll")]
+        public async Task<IEnumerable<Client>> GetAll()
+        {
+            return await db.Clients.ToListAsync();
+        }
+        [HttpGet("GetById/{id}")]
+        public async Task<Client> GetById(int id)
+        {
+            return await db.Clients.FirstOrDefaultAsync(p => p.Id == id);
+        }
 
         [HttpPost("Authorization")]
-        public async Task<ActionResult<Client>> Authorization([FromBody] AuthorizationBody  credentials )
+        public async Task<ActionResult<Client>> Authorization([FromBody] string[] clientData )
         {
-            if (credentials.Email == null || credentials.Password == null)
-                return Unauthorized("Неправильный логин или пароль!");
+            if (clientData == null || clientData.Length != 2)
+                return BadRequest();
+            if(clientData[0].Length < 6 || clientData[1].Length < 6)
+                return BadRequest();
             var user = await db.Clients.FirstOrDefaultAsync(p => p.Email == clientData[0] && p.Password == clientData[1]);
             if (user == null)
                 return NotFound();
@@ -51,5 +63,6 @@ namespace RecycleApi.Controllers
             }
             
         }
+        #endregion
     }
 }
