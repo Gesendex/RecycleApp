@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace Recycle.Interfaces.Services
+namespace RecycleApi.Settings
 {
-    public interface IClientService
+    public class AppSettings
     {
-
+        public string Secret { get; set; }
     }
 }

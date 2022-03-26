@@ -16,31 +16,28 @@ namespace RecycleApi.Controllers
     public class TypeOfGarbageController : ControllerBase
     {
         ITypeOfGarbageService typeOfGarbageService;
+
         public TypeOfGarbageController(ITypeOfGarbageService typeOfGarbageService)
         {
             this.typeOfGarbageService = typeOfGarbageService;
         }
-        #region Get
+
         [HttpGet("GetAll")]
         public async Task<IEnumerable<TypeOfGarbage>> GetAll()
         {
             return await typeOfGarbageService.GetAllAsync();
         }
+
         [HttpGet("GetAllWithImage")]
         public async Task<IEnumerable<TypeOfGarbage>> GetAllWithImage()
         {
             return await typeOfGarbageService.GetAllWithImageAsync();
         }
+
         [HttpGet("GetById/{id}")]
         public async Task<TypeOfGarbage> GetById(int id)
         {
             return await typeOfGarbageService.GetByIdAsync(id);
         }
-        [HttpGet("GetByCollectionPointId/{id}")]
-        public async Task<IEnumerable<TypeOfGarbage>> GetByCollectionPointId(int id)
-        {
-            throw new NotImplementedException();
-        }
-        #endregion
     }
 }

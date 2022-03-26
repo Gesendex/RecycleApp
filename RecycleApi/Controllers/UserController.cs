@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Recycle.Interfaces.Services;
 using Recycle.Models;
 using Recycle.Models.AuthorizationModels;
 using System;
@@ -14,27 +15,31 @@ namespace RecycleApi.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        RecycleContext db;
-        public UserController(RecycleContext db)
+        private readonly IAuthorizationService _authorizationService;
+        public UserController(IAuthorizationService authorizationService)
         {
-            this.db = db;
+            _authorizationService = authorizationService;
         }
 
         [HttpPost("Authorization")]
-        public async Task<ActionResult<Client>> Authorization([FromBody] AuthorizationBody  credentials )
+        public async Task<IActionResult> Authorization([FromBody] AuthorizationBody  credentials )
         {
-            if (credentials.Email == null || credentials.Password == null)
-                return Unauthorized("Неправильный логин или пароль!");
-            var user = await db.Clients.FirstOrDefaultAsync(p => p.Email == clientData[0] && p.Password == clientData[1]);
-            if (user == null)
-                return NotFound();
-            return Ok(user);
+            if(!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var user = _authorizationService.Authorize(credentials);
+
+            return user == null 
+                ? NotFound() 
+                : Ok(user);
         }
 
         [HttpPut("Registration")]
         public async Task<ActionResult<Client>> Registration([FromBody] Client newClient)
         {
-            if(newClient.Password == null || newClient.Email == null || 
+            /*if(newClient.Password == null || newClient.Email == null || 
                 (await db.Roles.FindAsync( newClient.IdRole).AsTask()) == null || 
                 newClient.Name == null)
                 return BadRequest();
@@ -49,7 +54,8 @@ namespace RecycleApi.Controllers
             {
                 return BadRequest();
             }
-            
+            */
+            throw new NotImplementedException();
         }
     }
 }

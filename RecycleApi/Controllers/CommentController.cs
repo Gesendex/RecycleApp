@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Recycle.Interfaces.Services;
 using Recycle.Models;
+using RecycleApi.Authorization;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace RecycleApi.Controllers
@@ -19,19 +18,27 @@ namespace RecycleApi.Controllers
         {
             this.commentService = commentService;
         }
-        #region Get
+
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(IEnumerable<Comment>), StatusCodes.Status200OK)]
+        [Authorize()]
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
             var result = await commentService.GetAllAsync();
             return Ok(result);
         }
+
+        [ProducesResponseType(typeof(Comment), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [Authorize]
         [HttpGet("GetById/{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var result =  await commentService.GetByIdAsync(id);
             return Ok(result);
         }
+
         [HttpGet("GetAllByClientId/{id}")]
         public async Task<IActionResult> GetAllByClientId(int id)
         {
@@ -65,7 +72,5 @@ namespace RecycleApi.Controllers
             }
 
         }
-
-        #endregion
     }
 }

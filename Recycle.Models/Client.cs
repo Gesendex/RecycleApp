@@ -19,6 +19,7 @@ namespace Recycle.Models
         public string Middlename { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
+        [JsonIgnore]
         public string Password { get; set; }
         public int IdRole { get; set; }
         [JsonIgnore]
