@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Recycle.Interfaces.Services;
 using Recycle.Models;
+using RecycleApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,24 +17,30 @@ namespace RecycleApi.Controllers
     public class CompanyController : ControllerBase
     {
 
-        ICompanyService companyService;
+        private readonly ICompanyService _companyService;
 
         public CompanyController(ICompanyService companyService)
         {
-            this.companyService = companyService;
+            _companyService = companyService;
         }
 
+        [ProducesResponseType(typeof(IEnumerable<ApiCompanyDtoOut>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize()]
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            var result = await companyService.GetAllAsync();
+            var result = await _companyService.GetAllAsync();
             return Ok(result);
         }
 
+        [ProducesResponseType(typeof(ApiCompanyDtoOut), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize()]
         [HttpGet("GetById/{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var result = await companyService.GetByIdAsync(id);
+            var result = await _companyService.GetByIdAsync(id);
             return Ok(result);
         }
     }

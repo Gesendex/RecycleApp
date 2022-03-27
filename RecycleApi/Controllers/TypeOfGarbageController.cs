@@ -1,12 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Recycle.Interfaces.Services;
 using Recycle.Models;
-using System;
+using RecycleApi.Authorization;
+using RecycleApi.Models;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace RecycleApi.Controllers
@@ -15,29 +13,40 @@ namespace RecycleApi.Controllers
     [ApiController]
     public class TypeOfGarbageController : ControllerBase
     {
-        ITypeOfGarbageService typeOfGarbageService;
+        private readonly ITypeOfGarbageService _typeOfGarbageService;
 
         public TypeOfGarbageController(ITypeOfGarbageService typeOfGarbageService)
         {
-            this.typeOfGarbageService = typeOfGarbageService;
+            _typeOfGarbageService = typeOfGarbageService;
         }
 
+        [ProducesResponseType(typeof(IEnumerable<ApiTypeOfGarbageDtoOut>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize()]
         [HttpGet("GetAll")]
         public async Task<IEnumerable<TypeOfGarbage>> GetAll()
         {
-            return await typeOfGarbageService.GetAllAsync();
+            return await _typeOfGarbageService.GetAllAsync();
         }
 
+        [ProducesResponseType(typeof(IEnumerable<ApiTypeOfGarbageDtoOut>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize()]
         [HttpGet("GetAllWithImage")]
-        public async Task<IEnumerable<TypeOfGarbage>> GetAllWithImage()
+        public async Task<IActionResult> GetAllWithImage()
         {
-            return await typeOfGarbageService.GetAllWithImageAsync();
+            var res = await _typeOfGarbageService.GetAllWithImageAsync();
+            return Ok(res);
         }
 
+        [ProducesResponseType(typeof(TypeOfGarbage), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize()]
         [HttpGet("GetById/{id}")]
-        public async Task<TypeOfGarbage> GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            return await typeOfGarbageService.GetByIdAsync(id);
+            var res = await _typeOfGarbageService.GetByIdAsync(id);
+            return Ok(res);
         }
     }
 }

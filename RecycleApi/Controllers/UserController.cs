@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Recycle.Interfaces.Services;
 using Recycle.Models;
 using Recycle.Models.AuthorizationModels;
+using RecycleApi.Authorization;
+using RecycleApi.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace RecycleApi.Controllers
@@ -16,26 +16,33 @@ namespace RecycleApi.Controllers
     public class UserController : ControllerBase
     {
         private readonly IAuthorizationService _authorizationService;
+
         public UserController(IAuthorizationService authorizationService)
         {
             _authorizationService = authorizationService;
         }
 
+        [ProducesResponseType(typeof(IEnumerable<AuthenticateResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize()]
         [HttpPost("Authorization")]
-        public async Task<IActionResult> Authorization([FromBody] AuthorizationBody  credentials )
+        public async Task<IActionResult> Authorization([FromBody] AuthorizationBody credentials)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            var user = _authorizationService.Authorize(credentials);
+            var user = await _authorizationService.Authorize(credentials);
 
-            return user == null 
-                ? NotFound() 
+            return user == null
+                ? NotFound()
                 : Ok(user);
         }
 
+        [ProducesResponseType(typeof(IEnumerable<ApiClientDtoOut>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize()]
         [HttpPut("Registration")]
         public async Task<ActionResult<Client>> Registration([FromBody] Client newClient)
         {

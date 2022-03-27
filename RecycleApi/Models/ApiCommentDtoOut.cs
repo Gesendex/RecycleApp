@@ -2,7 +2,7 @@
 
 namespace RecycleApi.Models
 {
-    public class ApiCommentOut
+    internal class ApiCommentDtoOut
     {
         public int Id { get; }
 
@@ -12,31 +12,19 @@ namespace RecycleApi.Models
 
         public int IdClient { get; }
 
-        public string ClientName { get; }
-
-        public string MiddleName { get; }
-
-        public string ClientSurnameName { get; }
-
         public DateTime DateOfCreation { get; }
 
-        public ApiCommentOut(
+        public ApiCommentDtoOut(
             int id,
             string text,
             int idGarbageCollectionPoint,
             int idClient,
-            string clientName,
-            string clientMiddleName,
-            string clientSurnameName,
             DateTime dateOfCreation)
         {
             Id = id;
             Text = text;
             IdGarbageCollectionPoint = idGarbageCollectionPoint;
             IdClient = idClient;
-            ClientName = clientName;
-            MiddleName = clientMiddleName;
-            ClientSurnameName = clientSurnameName;
             DateOfCreation = dateOfCreation;
         }
     }

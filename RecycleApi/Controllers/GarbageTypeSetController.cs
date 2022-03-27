@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Recycle.Interfaces.Services;
 using Recycle.Models;
+using RecycleApi.Authorization;
+using RecycleApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,30 +16,42 @@ namespace RecycleApi.Controllers
     [ApiController]
     public class GarbageTypeSetController : ControllerBase
     {
-        IGarbageTypeSetService GarbageTypeSetService;
-        public GarbageTypeSetController(IGarbageTypeSetService GarbageTypeSetService)
+
+        private readonly IGarbageTypeSetService _garbageTypeSetService;
+
+        public GarbageTypeSetController(IGarbageTypeSetService garbageTypeSetService)
         {
-            this.GarbageTypeSetService = GarbageTypeSetService;
+            _garbageTypeSetService = garbageTypeSetService;
         }
-        #region Get
+
+        [ProducesResponseType(typeof(IEnumerable<ApiGarbageTypeSetDtoOut>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize()]
         [HttpGet("GetAll")]
-        public async Task<IEnumerable<GarbageTypeSet>> GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var result = await GarbageTypeSetService.GetAllAsync();
-            return result;
+            var result = await _garbageTypeSetService.GetAllAsync();
+            return Ok(result);
         }
+
+        [ProducesResponseType(typeof(ApiGarbageTypeSetDtoOut), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize()]
         [HttpGet("GetByTypeOfGarbageId/{id}")]
-        public async Task<IEnumerable<GarbageTypeSet>> GetByTypeOfGarbageId(int id)
+        public async Task<IActionResult> GetByTypeOfGarbageId(int id)
         {
-            var result = await GarbageTypeSetService.GetByTypeOfGarbageIdAsync(id);
-            return result;
+            var result = await _garbageTypeSetService.GetByTypeOfGarbageIdAsync(id);
+            return Ok(result);
         }
+
+        [ProducesResponseType(typeof(IEnumerable<ApiGarbageTypeSetDtoOut>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize()]
         [HttpGet("GetByGarbageCollectionPointeId/{id}")]
-        public async Task<IEnumerable<GarbageTypeSet>> GetByGarbageCollectionPointeId(int id)
+        public async Task<IActionResult> GetByGarbageCollectionPointeId(int id)
         {
-            var result = await GarbageTypeSetService.GetByGarbageCollectionPointeIdAsync(id);
-            return result;
+            var result = await _garbageTypeSetService.GetByGarbageCollectionPointeIdAsync(id);
+            return Ok(result);
         }
-        #endregion
     }
 }
