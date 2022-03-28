@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Recycle.Interfaces.Services;
-using Recycle.Models;
 using Recycle.Models.AuthorizationModels;
 using RecycleApi.Authorization;
 using RecycleApi.Models;
+using RecycleApi.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -23,8 +22,7 @@ namespace RecycleApi.Controllers
         }
 
         [ProducesResponseType(typeof(IEnumerable<AuthenticateResponse>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [Authorize()]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpPost("Authorization")]
         public async Task<IActionResult> Authorization([FromBody] AuthorizationBody credentials)
         {
@@ -35,16 +33,13 @@ namespace RecycleApi.Controllers
 
             var user = await _authorizationService.Authorize(credentials);
 
-            return user == null
-                ? NotFound()
-                : Ok(user);
+            return Ok(user);
         }
 
         [ProducesResponseType(typeof(IEnumerable<ApiClientDtoOut>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [Authorize()]
         [HttpPut("Registration")]
-        public async Task<ActionResult<Client>> Registration([FromBody] Client newClient)
+        public async Task<ActionResult<ApiClientDtoOut>> Registration([FromBody] ApiClientDtoOut newClient)
         {
             /*if(newClient.Password == null || newClient.Email == null || 
                 (await db.Roles.FindAsync( newClient.IdRole).AsTask()) == null || 

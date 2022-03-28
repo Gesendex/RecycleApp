@@ -1,30 +1,38 @@
-﻿using Recycle.Interfaces.Repositories;
-using Recycle.Interfaces.Services;
-using Recycle.Models;
+﻿using Recycle.Models;
+using RecycleApi.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Recycle.Interfaces.Repositories;
+using RecycleApi.Converter;
+using RecycleApi.Models;
 
 namespace RecycleApi.Services
 {
     public class CompanyService : ICompanyService
     {
-        ICompanyRepository companyRepository;
+        private readonly ICompanyRepository _companyRepository;
+
         public CompanyService(ICompanyRepository companyRepository)
         {
-            this.companyRepository = companyRepository;
-        }
-        public async Task<IEnumerable<Company>> GetAllAsync()
-        {
-            var result = await companyRepository.GetAllAsync();
-            return result;
+            _companyRepository = companyRepository;
         }
 
-        public async Task<Company> GetByIdAsync(int id)
+        public async Task<IList<ApiCompanyDtoOut>> GetAllAsync()
         {
-            var result = await companyRepository.GetByIdAsync(id);
-            return result;
+            var result = await _companyRepository.GetAllAsync();
+
+            return result
+                .Select(CompanyConverter.ToApi)
+                .ToList();
+        }
+
+        public async Task<ApiCompanyDtoOut> GetByIdAsync(int id)
+        {
+            var result = await _companyRepository.GetByIdAsync(id);
+
+            return CompanyConverter.ToApi(result);
         }
     }
 }

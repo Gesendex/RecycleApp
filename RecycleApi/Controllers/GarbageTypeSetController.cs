@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Recycle.Interfaces.Services;
 using Recycle.Models;
 using RecycleApi.Authorization;
 using RecycleApi.Models;
+using RecycleApi.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +24,7 @@ namespace RecycleApi.Controllers
             _garbageTypeSetService = garbageTypeSetService;
         }
 
-        [ProducesResponseType(typeof(IEnumerable<ApiGarbageTypeSetDtoOut>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IList<ApiGarbageTypeSetDtoOut>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize()]
         [HttpGet("GetAll")]
@@ -44,13 +44,13 @@ namespace RecycleApi.Controllers
             return Ok(result);
         }
 
-        [ProducesResponseType(typeof(IEnumerable<ApiGarbageTypeSetDtoOut>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IList<ApiGarbageTypeSetDtoOut>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize()]
         [HttpGet("GetByGarbageCollectionPointeId/{id}")]
-        public async Task<IActionResult> GetByGarbageCollectionPointeId(int id)
+        public async Task<IActionResult> GetByGarbageCollectionPointId(int id)
         {
-            var result = await _garbageTypeSetService.GetByGarbageCollectionPointeIdAsync(id);
+            var result = await _garbageTypeSetService.GetByGarbageCollectionPointIdAsync(id);
             return Ok(result);
         }
     }

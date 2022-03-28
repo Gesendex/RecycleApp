@@ -2,7 +2,7 @@
 
 namespace RecycleApi.Models
 {
-    internal class ApiCommentDtoOut
+    public class ApiCommentDtoOut
     {
         public int Id { get; }
 

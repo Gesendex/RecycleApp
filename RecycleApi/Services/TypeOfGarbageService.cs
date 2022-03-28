@@ -1,43 +1,52 @@
 ﻿using Recycle.Interfaces.Repositories;
-using Recycle.Interfaces.Services;
-using Recycle.Models;
-using System;
+using RecycleApi.Services.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using RecycleApi.Converter;
+using RecycleApi.Models;
 
 namespace RecycleApi.Services
 {
     public class TypeOfGarbageService : ITypeOfGarbageService
     {
-        private ITypeOfGarbageRepository typeOfGarbageRepository;
+        private readonly ITypeOfGarbageRepository _typeOfGarbageRepository;
+
         public TypeOfGarbageService(ITypeOfGarbageRepository typeOfGarbageRepository)
         {
-            this.typeOfGarbageRepository = typeOfGarbageRepository;
-        }
-        public async Task<IEnumerable<TypeOfGarbage>> GetAllAsync()
-        {
-            return await typeOfGarbageRepository.GetAllAsync();
+            _typeOfGarbageRepository = typeOfGarbageRepository;
         }
 
-        public async Task<IEnumerable<TypeOfGarbage>> GetAllWithImageAsync()
+        public async Task<IList<ApiTypeOfGarbageDtoOut>> GetAllAsync()
         {
-            return await typeOfGarbageRepository.GetAllWithImageAsync();
+            var res = await _typeOfGarbageRepository.GetAllAsync();
+
+            return res
+                .Select(TypeOfGarbageConverter.ToApi)
+                .ToList();
         }
 
-        public async Task<IEnumerable<TypeOfGarbage>> GetByGarbageCollectionPointIdAsync(int id)
+        public async Task<IList<ApiTypeOfGarbageDtoOut>> GetAllWithImageAsync()
         {
-            throw new NotImplementedException();
+            var res = await _typeOfGarbageRepository.GetAllWithImageAsync();
+
+            return res
+                .Select(TypeOfGarbageConverter.ToApi)
+                .ToList();
         }
 
-        public async Task<TypeOfGarbage> GetByIdAsync(int id)
+        public async Task<ApiTypeOfGarbageDtoOut> GetByIdAsync(int id)
         {
-            return await typeOfGarbageRepository.GetByIdAsync(id);
+            var res = await _typeOfGarbageRepository.GetByIdAsync(id);
+
+            return TypeOfGarbageConverter.ToApi(res);
         }
 
-        public async Task<TypeOfGarbage> GetByIdWithImageAsync(int id)
+        public async Task<ApiTypeOfGarbageDtoOut> GetByIdWithImageAsync(int id)
         {
-            return await GetByIdWithImageAsync(id);
+            var res = await _typeOfGarbageRepository.GetByIdWithImageAsync(id);
+
+            return TypeOfGarbageConverter.ToApi(res);
         }
     }
 }

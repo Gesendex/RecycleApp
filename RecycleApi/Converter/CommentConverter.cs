@@ -1,5 +1,6 @@
 ﻿using Recycle.Models;
 using RecycleApi.Models;
+using RecycleApi.Services.Interfaces;
 
 namespace RecycleApi.Converter
 {
@@ -14,6 +15,17 @@ namespace RecycleApi.Converter
                 idClient: source.IdClient,
                 dateOfCreation: source.DateOfCreation
             );
+        }
+
+        public static Comment ToRepository(ApiCommentDtoOut source, ITimeProviderService service)
+        {
+            return new Comment
+            {
+                Text = source.Text,
+                IdGarbageCollectionPoint = source.IdGarbageCollectionPoint,
+                IdClient = source.IdClient,
+                DateOfCreation = service.CurrentDateTime
+            };
         }
     }
 }

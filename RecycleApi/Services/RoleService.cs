@@ -1,30 +1,34 @@
 ﻿using Recycle.Interfaces.Repositories;
-using Recycle.Interfaces.Services;
-using Recycle.Models;
-using System;
+using RecycleApi.Converter;
+using RecycleApi.Models;
+using RecycleApi.Services.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace RecycleApi.Services
 {
-    public class RoleService : IRoleService
+    internal class RoleService : IRoleService
     {
-        IRoleRepository roleRepository;
+        private readonly IRoleRepository _roleRepository;
+
         public RoleService(IRoleRepository roleRepository)
         {
-            this.roleRepository = roleRepository;
+            _roleRepository = roleRepository;
         }
 
-        public async Task<IEnumerable<Role>> GetAllAsync()
+        public async Task<IList<ApiRoleDtoOut>> GetAllAsync()
         {
-            var result = await roleRepository.GetAllAsync();
-            return result;
+            var result = await _roleRepository.GetAllAsync();
+            return result
+                .Select(RoleConverter.ToApi)
+                .ToList();
         }
-        public async Task<Role> GetByIdAsync(int id)
+
+        public async Task<ApiRoleDtoOut> GetByIdAsync(int id)
         {
-            var result = await roleRepository.GetByIdAsync(id);
-            return result;
+            var result = await _roleRepository.GetByIdAsync(id);
+            return RoleConverter.ToApi(result);
         }
     }
 }

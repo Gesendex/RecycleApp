@@ -10,6 +10,15 @@
     <None Remove="Images\Mock.png" />
     <None Remove="Images\Questionmark.svg" />
     <None Remove="Images\Recycle.jpg" />
+    <None Remove="swagger.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="swagger.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

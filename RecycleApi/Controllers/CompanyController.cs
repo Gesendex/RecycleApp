@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Recycle.Interfaces.Services;
 using Recycle.Models;
 using RecycleApi.Models;
+using RecycleApi.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;

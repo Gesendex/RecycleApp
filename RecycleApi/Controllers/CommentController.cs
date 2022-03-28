@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Recycle.Interfaces.Services;
 using Recycle.Models;
 using RecycleApi.Authorization;
 using RecycleApi.Models;
+using RecycleApi.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -20,7 +20,7 @@ namespace RecycleApi.Controllers
             _commentService = commentService;
         }
 
-        [ProducesResponseType(typeof(IEnumerable<ApiCommentDtoOut>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IList<ApiCommentDtoOut>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize()]
         [HttpGet("GetAll")]
@@ -49,12 +49,12 @@ namespace RecycleApi.Controllers
             var result = await _commentService.GetAllByClientIdAsync(id);
             return Ok(result);
         }
-
+        
         [ProducesResponseType(typeof(IEnumerable<ApiCommentDtoOut>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize()]
         [HttpGet("GetAllByGCPId/{id}")]
-        public async Task<IActionResult> GetAllByGCPtId(int id)
+        public async Task<IActionResult> GetAllByGcpId(int id)
         {
             var result = await _commentService.GetAllByGarbageCollectionPointIdAsync(id);
             return Ok(result);
@@ -62,7 +62,7 @@ namespace RecycleApi.Controllers
 
         [Authorize()]
         [HttpPut("WriteComment")]
-        public async Task<IActionResult> WriteComment([FromBody] Comment comment)
+        public async Task<IActionResult> WriteComment([FromBody] ApiCommentDtoOut comment)
         {
             try
             {

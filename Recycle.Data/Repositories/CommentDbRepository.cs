@@ -20,8 +20,10 @@ namespace Recycle.Data.Repositories
         {
             try
             {
-                var createdComment = await db.Comments.AddAsync(comment);
-                return createdComment.Entity;
+                var res = await db.Comments
+                    .AddAsync(comment);
+
+                return res.Entity;
             }
             catch (Exception)
             {
@@ -29,11 +31,15 @@ namespace Recycle.Data.Repositories
             }
         }
 
-        public async Task<IEnumerable<Comment>> GetAllAsync()
+        public async Task<IList<Comment>> GetAllAsync()
         {
             try
             {
-                return await db.Comments.ToListAsync();
+                var res = await db.Comments
+                    .OrderByDescending(item => item.DateOfCreation)
+                    .ToListAsync();
+
+                return res;
             }
             catch (Exception)
             {
@@ -43,11 +49,16 @@ namespace Recycle.Data.Repositories
 
         }
 
-        public async Task<IEnumerable<Comment>> GetAllByClientIdAsync(int id)
+        public async Task<IList<Comment>> GetAllByClientIdAsync(int id)
         {
             try
             {
-                return await db.Comments.Where(p => p.IdClient == id).ToListAsync();
+                var res = await db.Comments
+                    .Where(item => item.IdClient == id)
+                    .OrderByDescending(item => item.DateOfCreation)
+                    .ToListAsync();
+
+                return res;
             }
             catch (Exception)
             {
@@ -56,11 +67,16 @@ namespace Recycle.Data.Repositories
             }
         }
 
-        public async Task<IEnumerable<Comment>> GetAllByGarbageCollectionPointIdAsync(int id)
+        public async Task<IList<Comment>> GetAllByGarbageCollectionPointIdAsync(int id)
         {
             try
             {
-                return await db.Comments.Where(p => p.IdGarbageCollectionPoint == id).ToListAsync();
+                var res = await db.Comments
+                    .Where(p => p.IdGarbageCollectionPoint == id)
+                    .OrderByDescending(item => item.DateOfCreation)
+                    .ToListAsync();
+
+                return res;
             }
             catch (Exception)
             {
@@ -73,11 +89,13 @@ namespace Recycle.Data.Repositories
         {
             try
             {
-                return await db.Comments.FirstOrDefaultAsync(p => p.Id == id);
+                var res = await db.Comments
+                    .FirstOrDefaultAsync(p => p.Id == id);
+
+                return res;
             }
             catch (Exception)
             {
-
                 throw new Exception("Ошибка во время получения комментария");
             }
         }

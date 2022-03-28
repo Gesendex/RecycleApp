@@ -1,7 +1,8 @@
-﻿using Recycle.Interfaces;
-using Recycle.Interfaces.Repositories;
-using Recycle.Interfaces.Services;
+﻿using Recycle.Interfaces.Repositories;
 using Recycle.Models;
+using RecycleApi.Converter;
+using RecycleApi.Models;
+using RecycleApi.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,53 +10,72 @@ using System.Threading.Tasks;
 
 namespace RecycleApi.Services
 {
-    public class CommentService : ICommentService
+    internal class CommentService : ICommentService
     {
-        private ICommentRepository commentRepository;
-        private ITimeProviderService timeProvider;
+        private readonly ICommentRepository _commentRepository;
+        private readonly ITimeProviderService _timeProvider;
+
         public CommentService(ICommentRepository commentRepository, ITimeProviderService timeProvider)
         {
-            this.commentRepository = commentRepository;
-            this.timeProvider = timeProvider;
+            _commentRepository = commentRepository;
+            _timeProvider = timeProvider;
         }
-        public async Task<Comment> AddAsync(Comment comment)
+
+        public async Task<ApiCommentDtoOut> AddAsync(ApiCommentDtoOut model)
         {
-            if (comment == null)// Возможно стоит изменить тип исключения на ArgumenNullExeption, но тогда и в контроллере предется отдельно ловить исключение, хотя и обрабатываться оно будет также
-                throw new ArgumentException("Отсутствует комментарий для записи");
-            if (string.IsNullOrWhiteSpace(comment.Text))
+            if (model == null)
+                throw new ArgumentNullException("Отсутствует комментарий для записи");
+
+            if (string.IsNullOrWhiteSpace(model.Text))
                 throw new ArgumentException("Комментарий не должен быть пустым");
+
             //TODO: Когда будет готов сервис для клиентов и точек сбора мусора, надо сделать проверку на то, что комментарий ссылается на существующего клиента и существующую точку сбора мусора.
-            if (false)//Проверка клиента
+
+            if (false) //Проверка клиента
                 throw new ArgumentException("Пользователь не найден");
-            if (false)//Проверка точки сбора мусора
+            if (false) //Проверка точки сбора мусора
                 throw new ArgumentException("Точка сбора мусора не найдена");
 
-            comment.DateOfCreation = timeProvider.CurrentDateTime;
-            comment.Id = 0;
-            return await commentRepository.AddAsync(comment);
+
+            var comment = CommentConverter.ToRepository(model, _timeProvider);
+
+            var res = await _commentRepository.AddAsync(comment);
+
+            return CommentConverter.ToApi(res);
         }
 
-        public async Task<IEnumerable<Comment>> GetAllAsync()
+        public async Task<IList<ApiCommentDtoOut>> GetAllAsync()
         {
-            var comments = await commentRepository.GetAllAsync();
-            return comments.OrderByDescending(p => p.DateOfCreation);
+            var res = await _commentRepository.GetAllAsync();
+
+            return res
+                .Select(CommentConverter.ToApi)
+                .ToList();
         }
 
-        public async Task<IEnumerable<Comment>> GetAllByClientIdAsync(int id)
+        public async Task<IList<ApiCommentDtoOut>> GetAllByClientIdAsync(int id)
         {
-            var comments = await commentRepository.GetAllByClientIdAsync(id);
-            return comments.OrderByDescending(p => p.DateOfCreation);
+            var res = await _commentRepository.GetAllByClientIdAsync(id);
+
+            return res
+                .Select(CommentConverter.ToApi)
+                .ToList();
         }
 
-        public async Task<IEnumerable<Comment>> GetAllByGarbageCollectionPointIdAsync(int id)
+        public async Task<IList<ApiCommentDtoOut>> GetAllByGarbageCollectionPointIdAsync(int id)
         {
-            var comments = await commentRepository.GetAllByGarbageCollectionPointIdAsync(id);
-            return comments.OrderByDescending(p => p.DateOfCreation);
+            var res = await _commentRepository.GetAllByGarbageCollectionPointIdAsync(id);
+
+            return res
+                .Select(CommentConverter.ToApi)
+                .ToList();
         }
 
-        public async Task<Comment> GetByIdAsync(int id)
+        public async Task<ApiCommentDtoOut> GetByIdAsync(int id)
         {
-            return await commentRepository.GetByIdAsync(id);
+            var res = await _commentRepository.GetByIdAsync(id);
+
+            return CommentConverter.ToApi(res);
         }
     }
 }

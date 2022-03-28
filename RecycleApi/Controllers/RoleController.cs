@@ -1,13 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Recycle.Interfaces.Services;
-using Recycle.Models;
 using RecycleApi.Authorization;
 using RecycleApi.Models;
-using System;
+using RecycleApi.Services.Interfaces;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace RecycleApi.Controllers

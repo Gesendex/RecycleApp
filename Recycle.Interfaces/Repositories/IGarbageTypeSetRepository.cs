@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Recycle.Interfaces.Services
+namespace Recycle.Interfaces.Repositories
 {
-    public interface IGarbageTypeSetService
+    public interface IGarbageTypeSetRepository
     {
         Task<IEnumerable<GarbageTypeSet>> GetAllAsync();
         Task<IEnumerable<GarbageTypeSet>> GetByTypeOfGarbageIdAsync(int id);

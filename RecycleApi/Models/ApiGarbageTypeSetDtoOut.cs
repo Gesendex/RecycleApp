@@ -1,19 +1,14 @@
 ﻿namespace RecycleApi.Models
 {
-    internal class ApiGarbageTypeSetDtoOut
+    public class ApiGarbageTypeSetDtoOut
     {
-        public int Id { get; }
-        public string Type { get; }
-        public string Description { get; }
+        public int IdGarbageCollectionPoint { get;  }
+        public int IdTypeOfGarbage { get;  }
 
-        public ApiGarbageTypeSetDtoOut(
-            int id,
-            string type,
-            string description)
+        public ApiGarbageTypeSetDtoOut(int idGarbageCollectionPoint, int idTypeOfGarbage)
         {
-            Id = id;
-            Type = type;
-            Description = description;
+            IdGarbageCollectionPoint = idGarbageCollectionPoint;
+            IdTypeOfGarbage = idTypeOfGarbage;
         }
     }
 }

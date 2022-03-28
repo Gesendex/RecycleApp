@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using Recycle.Interfaces.Services;
+using RecycleApi.Services.Interfaces;
 using RecycleApi.Settings;
 using System;
 using System.IdentityModel.Tokens.Jwt;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace RecycleApi.Middleware
 {
-    public class JwtMiddleware
+    internal class JwtMiddleware
     {
         private readonly RequestDelegate _next;
         private readonly AppSettings _appSettings;
@@ -45,7 +45,7 @@ namespace RecycleApi.Middleware
                     ValidateIssuer = false,
                     ValidateAudience = false,
                     // set clockskew to zero so tokens expire exactly at token expiration time (instead of 5 minutes later)
-                    ClockSkew = TimeSpan.FromDays(7)
+                    ClockSkew = TimeSpan.Zero
                 };
 
                 tokenHandler.ValidateToken(token, tokenParametrs, out SecurityToken validatedToken);

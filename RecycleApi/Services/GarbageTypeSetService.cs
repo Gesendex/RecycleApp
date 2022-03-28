@@ -1,36 +1,47 @@
-﻿using System;
+﻿using Recycle.Interfaces.Repositories;
+using RecycleApi.Converter;
+using RecycleApi.Models;
+using RecycleApi.Services.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Recycle.Interfaces.Repositories;
-using Recycle.Interfaces.Services;
-using Recycle.Models;
 
 namespace RecycleApi.Services
 {
     public class GarbageTypeSetService : IGarbageTypeSetService
     {
-        IGarbageTypeSetReposytory garbageTypeSetReposytory;
-        public GarbageTypeSetService(IGarbageTypeSetReposytory garbageTypeSetReposytory)
+        private readonly IGarbageTypeSetRepository _garbageTypeSetRepository;
+
+        public GarbageTypeSetService(IGarbageTypeSetRepository garbageTypeSetRepository)
         {
-            this.garbageTypeSetReposytory = garbageTypeSetReposytory;
-        }
-        public async Task<IEnumerable<GarbageTypeSet>> GetAllAsync()
-        {
-            var result = await garbageTypeSetReposytory.GetAllAsync();
-            return result;
+            _garbageTypeSetRepository = garbageTypeSetRepository;
         }
 
-        public async Task<IEnumerable<GarbageTypeSet>> GetByGarbageCollectionPointeIdAsync(int id)
+        public async Task<IList<ApiGarbageTypeSetDtoOut>> GetAllAsync()
         {
-            var result = await garbageTypeSetReposytory.GetByGarbageCollectionPointeIdAsync(id);
-            return result;
+            var result = await _garbageTypeSetRepository.GetAllAsync();
+
+            return result
+                .Select(GarbageTypeSetConverter.ToApi)
+                .ToList();
         }
 
-        public async Task<IEnumerable<GarbageTypeSet>> GetByTypeOfGarbageIdAsync(int id)
+        public async Task<IList<ApiGarbageTypeSetDtoOut>> GetByGarbageCollectionPointIdAsync(int id)
         {
-            var result = await garbageTypeSetReposytory.GetByTypeOfGarbageIdAsync(id);
-            return result;
+            var result = await _garbageTypeSetRepository.GetByGarbageCollectionPointeIdAsync(id);
+
+            return result
+                .Select(GarbageTypeSetConverter.ToApi)
+                .ToList();
+        }
+
+        public async Task<IList<ApiGarbageTypeSetDtoOut>> GetByTypeOfGarbageIdAsync(int id)
+        {
+            var result = await _garbageTypeSetRepository.GetByTypeOfGarbageIdAsync(id);
+
+            return result
+                .Select(GarbageTypeSetConverter.ToApi)
+                .ToList();
         }
     }
 }

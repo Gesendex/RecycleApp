@@ -3,10 +3,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Recycle.Data.Repositories;
 using Recycle.Interfaces.Repositories;
-using Recycle.Interfaces.Services;
 using RecycleApi.Authorization;
 using RecycleApi.Helpers;
 using RecycleApi.Services;
+using RecycleApi.Services.Interfaces;
 
 namespace RecycleApi.Extentions
 {
@@ -16,6 +16,7 @@ namespace RecycleApi.Extentions
         {
             services.AddTransient<ITimeProviderService, TimeProviderService>();
             services.AddTransient<ITypeOfGarbageService, TypeOfGarbageService>();
+            services.AddTransient<IGarbageTypeSetService, GarbageTypeSetService>();
             services.AddTransient<ICommentService, CommentService>();
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<ICompanyService, CompanyService>();
@@ -31,11 +32,12 @@ namespace RecycleApi.Extentions
             services.AddTransient<ICompanyRepository, CompanyDbRepository>();
             services.AddTransient<IRoleRepository, RoleDbRepository>();
             services.AddTransient<IClientRepository, ClientDbRepository>();
+            services.AddTransient<IGarbageTypeSetRepository, GarbageTypeSetDbRepository>();
 
             return services;
         }
 
-        public static IServiceCollection AddJWTAuthorization(this IServiceCollection services)
+        public static IServiceCollection AddJwtAuthorization(this IServiceCollection services)
         {
             services.AddTransient<AuthorizationHelper>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

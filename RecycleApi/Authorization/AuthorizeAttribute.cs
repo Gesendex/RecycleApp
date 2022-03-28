@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Recycle.Models;
 using System;
+using RecycleApi.Models;
 
 namespace RecycleApi.Authorization
 {
@@ -13,7 +14,7 @@ namespace RecycleApi.Authorization
 
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            var user = context.HttpContext.Items["Client"] as Client;
+            var user = context.HttpContext.Items["Client"] as ApiClientDtoOut;
             if (user == null)
             {
                 // not logged in

@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Recycle.Interfaces.Services;
 using Recycle.Models;
 using RecycleApi.Authorization;
 using RecycleApi.Models;
+using RecycleApi.Services.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -24,9 +24,10 @@ namespace RecycleApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize()]
         [HttpGet("GetAll")]
-        public async Task<IEnumerable<TypeOfGarbage>> GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            return await _typeOfGarbageService.GetAllAsync();
+            var res = await _typeOfGarbageService.GetAllAsync();
+            return Ok(res);
         }
 
         [ProducesResponseType(typeof(IEnumerable<ApiTypeOfGarbageDtoOut>), StatusCodes.Status200OK)]

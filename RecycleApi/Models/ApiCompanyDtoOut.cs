@@ -1,6 +1,6 @@
 ﻿namespace RecycleApi.Models
 {
-    internal class ApiCompanyDtoOut
+    public class ApiCompanyDtoOut
     {
         public int Id { get; }
 
@@ -20,7 +20,8 @@
             string owner,
             string description,
             int? clientId,
-            byte[] image)
+            byte[] image
+        )
         {
             Id = id;
             Name = name;

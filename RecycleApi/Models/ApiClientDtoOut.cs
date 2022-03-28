@@ -1,6 +1,6 @@
 ﻿namespace RecycleApi.Models
 {
-    internal class ApiClientDtoOut
+    public class ApiClientDtoOut
     {
         public int Id { get; }
 

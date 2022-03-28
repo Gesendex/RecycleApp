@@ -1,30 +1,15 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Recycle.Data.Repositories;
-using Recycle.Interfaces.Repositories;
-using Recycle.Interfaces.Services;
 using Recycle.Models;
-using RecycleApi.Authorization;
 using RecycleApi.Extentions;
 using RecycleApi.Middleware;
-using RecycleApi.Services;
 using RecycleApi.Settings;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 
 namespace RecycleApi
 {
@@ -49,6 +34,7 @@ namespace RecycleApi
 
             app.UseHttpsRedirection();
             app.UseRouting();
+            app.UseAuthorization();
             // global cors policy
             app.UseCors(x => x
                 .AllowAnyOrigin()
@@ -70,7 +56,7 @@ namespace RecycleApi
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
             services.AddDbContext<RecycleContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers();
-            services.AddJWTAuthorization();
+            services.AddJwtAuthorization();
             services.AddRepositories();
             services.AddServices();
             services.AddSwaggerGen(c =>
@@ -85,6 +71,25 @@ namespace RecycleApi
                     In = ParameterLocation.Header,
                     Type = SecuritySchemeType.ApiKey,
                     Scheme = "Bearer"
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            },
+                            Scheme = "oauth2",
+                            Name = "Bearer",
+                            In = ParameterLocation.Header,
+
+                        },
+                        new List<string>()
+                    }
                 });
             });
         }

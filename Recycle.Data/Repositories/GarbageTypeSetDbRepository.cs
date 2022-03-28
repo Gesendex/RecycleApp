@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Recycle.Data.Repositories
 {
-    public class GarbageTypeSetDbRepository : IGarbageTypeSetReposytory
+    public class GarbageTypeSetDbRepository : IGarbageTypeSetRepository
     {
         RecycleContext db;
         public GarbageTypeSetDbRepository(RecycleContext db)

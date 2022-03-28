@@ -1,10 +1,11 @@
 ﻿using Recycle.Interfaces.Repositories;
-using Recycle.Interfaces.Services;
-using Recycle.Models;
 using Recycle.Models.AuthorizationModels;
 using RecycleApi.Helpers;
+using RecycleApi.Models;
+using RecycleApi.Services.Interfaces;
 using System;
 using System.Threading.Tasks;
+using RecycleApi.Converter;
 
 namespace RecycleApi.Services
 {
@@ -24,7 +25,7 @@ namespace RecycleApi.Services
             var user = await _clientRepository.GetClientAsync(credentials);
 
             // return null if user not found
-            if (user == null) 
+            if (user == null)
                 return null;
 
             // authentication successful so generate jwt token
@@ -33,16 +34,16 @@ namespace RecycleApi.Services
             return new AuthenticateResponse(user, token);
         }
 
-        public async Task Registration(Client client)
+        public async Task Registration(ApiClientDtoOut client)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<Client> GetById(int clientId)
+        public async Task<ApiClientDtoOut> GetById(int clientId)
         {
             var res = await _clientRepository.GetClientAsync(clientId);
 
-            return res;
+            return ClientConverter.ToApi(res);
         }
     }
 }
