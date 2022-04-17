@@ -1,6 +1,4 @@
-﻿using Recycle.Models;
-
-namespace Recycle.Models.AuthorizationModels
+﻿namespace Recycle.Models.AuthorizationModels
 {
     public class AuthenticateResponse
     {
@@ -10,6 +8,7 @@ namespace Recycle.Models.AuthorizationModels
         public string Surname { get; set; }
         public string Username { get; set; }
         public string Token { get; set; }
+        public int RoleId { get; set; }
 
 
         public AuthenticateResponse(Client user, string token)
@@ -20,6 +19,7 @@ namespace Recycle.Models.AuthorizationModels
             Surname = user.Surname;
             Username = user.Email;
             Token = token;
+            RoleId = user.IdRole;
         }
     }
 }

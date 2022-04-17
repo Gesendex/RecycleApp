@@ -11,22 +11,28 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using RecycleApp.Pages;
 
 namespace RecycleApp
 {
-    /// <summary>
-    /// Логика взаимодействия для AuthorizationWindow.xaml
-    /// </summary>
-    public partial class AuthorizationWindow : Window
-    {
-        public AuthorizationWindow()
-        {
-            InitializeComponent();
-        }
+	/// <summary>
+	/// Логика взаимодействия для AuthorizationWindow.xaml
+	/// </summary>
+	public partial class AuthorizationWindow : Window
+	{
+		public AuthorizationWindow(AuthorizationPage authorizationPage)
+		{
+			InitializeComponent();
+			FrameMain.NavigationService.Navigate(authorizationPage);
+		}
 
-        private void RegistrationLink_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
+		public AuthorizationWindow()
+		{
+			this.Close();
+		}
 
-        }
-    }
+		private void RegistrationLink_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+		{
+		}
+	}
 }

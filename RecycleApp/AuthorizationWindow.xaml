@@ -18,8 +18,8 @@
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <Rectangle Grid.RowSpan="3" Opacity="0.8" Fill="Gray"/>
-        <TextBlock x:Name="TxtTitle" Text="{Binding ElementName=FrameMain, Path=Content.Title}" HorizontalAlignment="Center" FontSize="25" Width="auto" Style="{StaticResource TextBlockAuthorizationWindow}"/>
-        <Frame Name="FrameMain" NavigationUIVisibility="Hidden" Grid.Row="1" Source="/Pages/AuthorizationPage.xaml">
+        <TextBlock Grid.Row="0" x:Name="TxtTitle" Text="{Binding ElementName=FrameMain, Path=Content.Title}" HorizontalAlignment="Center" FontSize="25" Width="auto" Style="{StaticResource TextBlockAuthorizationWindow}"/>
+        <Frame Name="FrameMain" NavigationUIVisibility="Hidden" Grid.Row="1">
 
             
         </Frame>

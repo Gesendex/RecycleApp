@@ -21,7 +21,7 @@ namespace RecycleApi.Controllers
             _authorizationService = authorizationService;
         }
 
-        [ProducesResponseType(typeof(IEnumerable<AuthenticateResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(AuthenticateResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpPost("Authorization")]
         public async Task<IActionResult> Authorization([FromBody] AuthorizationBody credentials)
