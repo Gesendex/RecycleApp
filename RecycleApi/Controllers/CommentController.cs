@@ -22,7 +22,7 @@ namespace RecycleApi.Controllers
 
         [ProducesResponseType(typeof(IList<ApiCommentDtoOut>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [Authorize()]
+        [RecycleAuthorize()]
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
@@ -32,7 +32,7 @@ namespace RecycleApi.Controllers
 
         [ProducesResponseType(typeof(ApiCommentDtoOut), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [Authorize()]
+        [RecycleAuthorize()]
         [HttpGet("GetById/{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -42,7 +42,7 @@ namespace RecycleApi.Controllers
 
         [ProducesResponseType(typeof(IEnumerable<ApiCommentDtoOut>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [Authorize()]
+        [RecycleAuthorize()]
         [HttpGet("GetAllByClientId/{id}")]
         public async Task<IActionResult> GetAllByClientId(int id)
         {
@@ -52,7 +52,7 @@ namespace RecycleApi.Controllers
         
         [ProducesResponseType(typeof(IEnumerable<ApiCommentDtoOut>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [Authorize()]
+        [RecycleAuthorize()]
         [HttpGet("GetAllByGCPId/{id}")]
         public async Task<IActionResult> GetAllByGcpId(int id)
         {
@@ -60,7 +60,7 @@ namespace RecycleApi.Controllers
             return Ok(result);
         }
 
-        [Authorize()]
+        [RecycleAuthorize()]
         [HttpPut("WriteComment")]
         public async Task<IActionResult> WriteComment([FromBody] ApiCommentDtoOut comment)
         {

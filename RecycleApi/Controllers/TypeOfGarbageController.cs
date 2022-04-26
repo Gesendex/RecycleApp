@@ -22,7 +22,7 @@ namespace RecycleApi.Controllers
 
         [ProducesResponseType(typeof(IEnumerable<ApiTypeOfGarbageDtoOut>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [Authorize()]
+        [RecycleAuthorize()]
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
@@ -32,7 +32,7 @@ namespace RecycleApi.Controllers
 
         [ProducesResponseType(typeof(IEnumerable<ApiTypeOfGarbageDtoOut>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [Authorize()]
+        [RecycleAuthorize()]
         [HttpGet("GetAllWithImage")]
         public async Task<IActionResult> GetAllWithImage()
         {
@@ -42,7 +42,7 @@ namespace RecycleApi.Controllers
 
         [ProducesResponseType(typeof(TypeOfGarbage), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [Authorize()]
+        [RecycleAuthorize()]
         [HttpGet("GetById/{id}")]
         public async Task<IActionResult> GetById(int id)
         {

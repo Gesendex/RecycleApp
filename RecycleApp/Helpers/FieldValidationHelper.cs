@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RecycleApp
 {
-    public static class FieldValidator
+    public static class FieldValidationHelper
     {
         public static bool IsValidEmail(string email)
         {

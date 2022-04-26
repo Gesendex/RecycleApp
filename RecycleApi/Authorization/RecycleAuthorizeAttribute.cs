@@ -8,7 +8,7 @@ using RecycleApi.Models;
 namespace RecycleApi.Authorization
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-    public class AuthorizeAttribute : Attribute, IAuthorizationFilter
+    public class RecycleAuthorizeAttribute : Attribute, IAuthorizationFilter
     {
         private readonly int _roleId;
 
@@ -24,12 +24,12 @@ namespace RecycleApi.Authorization
                 };
             }
         }
-        public AuthorizeAttribute(int roleId)
+        public RecycleAuthorizeAttribute(int roleId)
         {
             _roleId = roleId;
         }
 
-        public AuthorizeAttribute()
+        public RecycleAuthorizeAttribute()
         {
 
         }

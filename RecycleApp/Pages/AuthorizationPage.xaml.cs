@@ -1,5 +1,4 @@
-﻿using Autofac;
-using RecycleApp.Helpers;
+﻿using RecycleApp.Helpers;
 using RecycleApp.Services;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,15 +10,13 @@ namespace RecycleApp.Pages
 	/// </summary>
 	public partial class AuthorizationPage : Page
 	{
-		private readonly IRecycleService _recycleService; 
-		private readonly MainWindow _mainWindow;
+		private readonly IRecycleService _recycleService;
 
-
-		public AuthorizationPage(IRecycleService recycleService, MainWindow mainWindow)
+		public AuthorizationPage(IRecycleService recycleService)
 		{
 			_recycleService = recycleService;
-			_mainWindow = mainWindow;
 			InitializeComponent();
+
 			//TODO: Удалить данные для быстрого входа
 			TXBEmail.Text = "info@p-w.ru";
 			PSboxPassword.Password = "123456";
@@ -31,7 +28,8 @@ namespace RecycleApp.Pages
 
 			var model = AuthorizationHelper.GetAuthorizationModel(
 				email: TXBEmail.Text,
-				password: PSboxPassword.Password);
+				password: PSboxPassword.Password
+			);
 
 			if (model == null)
 			{
@@ -42,12 +40,12 @@ namespace RecycleApp.Pages
 
 			var response = await _recycleService.AuthorizeAsync(model);
 
+			App.CurrentUser = response;
+
 			if (response != null)
 			{
-				App.CurrentUser = response;
-
-				_mainWindow.Show();
-				Window.GetWindow(this)?.Close();
+				App.GetNewWindow().Show();
+				App.AppAuthorizationWindow.Visibility = Visibility.Collapsed;
 			}
 
 			this.IsEnabled = true;
@@ -56,6 +54,7 @@ namespace RecycleApp.Pages
 		public void SetEmail(string email)
 		{
 			TXBEmail.Text = email;
+			PSboxPassword.Password = "";
 		}
 	}
 }

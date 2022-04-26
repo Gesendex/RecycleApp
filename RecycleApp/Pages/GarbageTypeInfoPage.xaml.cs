@@ -1,8 +1,10 @@
 ﻿using RecycleApp.Models;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
+using RecycleApp.Converters;
+using RecycleApp.Helpers;
+using RecycleApp.Services;
 
 namespace RecycleApp.Pages
 {
@@ -11,28 +13,32 @@ namespace RecycleApp.Pages
 	/// </summary>
 	public partial class GarbageTypeInfoPage : Page
 	{
-		public GarbageTypeInfoPage()
+		private readonly IRecycleService _recycleService;
+
+		public GarbageTypeInfoPage(IRecycleService recycleService)
 		{
+			_recycleService = recycleService;
 			InitializeComponent();
 		}
 
 		private void LWGarbageType_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			var lw = sender as ListView;
-			var selectedItem = (lw.SelectedItem as TypeOfGarbageDtoIn);
-			if (selectedItem.TypeImage.SubImage != null)
-				SelectedImage.Source =
-					new ImageSourceConverter().ConvertFrom(selectedItem.TypeImage.SubImage) as ImageSource;
-			else
-				SelectedImage.Source = null;
+			var selectedItem = ContextHelper.GetListViewItem<TypeOfGarbageDtoIn>(sender);
+
+			var subImage = selectedItem?.TypeImage?.SubImage;
+			SelectedImage.Source = ByteArrayConverter.ToImageSource(subImage);
+
 			TXBDescription.Text = selectedItem?.Description;
 		}
 
 		private async void Page_Loaded(object sender, RoutedEventArgs e)
 		{
-			LWGarbageType.ItemsSource =
-				await RequestHandler.GetObjectFromRequestAsync<IEnumerable<TypeOfGarbageDtoIn>>("GET",
-					"/api/TypeOfGarbageDtoIn/GetAllWithImage");
+			await InitTypeOfGarbageAsync();
+		}
+
+		private async Task InitTypeOfGarbageAsync()
+		{
+			LWGarbageType.ItemsSource = await _recycleService.GetTypeOfGarbageWithImageAsync();
 			LWGarbageType.SelectedIndex = 0;
 		}
 	}

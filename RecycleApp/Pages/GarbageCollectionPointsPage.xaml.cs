@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
+using RecycleApp.Converters;
+using RecycleApp.Helpers;
 using RecycleApp.Models;
 using RecycleApp.RecycleApiService;
+using RecycleApp.Services;
 
 namespace RecycleApp.Pages
 {
@@ -14,70 +16,99 @@ namespace RecycleApp.Pages
 	/// </summary>
 	public partial class GarbageCollectionPointsPage : Page
 	{
-		IEnumerable<GarbageCollectionPointDtoIn> gcps;
+		private readonly IRecycleService _recycleService;
 
-		public GarbageCollectionPointsPage()
+		private IList<GarbageCollectionPointDtoIn> _garbageCollectionPoints;
+		private IList<TypeOfGarbageDtoIn> _types;
+		private IList<CompanyDtoIn> _companies;
+
+		public GarbageCollectionPointsPage(IRecycleService recycleService)
 		{
+			_recycleService = recycleService;
 			InitializeComponent();
-			CBCompanyFilter.IsEnabled = false;
-			CBTypesFilter.IsEnabled = false;
 		}
 
 		private async void Page_Loaded(object sender, RoutedEventArgs e)
 		{
-			gcps = await RequestHandler.GetObjectFromRequestAsync<IEnumerable<GarbageCollectionPointDtoIn>>("GET",
-				"/api/GarbageCollectionPointDtoIn/GetAll");
-			LWGarbagePoints.ItemsSource =
-				await RequestHandler.GetObjectFromRequestAsync<IEnumerable<GarbageCollectionPointDtoIn>>("GET",
-					"/api/GarbageCollectionPointDtoIn/GetAll");
+			DisableFilters();
 
-			var cmp = (await RequestHandler.GetObjectFromRequestAsync<IEnumerable<Company>>("GET",
-				"/api/Company/GetAll")).ToList();
-			cmp.Insert(0, new Company() {Id = 0, Name = "Все"});
-			CBCompanyFilter.ItemsSource = cmp;
-			CBCompanyFilter.SelectedIndex = 0;
+			await InitGarbageCollectionPointAsync();
+			await InitCompaniesAsync();
+			await InitTypeOfGarbageAsync();
 
-			var types = (await RequestHandler.GetObjectFromRequestAsync<IEnumerable<TypeOfGarbage>>("GET",
-				"/api/TypeOfGarbage/GetAll")).ToList();
-			types.Insert(0, new TypeOfGarbage() {Id = 0, Type = "Все"});
-			CBTypesFilter.ItemsSource = types;
-			CBTypesFilter.SelectedIndex = 0;
+			EnableFilters();
+		}
+
+		private void EnableFilters()
+		{
 			CBTypesFilter.IsEnabled = true;
 			CBCompanyFilter.IsEnabled = true;
 		}
 
+		private void DisableFilters()
+		{
+			CBCompanyFilter.IsEnabled = false;
+			CBTypesFilter.IsEnabled = false;
+		}
+
+		private async Task InitGarbageCollectionPointAsync()
+		{
+			_garbageCollectionPoints = await _recycleService.GetGarbageCollectionPointsAsync();
+			LWGarbagePoints.ItemsSource = _garbageCollectionPoints.ToList();
+		}
+
+		private async Task InitTypeOfGarbageAsync()
+		{
+			_types = await _recycleService.GetTypeOfGarbageWithImageAsync();
+			_types = _types.Prepend(new TypeOfGarbageDtoIn(-1, "Все")).ToList();
+
+			CBTypesFilter.ItemsSource = _types;
+			CBTypesFilter.SelectedIndex = 0;
+		}
+
+		private async Task InitCompaniesAsync()
+		{
+			_companies = await _recycleService.GetCompaniesAsync();
+			_companies = _companies.Prepend(new CompanyDtoIn(-1, "Все")).ToList();
+
+			CBCompanyFilter.ItemsSource = _companies;
+			CBCompanyFilter.SelectedIndex = 0;
+		}
+
 		private void LWGarbagePoints_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			var selectedItem = (sender as ListView).SelectedItem as GarbageCollectionPointDtoIn;
-			TXBDescription.Text = selectedItem?.Description;
-			if (selectedItem?.Image != null)
-			{
-				SelectedImage.Source = new ImageSourceConverter().ConvertFrom(selectedItem.Image) as ImageSource;
-			}
-			else
-			{
-				SelectedImage.Source = null;
-			}
+			var selectedItem = ContextHelper.GetListViewItem<GarbageCollectionPointDtoIn>(sender);
+
+			TXBDescription.Text = selectedItem?.Description ?? "";
+
+			SelectedImage.Source = ByteArrayConverter.ToImageSource(selectedItem?.Image);
 		}
 
-		private void BtnEdit_Click(object sender, RoutedEventArgs e)
+		private void CBCompanyFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			var button = sender as Button;
-			var currentGCP = button.DataContext as GarbageCollectionPointDtoIn;
-			NavigationService.Navigate(new GarbageCollectionPointEditPage(currentGCP));
+			Sort();
 		}
 
-		private void BtnComment_Click(object sender, RoutedEventArgs e)
+		private void TBxStreet_LostFocus(object sender, RoutedEventArgs e)
 		{
-			var button = sender as Button;
-			var currentGCP = button.DataContext as GarbageCollectionPointDtoIn;
-			NavigationService.Navigate(new CommentsPage(currentGCP));
+			Sort();
 		}
 
-		private void Filt()
+		private void TBxBuilding_LostFocus(object sender, RoutedEventArgs e)
 		{
-			var buf = gcps;
-			buf.ToList().Clear();
+			Sort();
+		}
+
+		private void CBTypesFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			Sort();
+		}
+
+		private void Sort()
+		{
+			DisableFilters();
+
+			var buf = _garbageCollectionPoints.ToList().AsQueryable();
 
 			if (CBCompanyFilter.SelectedIndex != 0 && CBCompanyFilter.SelectedIndex != -1)
 			{
@@ -86,42 +117,46 @@ namespace RecycleApp.Pages
 
 			if (CBTypesFilter.SelectedIndex != 0 && CBTypesFilter.SelectedIndex != -1)
 			{
-				buf = buf.Where(p =>
-					p.GarbageTypeSets.FirstOrDefault(g =>
-						g.IdTypeOfGarbage == (CBTypesFilter.SelectedItem as TypeOfGarbage).Id) != null);
+				var typeOfGarbage = CBTypesFilter.SelectedItem as TypeOfGarbage;
+
+				buf = buf
+					.Where(
+						garbageCollectionPointDtoIn =>
+							garbageCollectionPointDtoIn.GarbageTypeSets
+								.Any(
+									garbageTypeSetDtoIn =>
+										garbageTypeSetDtoIn.IdTypeOfGarbage == typeOfGarbage.Id
+								)
+					);
 			}
 
 			if (!string.IsNullOrWhiteSpace(TBxStreet.Text))
 			{
-				buf = buf.Where(p => p.Street.ToLower().Contains(TBxStreet.Text.ToLower().Trim()));
+				buf = buf.Where(garbageCollectionPointDtoIn => garbageCollectionPointDtoIn.Street.ToLower().Contains(TBxStreet.Text.ToLower().Trim()));
 			}
 
 			if (!string.IsNullOrWhiteSpace(TBxBuilding.Text))
 			{
-				buf = buf.Where(p => p.Building.ToLower().Contains(TBxBuilding.Text.ToLower().Trim()));
+				buf = buf.Where(garbageCollectionPointDtoIn => garbageCollectionPointDtoIn.Building.ToLower().Contains(TBxBuilding.Text.ToLower().Trim()));
 			}
 
-			LWGarbagePoints.ItemsSource = buf;
+			LWGarbagePoints.ItemsSource = buf.ToList();
+
+			EnableFilters();
 		}
 
-		private void CBCompanyFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		private void BtnEdit_Click(object sender, RoutedEventArgs e)
 		{
-			Filt();
+			var currentGCP = ContextHelper.GetButtonContext<GarbageCollectionPointDtoIn>(sender);
+
+			NavigationService.Navigate(new GarbageCollectionPointEditPage(currentGCP, _recycleService));
 		}
 
-		private void TBxStreet_LostFocus(object sender, RoutedEventArgs e)
+		private void BtnComment_Click(object sender, RoutedEventArgs e)
 		{
-			Filt();
-		}
+			var currentGCP = ContextHelper.GetButtonContext<GarbageCollectionPointDtoIn>(sender);
 
-		private void TBxBuilding_LostFocus(object sender, RoutedEventArgs e)
-		{
-			Filt();
-		}
-
-		private void CBTypesFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			Filt();
+			NavigationService.Navigate(new CommentsPage(currentGCP, _recycleService));
 		}
 	}
 }

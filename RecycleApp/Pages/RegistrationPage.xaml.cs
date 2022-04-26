@@ -29,7 +29,7 @@ namespace RecycleApp.Pages
 				return false;
 			if (CBRole.SelectedItem == null)
 				return false;
-			if (!FieldValidator.IsValidEmail(TXBEmail.Text) || string.IsNullOrWhiteSpace(TXBEmail.Text))
+			if (!FieldValidationHelper.IsValidEmail(TXBEmail.Text) || string.IsNullOrWhiteSpace(TXBEmail.Text))
 				return false;
 			if (string.IsNullOrWhiteSpace(PSboxPassword.Password) || PSboxPassword.Password.Length < 6)
 				return false;

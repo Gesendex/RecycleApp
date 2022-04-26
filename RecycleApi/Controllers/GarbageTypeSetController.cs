@@ -26,7 +26,7 @@ namespace RecycleApi.Controllers
 
         [ProducesResponseType(typeof(IList<ApiGarbageTypeSetDtoOut>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [Authorize()]
+        [RecycleAuthorize()]
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
@@ -36,7 +36,7 @@ namespace RecycleApi.Controllers
 
         [ProducesResponseType(typeof(ApiGarbageTypeSetDtoOut), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [Authorize()]
+        [RecycleAuthorize()]
         [HttpGet("GetByTypeOfGarbageId/{id}")]
         public async Task<IActionResult> GetByTypeOfGarbageId(int id)
         {
@@ -46,7 +46,7 @@ namespace RecycleApi.Controllers
 
         [ProducesResponseType(typeof(IList<ApiGarbageTypeSetDtoOut>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [Authorize()]
+        [RecycleAuthorize()]
         [HttpGet("GetByGarbageCollectionPointeId/{id}")]
         public async Task<IActionResult> GetByGarbageCollectionPointId(int id)
         {

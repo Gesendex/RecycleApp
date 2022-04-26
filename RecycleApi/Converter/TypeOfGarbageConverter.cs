@@ -11,8 +11,8 @@ namespace RecycleApi.Converter
                 id: source.Id,
                 type: source.Type,
                 description: source.Description,
-                mainImage: source.TypeImage.MainImage,
-                subImage: source.TypeImage.SubImage
+                mainImage: source.TypeImage?.MainImage,
+                subImage: source.TypeImage?.SubImage
             );
         }
 

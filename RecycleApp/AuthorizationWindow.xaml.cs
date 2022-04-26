@@ -20,19 +20,19 @@ namespace RecycleApp
 	/// </summary>
 	public partial class AuthorizationWindow : Window
 	{
+		private readonly AuthorizationPage _authorizationPage;
+
 		public AuthorizationWindow(AuthorizationPage authorizationPage)
 		{
+			_authorizationPage = authorizationPage;
+			App.AppAuthorizationWindow = this;
 			InitializeComponent();
 			FrameMain.NavigationService.Navigate(authorizationPage);
 		}
 
-		public AuthorizationWindow()
+		public void SetEmailOnPage(string email)
 		{
-			this.Close();
-		}
-
-		private void RegistrationLink_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-		{
+			_authorizationPage.SetEmail(email);
 		}
 	}
 }
