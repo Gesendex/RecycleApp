@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
 #nullable disable
 
@@ -21,6 +20,7 @@ namespace Recycle.Models
         public string Email { get; set; }
         public string Password { get; set; }
         public int IdRole { get; set; }
+
         public virtual Role IdRoleNavigation { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Company> Companies { get; set; }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
 #nullable disable
 
@@ -19,6 +18,7 @@ namespace Recycle.Models
         public string Description { get; set; }
         public int? ClientId { get; set; }
         public byte[] Image { get; set; }
+
         public virtual Client Client { get; set; }
         public virtual ICollection<GarbageCollectionPoint> GarbageCollectionPoints { get; set; }
     }

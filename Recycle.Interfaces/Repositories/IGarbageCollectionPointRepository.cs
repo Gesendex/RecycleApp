@@ -13,5 +13,6 @@ namespace Recycle.Interfaces.Repositories
 		Task<GarbageCollectionPoint> GetById(int id);
 		Task<int?> CreateGarbageCollectionPoint(GarbageCollectionPoint point);
 		Task<int?> UpdateGarbageCollectionPoint(GarbageCollectionPoint point);
+		Task DeleteGarbageCollectionPoint(int id);
 	}
 }

@@ -14,5 +14,6 @@ namespace RecycleApi.Services.Interfaces
 		Task<IList<ApiGarbageCollectionPointDtoOut>> GetByClientId(int id);
 		Task<int?> CreateGarbageCollectionPoint(ApiGarbageCollectionPointDtoIn model);
 		Task<int?> UpdateGarbageCollectionPoint(ApiGarbageCollectionPointDtoIn model);
+		Task DeleteGarbageCollectionPoint(int id);
 	}
 }

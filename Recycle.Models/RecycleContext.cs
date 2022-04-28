@@ -30,9 +30,9 @@ namespace Recycle.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder
-	                .UseLazyLoadingProxies()
-	                .UseSqlServer("Server=localhost\\SQLExpress;Database=Recycle;Trusted_Connection=True;");
+	            optionsBuilder
+		            .UseLazyLoadingProxies()
+		            .UseSqlServer("Server=localhost\\SQLEXPRESS; Database=Recycle; Trusted_Connection=true;");
             }
         }
 
@@ -84,10 +84,10 @@ namespace Recycle.Models
                     .HasConstraintName("FK_Comment_Client");
 
                 entity.HasOne(d => d.IdGarbageCollectionPointNavigation)
-                    .WithMany(p => p.Comments)
-                    .HasForeignKey(d => d.IdGarbageCollectionPoint)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Comment_GarbageCollectionPoint");
+	                .WithMany(p => p.Comments)
+	                .HasForeignKey(d => d.IdGarbageCollectionPoint)
+	                .OnDelete(DeleteBehavior.Cascade)
+	                .HasConstraintName("FK_Comment_GarbageCollectionPoint");
             });
 
             modelBuilder.Entity<Company>(entity =>
@@ -140,7 +140,7 @@ namespace Recycle.Models
                 entity.HasOne(d => d.IdGarbageCollectionPointNavigation)
                     .WithMany(p => p.GarbageTypeSets)
                     .HasForeignKey(d => d.IdGarbageCollectionPoint)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_GarbageTypeSet_GarbageCollectionPoint");
 
                 entity.HasOne(d => d.IdTypeOfGarbageNavigation)

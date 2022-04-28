@@ -159,26 +159,22 @@ namespace RecycleApi.Controllers
 			return Ok(res);
 		}
 
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 		[HttpDelete("DeleteGCP/{id}")]
-		public async Task<ActionResult> DeleteGCP(int id)
+		public async Task<IActionResult> DeleteGCP(int id)
 		{
-			//try
-			//{
-			//	var gcp = await db.GarbageCollectionPoints.FindAsync(id);
-			//	if (gcp == null)
-			//		return NotFound();
+			try
+			{
+				await _garbageCollectionPointService.DeleteGarbageCollectionPoint(id);
 
-			//	db.GarbageTypeSets.RemoveRange(db.GarbageTypeSets.Where(p => p.IdGarbageCollectionPoint == id));
-			//	db.Comments.RemoveRange(db.Comments.Where(p => p.IdGarbageCollectionPoint == id));
-			//	db.GarbageCollectionPoints.Remove(gcp);
-			//	await db.SaveChangesAsync();
-			//	return Ok();
-			//}
-			//catch (Exception e)
-			//{
-			//	return BadRequest();
-			//}
-			return null;
+				return Ok();
+			}
+			catch (Exception e)
+			{
+				return BadRequest(e.Message);
+			}
 		}
 	}
 }

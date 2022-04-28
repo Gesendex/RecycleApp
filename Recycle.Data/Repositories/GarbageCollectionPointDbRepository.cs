@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -141,6 +142,17 @@ namespace Recycle.Data.Repositories
 			{
 				return null;
 			}
+		}
+
+		public async Task DeleteGarbageCollectionPoint(int id)
+		{
+			var point = await _db.GarbageCollectionPoints.FirstOrDefaultAsync(item => item.Id == id);
+
+			if (point == null)
+				return;
+
+			_db.GarbageCollectionPoints.Remove(point);
+			await _db.SaveChangesAsync();
 		}
 	}
 }

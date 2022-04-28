@@ -93,5 +93,10 @@ namespace RecycleApi.Services
 
 			return res;
 		}
+
+		public async Task DeleteGarbageCollectionPoint(int id)
+		{
+			await _garbageCollectionPointRepository.DeleteGarbageCollectionPoint(id);
+		}
 	}
 }
