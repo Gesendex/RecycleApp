@@ -30,7 +30,9 @@ namespace Recycle.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=localhost\\SQLExpress;Database=Recycle;Trusted_Connection=True;");
+                optionsBuilder
+	                .UseLazyLoadingProxies()
+	                .UseSqlServer("Server=localhost\\SQLExpress;Database=Recycle;Trusted_Connection=True;");
             }
         }
 

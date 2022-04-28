@@ -54,7 +54,7 @@ namespace RecycleApi
         {
             services.AddCors();
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
-            services.AddDbContext<RecycleContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<RecycleContext>();
             services.AddControllers();
             services.AddJwtAuthorization();
             services.AddRepositories();

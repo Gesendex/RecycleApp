@@ -21,6 +21,7 @@ namespace RecycleApi.Extentions
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<ICompanyService, CompanyService>();
             services.AddTransient<IAuthorizationService, AuthorizationService>();
+            services.AddTransient<IGarbageCollectionPointService, GarbageCollectionPointService>();
 
             return services;
         }
@@ -33,6 +34,7 @@ namespace RecycleApi.Extentions
             services.AddTransient<IRoleRepository, RoleDbRepository>();
             services.AddTransient<IClientRepository, ClientDbRepository>();
             services.AddTransient<IGarbageTypeSetRepository, GarbageTypeSetDbRepository>();
+            services.AddTransient<IGarbageCollectionPointRepository, GarbageCollectionPointDbRepository>();
 
             return services;
         }

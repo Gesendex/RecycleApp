@@ -10,9 +10,7 @@ namespace Recycle.Models
     {
         public int IdGarbageCollectionPoint { get; set; }
         public int IdTypeOfGarbage { get; set; }
-        [JsonIgnore]
         public virtual GarbageCollectionPoint IdGarbageCollectionPointNavigation { get; set; }
-        [JsonIgnore]
         public virtual TypeOfGarbage IdTypeOfGarbageNavigation { get; set; }
     }
 }

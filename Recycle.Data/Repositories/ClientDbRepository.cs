@@ -27,7 +27,7 @@ namespace Recycle.Data.Repositories
                 _db.Clients
                 .SingleOrDefault(
                     client =>
-                    client.Email == credentials.Email && 
+                    client.Email == credentials.Email &&
                     client.Password == credentials.Password
                 ));
         }

@@ -11,7 +11,6 @@ namespace Recycle.Models
         public int Id { get; set; }
         public byte[] MainImage { get; set; }
         public byte[] SubImage { get; set; }
-        [JsonIgnore]
         public virtual TypeOfGarbage IdNavigation { get; set; }
     }
 }

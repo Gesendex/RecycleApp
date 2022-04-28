@@ -19,14 +19,10 @@ namespace Recycle.Models
         public string Middlename { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
-        [JsonIgnore]
         public string Password { get; set; }
         public int IdRole { get; set; }
-        [JsonIgnore]
         public virtual Role IdRoleNavigation { get; set; }
-        [JsonIgnore]
         public virtual ICollection<Comment> Comments { get; set; }
-        [JsonIgnore]
         public virtual ICollection<Company> Companies { get; set; }
     }
 }
