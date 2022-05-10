@@ -41,7 +41,7 @@
             </StackPanel>
             <Button x:Name="BtnRegistration" Content="Зарегистрироваться" Style="{StaticResource BtnAuthorizationWindow}" Click="BtnRegistration_Click"/>
             <TextBlock x:Name="AuthorizationLink"  Style="{StaticResource TextBlockAuthorizationWindow}" >
-                <Hyperlink NavigateUri="AuthorizationPage.xaml">Авторизация</Hyperlink>
+                <Hyperlink Click="Hyperlink_OnClick">Авторизация</Hyperlink>
             </TextBlock>
         </StackPanel>
     </Grid>

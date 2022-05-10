@@ -19,7 +19,7 @@
                     <ComboBox Name="CBCompany" Style="{StaticResource CBEditPage}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Name}"/>
+                                <TextBlock Width="auto" Text="{Binding Name}"/>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
@@ -37,16 +37,16 @@
                 <TextBox Name="TBxDescription" TextWrapping="Wrap" Width="350" Height="100" Margin="5"/>
                 <StackPanel Orientation="Horizontal">
                     <StackPanel>
-                        <CheckBox Content="Стекло" Name="glassCHbx" Style="{StaticResource CHbxGarbageType}"/>
-                        <CheckBox Content="Пластик"  Name="plasticCHbx" Style="{StaticResource CHbxGarbageType}"/>
+                        <CheckBox Content="Стекло" Tag="1" Name="glassCHbx" Style="{StaticResource CHbxGarbageType}"/>
+						<CheckBox Content="Пластик" Tag="2"  Name="plasticCHbx" Style="{StaticResource CHbxGarbageType}"/>
                     </StackPanel>
                     <StackPanel>
-                        <CheckBox Content="Макулатура"  Name="paperCHbx" Style="{StaticResource CHbxGarbageType}"/>
-                        <CheckBox Content="Металл"  Name="metalCHbx" Style="{StaticResource CHbxGarbageType}"/>
+						<CheckBox Content="Макулатура" Tag="3"  Name="paperCHbx" Style="{StaticResource CHbxGarbageType}"/>
+						<CheckBox Content="Металл" Tag="4"  Name="metalCHbx" Style="{StaticResource CHbxGarbageType}"/>
                     </StackPanel>
                     <StackPanel>
-                        <CheckBox Content="PAC"  Name="pacCHbx" Style="{StaticResource CHbxGarbageType}"/>
-                        <CheckBox Content="Опасные отходы"  Name="dangCHbx" Style="{StaticResource CHbxGarbageType}"/>
+						<CheckBox Content="PAC" Tag="5"  Name="pacCHbx" Style="{StaticResource CHbxGarbageType}"/>
+						<CheckBox Content="Опасные отходы" Tag="6"  Name="dangCHbx" Style="{StaticResource CHbxGarbageType}"/>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>

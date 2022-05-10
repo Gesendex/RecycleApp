@@ -2,30 +2,35 @@
 
 namespace RecycleApi.Models
 {
-    public class ApiCommentDtoOut
-    {
-        public int Id { get; }
+	public class ApiCommentDtoOut
+	{
+		public int Id { get; set; }
 
-        public string Text { get; }
+		public string Text { get; set; }
 
-        public int IdGarbageCollectionPoint { get; }
+		public int IdGarbageCollectionPoint { get; set; }
 
-        public int IdClient { get; }
+		public int IdClient { get; }
 
-        public DateTime DateOfCreation { get; }
+		public ApiClientDtoOut Client { get; set; }
 
-        public ApiCommentDtoOut(
-            int id,
-            string text,
-            int idGarbageCollectionPoint,
-            int idClient,
-            DateTime dateOfCreation)
-        {
-            Id = id;
-            Text = text;
-            IdGarbageCollectionPoint = idGarbageCollectionPoint;
-            IdClient = idClient;
-            DateOfCreation = dateOfCreation;
-        }
-    }
+		public DateTime DateOfCreation { get; set; }
+
+		public ApiCommentDtoOut(
+			int id,
+			string text,
+			int idGarbageCollectionPoint,
+			int idClient,
+			DateTime dateOfCreation,
+			ApiClientDtoOut client
+			)
+		{
+			Id = id;
+			Text = text;
+			IdGarbageCollectionPoint = idGarbageCollectionPoint;
+			IdClient = idClient;
+			DateOfCreation = dateOfCreation;
+			Client = client;
+		}
+	}
 }

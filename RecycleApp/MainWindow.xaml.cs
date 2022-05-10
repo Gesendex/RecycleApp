@@ -40,7 +40,7 @@ namespace RecycleApp
 		{
 			App.CurrentUser = null;
 
-			_authorizationWindow.SetEmailOnPage(_currentUser.Username);
+			_authorizationWindow.SetEmailOnPage(_currentUser.Email);
 			_authorizationWindow.Visibility = Visibility.Visible;
 
 			Close();

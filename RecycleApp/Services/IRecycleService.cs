@@ -20,5 +20,7 @@ namespace RecycleApp.Services
         Task<IList<TypeOfGarbageDtoIn>> GetTypeOfGarbageAsync();
         Task<bool> UpdateGarbageCollectionPoint(GarbageCollectionPointDtoIn garbageCollectionPoint);
         Task<IList<TypeOfGarbageDtoIn>> GetTypeOfGarbageByGarbageCollectionPointIdAsync(int id);
+        Task<bool> CreateGcp(GarbageCollectionPointDtoIn garbageCollectionPoint);
+        Task<bool> Register(ClientDtoIn client);
     }
 }

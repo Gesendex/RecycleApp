@@ -60,6 +60,8 @@ namespace RecycleApi.Controllers
             return Ok(result);
         }
 
+        [ProducesResponseType(typeof(ApiCommentDtoOut), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [RecycleAuthorize()]
         [HttpPut("WriteComment")]
         public async Task<IActionResult> WriteComment([FromBody] ApiCommentDtoOut comment)

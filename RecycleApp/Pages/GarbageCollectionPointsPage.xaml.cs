@@ -110,14 +110,15 @@ namespace RecycleApp.Pages
 
 			var buf = _garbageCollectionPoints.ToList().AsQueryable();
 
-			if (CBCompanyFilter.SelectedIndex != 0 && CBCompanyFilter.SelectedIndex != -1)
+			if (CBCompanyFilter.SelectedIndex > 0)
 			{
-				buf = buf.Where(p => p.IdCompany == (CBCompanyFilter.SelectedItem as Company).Id);
+				var company = CBCompanyFilter.SelectedItem as CompanyDtoIn;
+				buf = buf.Where(p => p.IdCompany == company.Id);
 			}
 
-			if (CBTypesFilter.SelectedIndex != 0 && CBTypesFilter.SelectedIndex != -1)
+			if (CBTypesFilter.SelectedIndex > 0)
 			{
-				var typeOfGarbage = CBTypesFilter.SelectedItem as TypeOfGarbage;
+				var typeOfGarbage = CBTypesFilter.SelectedItem as TypeOfGarbageDtoIn;
 
 				buf = buf
 					.Where(

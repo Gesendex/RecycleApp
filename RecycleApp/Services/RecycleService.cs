@@ -41,14 +41,17 @@ namespace RecycleApp.Services
 
 		public async Task<IList<GarbageCollectionPointDtoIn>> GetGarbageCollectionPointsAsync()
 		{
-			return new List<GarbageCollectionPointDtoIn>();
+			var res = await _recycleClient.ApiGarbageCollectionPointGetAllAsync(true, 0, 1000);
+			return res
+				.Select(ApiGarbageCollectionPointDtoOutConverter.ToService)
+				.ToList();
 		}
 
 		public async Task<IList<CompanyDtoIn>> GetCompaniesAsync()
 		{
 			try
 			{
-				var res = await _recycleClient.ApiCompanyGetallAsync();
+				var res = await _recycleClient.ApiCompanyGetAllAsync();
 				return res
 					.Select(ApiCompanyDtoOutConverter.ToCompanyDtoIn)
 					.ToList();
@@ -63,7 +66,7 @@ namespace RecycleApp.Services
 		{
 			try
 			{
-				var res = await _recycleClient.ApiTypeofgarbageGetallwithimageAsync();
+				var res = await _recycleClient.ApiTypeOfGarbageGetAllWithImageAsync();
 				return res
 					.Select(ApiTypeOfGarbageDtoOutConverter.ToTypeOfGarbageDtoIn)
 					.ToList();
@@ -76,7 +79,7 @@ namespace RecycleApp.Services
 
 		public async Task<IList<CommentDtoIn>> GetAllCommentsByGcpId(int currentGcpId)
 		{
-			var res = await _recycleClient.ApiCommentGetallbygcpidAsync(currentGcpId);
+			var res = await _recycleClient.ApiCommentGetAllByGCPIdAsync(currentGcpId);
 			return res
 				.Select(ApiCommentDtoOutConverter.ToCommentDtoIn)
 				.ToList();
@@ -88,7 +91,7 @@ namespace RecycleApp.Services
 
 			try
 			{
-				await _recycleClient.ApiCommentWritecommentAsync(apiComment);
+				await _recycleClient.ApiCommentWriteCommentAsync(apiComment);
 				return true;
 			}
 			catch (Exception e)
@@ -101,14 +104,17 @@ namespace RecycleApp.Services
 			int currentClientId
 		)
 		{
-			return new List<GarbageCollectionPointDtoIn>();
+			var res = await _recycleClient.ApiGarbageCollectionPointGetByClientIdAsync(currentClientId);
+			return res
+				.Select(ApiGarbageCollectionPointDtoOutConverter.ToService)
+				.ToList();
 		}
 
 		public async Task<bool> DeleteGarbageCollectionPoint(int id)
 		{
 			try
 			{
-				await DeleteGarbageCollectionPoint(id);
+				await _recycleClient.ApiGarbageCollectionPointDeleteGCPAsync(id);
 				return true;
 			}
 			catch (Exception e)
@@ -121,7 +127,7 @@ namespace RecycleApp.Services
 		{
 			try
 			{
-				var res = await _recycleClient.ApiTypeofgarbageGetallAsync();
+				var res = await _recycleClient.ApiTypeOfGarbageGetAllAsync();
 				return res
 					.Select(ApiTypeOfGarbageDtoOutConverter.ToTypeOfGarbageDtoIn)
 					.ToList();
@@ -137,7 +143,7 @@ namespace RecycleApp.Services
 			try
 			{
 				var data = GarbageCollectionPointDtoInConverter.ToApi(garbageCollectionPoint);
-				await _recycleClient.ApiGarbagecollectionpointUpdateAsync(data);
+				await _recycleClient.ApiGarbageCollectionPointUpdateAsync(data);
 				return true;
 			}
 			catch (Exception e)
@@ -150,7 +156,7 @@ namespace RecycleApp.Services
 		{
 			try
 			{
-				var res = await _recycleClient.ApiTypeofgarbageGetallAsync();
+				var res = await _recycleClient.ApiTypeOfGarbageGetAllAsync();
 				return res
 					.Select(ApiTypeOfGarbageDtoOutConverter.ToTypeOfGarbageDtoIn)
 					.ToList();
@@ -158,6 +164,37 @@ namespace RecycleApp.Services
 			catch (ApiException e)
 			{
 				return new List<TypeOfGarbageDtoIn>();
+			}
+		}
+
+		public async Task<bool> CreateGcp(GarbageCollectionPointDtoIn garbageCollectionPoint)
+		{
+			try
+			{
+				var data = GarbageCollectionPointDtoInConverter.ToApi(garbageCollectionPoint);
+
+				await _recycleClient.ApiGarbageCollectionPointCreateGCPAsync(data);
+				return true;
+			}
+			catch (Exception e)
+			{
+				return false;
+			}
+		}
+
+		public async Task<bool> Register(ClientDtoIn client)
+		{
+			try
+			{
+				var userInfo = ClientDtoInConverter.ToApi(client);
+
+				var res = await _recycleClient.ApiUserRegistrationAsync(userInfo);
+
+				return res != null;
+			}
+			catch (Exception e)
+			{
+				return false;
 			}
 		}
 	}

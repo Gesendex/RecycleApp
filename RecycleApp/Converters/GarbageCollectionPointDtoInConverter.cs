@@ -6,15 +6,15 @@ namespace RecycleApp.Converters
 {
 	internal static class GarbageCollectionPointDtoInConverter
 	{
-		public static GarbageCollectionPoint ToApi(
+		public static ApiGarbageCollectionPointDtoIn ToApi(
 			GarbageCollectionPointDtoIn source
 		)
 		{
 			var garbageTypeSet = source.GarbageTypeSets
-				.Select(GarbageTypeSetDtoInConverter.ToApi)
+				.Select(item => item.IdTypeOfGarbage)
 				.ToList();
 
-			return new GarbageCollectionPoint
+			return new ApiGarbageCollectionPointDtoIn
 			{
 				Id = source.Id,
 				Street = source.Street,
@@ -22,8 +22,7 @@ namespace RecycleApp.Converters
 				IdCompany = source.IdCompany,
 				Image = source.Image,
 				Description = source.Description,
-				IdCompanyNavigation = null,
-				GarbageTypeSets = garbageTypeSet
+				GarbageTypeIds = garbageTypeSet,
 			};
 		}
 	}

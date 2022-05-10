@@ -1,6 +1,6 @@
 ﻿namespace RecycleApp.Models
 {
-    public class TypeOfGarbageDtoIn
+	public partial class TypeOfGarbageDtoIn
     {
 	    public int Id { get; set; }
 		public string Type { get; set; }

@@ -2,7 +2,7 @@
 
 namespace RecycleApp.Models
 {
-	public class TypeImageDtoIn
+	public partial class TypeImageDtoIn
 	{
 		public int Id { get; set; }
 

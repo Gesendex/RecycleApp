@@ -58,6 +58,7 @@ namespace RecycleApp.Pages
 				TBxDescription.Text = _currentGarbageCollectionPoint?.Description;
 				ImageGC.Source = ByteArrayConverter.ToImageSource(_currentGarbageCollectionPoint.Image);
 				CBCompany.ItemsSource = new[] {_currentGarbageCollectionPoint.Company};
+				CBCompany.SelectedIndex = 0;
 				await InitTypeSetAsync();
 			}
 			else
@@ -68,14 +69,9 @@ namespace RecycleApp.Pages
 
 		private async Task InitTypeSetAsync()
 		{
-			var garbageTypes = await _recycleService
-				.GetTypeOfGarbageByGarbageCollectionPointIdAsync(_currentGarbageCollectionPoint.Id);
+			var garbageTypes = _currentGarbageCollectionPoint.GarbageTypeSets.Select(item => item.IdTypeOfGarbage);
 
-			garbageTypes?.ToList()
-				.ForEach(
-					item =>
-						SetCheckBox(item.Id)
-				);
+			garbageTypes?.ToList().ForEach(SetCheckBox);
 		}
 
 		private async Task SetCompanysAsync()
@@ -142,8 +138,7 @@ namespace RecycleApp.Pages
 				GarbageTypeSets = typeSet
 			};
 
-			var isGcpCreated =
-				await RequestHandler.PutRequestAsync(gcp, "/api/GarbageCollectionPointDtoIn/CreateGCP");
+			var isGcpCreated = await _recycleService.CreateGcp(gcp);
 
 			if (isGcpCreated)
 			{
@@ -154,7 +149,7 @@ namespace RecycleApp.Pages
 		private async Task UpdateCurrentGarbageCollectionPointAsync()
 		{
 			var typeSet = GetTypeSet();
-			var company = ContextHelper.GetListViewItem<Company>(CBCompany);
+			var company = ContextHelper.GetComboBoxItem<CompanyDtoIn>(CBCompany);
 
 			var garbageCollectionPoint = new GarbageCollectionPointDtoIn()
 			{
@@ -174,27 +169,54 @@ namespace RecycleApp.Pages
 			}
 		}
 
-		private IList<GarbageTypeSetDtoIn> GetTypeSet()
+		private void SetTypeFromCheckBox(
+			object tag,
+			IList<GarbageTypeSetDtoIn> list,
+			int pointId
+		)
+		{
+			var garbageTypeId =int.Parse((tag as string)!) ;
+			list.Add(
+				new GarbageTypeSetDtoIn()
+				{
+					IdGarbageCollectionPoint = pointId,
+					IdTypeOfGarbage = garbageTypeId
+				});
+		}
+
+		private IList<GarbageTypeSetDtoIn> GetTypeSet(int pointId = 0)
 		{
 			var typeSet = new List<GarbageTypeSetDtoIn>();
 			if (glassCHbx.IsChecked.Value)
-				typeSet.Add(new GarbageTypeSetDtoIn()
-					{IdGarbageCollectionPoint = _currentGarbageCollectionPoint.Id, IdTypeOfGarbage = 1});
+			{
+				SetTypeFromCheckBox(glassCHbx.Tag, typeSet, pointId);
+			}
+
 			if (plasticCHbx.IsChecked.Value)
-				typeSet.Add(new GarbageTypeSetDtoIn()
-					{IdGarbageCollectionPoint = _currentGarbageCollectionPoint.Id, IdTypeOfGarbage = 2});
+			{
+				SetTypeFromCheckBox(plasticCHbx.Tag, typeSet, pointId);
+			}
+
 			if (paperCHbx.IsChecked.Value)
-				typeSet.Add(new GarbageTypeSetDtoIn()
-					{IdGarbageCollectionPoint = _currentGarbageCollectionPoint.Id, IdTypeOfGarbage = 3});
+			{
+				SetTypeFromCheckBox(paperCHbx.Tag, typeSet, pointId);
+			}
+
 			if (metalCHbx.IsChecked.Value)
-				typeSet.Add(new GarbageTypeSetDtoIn()
-					{IdGarbageCollectionPoint = _currentGarbageCollectionPoint.Id, IdTypeOfGarbage = 4});
+			{
+				SetTypeFromCheckBox(metalCHbx.Tag, typeSet, pointId);
+			}
+
 			if (pacCHbx.IsChecked.Value)
-				typeSet.Add(new GarbageTypeSetDtoIn()
-					{IdGarbageCollectionPoint = _currentGarbageCollectionPoint.Id, IdTypeOfGarbage = 5});
+			{
+				SetTypeFromCheckBox(pacCHbx.Tag, typeSet, pointId);
+			}
+
 			if (dangCHbx.IsChecked.Value)
-				typeSet.Add(new GarbageTypeSetDtoIn()
-					{IdGarbageCollectionPoint = _currentGarbageCollectionPoint.Id, IdTypeOfGarbage = 6});
+			{
+				SetTypeFromCheckBox(dangCHbx.Tag, typeSet, pointId);
+			}
+
 			return typeSet;
 		}
 
@@ -231,18 +253,27 @@ namespace RecycleApp.Pages
 
 		private void SetCheckBox(int id)
 		{
-			if (id == 1)
-				glassCHbx.IsChecked = true;
-			else if (id == 2)
-				plasticCHbx.IsChecked = true;
-			else if (id == 3)
-				paperCHbx.IsChecked = true;
-			else if (id == 4)
-				metalCHbx.IsChecked = true;
-			else if (id == 5)
-				pacCHbx.IsChecked = true;
-			else if (id == 6)
-				dangCHbx.IsChecked = true;
+			switch (id)
+			{
+				case 1:
+					glassCHbx.IsChecked = true;
+					break;
+				case 2:
+					plasticCHbx.IsChecked = true;
+					break;
+				case 3:
+					paperCHbx.IsChecked = true;
+					break;
+				case 4:
+					metalCHbx.IsChecked = true;
+					break;
+				case 5:
+					pacCHbx.IsChecked = true;
+					break;
+				case 6:
+					dangCHbx.IsChecked = true;
+					break;
+			}
 		}
 	}
 }

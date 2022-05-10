@@ -7,12 +7,14 @@ namespace RecycleApp.Converters
 	{
 		public static CommentDtoIn ToCommentDtoIn(ApiCommentDtoOut source)
 		{
+			var client = ApiClientDtoOutConverter.ToService(source.Client);
 			return new CommentDtoIn(
 				source.Id,
 				source.IdClient,
 				source.IdGarbageCollectionPoint,
 				source.Text,
-				source.DateOfCreation
+				source.DateOfCreation,
+				client
 			);
 		}
 	}

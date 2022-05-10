@@ -50,7 +50,7 @@ namespace RecycleApp.Pages
 		{
 			var selectedItem = ContextHelper.GetListViewItem<GarbageCollectionPointDtoIn>(sender);
 
-			TXBDescription.Text = selectedItem.Description ?? "";
+			TXBDescription.Text = selectedItem?.Description ?? "";
 
 			SelectedImage.Source = ByteArrayConverter.ToImageSource(selectedItem?.Image);
 		}

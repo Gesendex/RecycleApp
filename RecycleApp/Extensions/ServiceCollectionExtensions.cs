@@ -15,6 +15,7 @@ namespace RecycleApp.Extensions
 			services.AddTransient<GarbageTypeInfoPage>();
 			services.AddTransient<OwnPointsPage>();
 			services.AddTransient<GarbageTypeInfoPage>();
+			services.AddTransient<RegistrationPage>();
 
 			return services;
 		}

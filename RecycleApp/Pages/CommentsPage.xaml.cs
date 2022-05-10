@@ -51,7 +51,8 @@ namespace RecycleApp.Pages
 				idClient: App.CurrentUser.Id,
 				idGarbageCollectionPoint: _currentGCP.Id,
 				text: TXBxCommentBody.Text,
-				dateOfCreation: DateTimeOffset.UtcNow
+				dateOfCreation: DateTimeOffset.UtcNow,
+				client: null
 			);
 
 			var isCommentCreated = await _recycleService.PutComment(comment);

@@ -1,6 +1,6 @@
 ﻿namespace RecycleApp.Models
 {
-    public class AuthorizationBodyDtoIn
+    public partial class AuthorizationBodyDtoIn
     {
         public string Email { get; }
 

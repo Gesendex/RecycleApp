@@ -1,7 +1,9 @@
-﻿using RecycleApp.Helpers;
+﻿using System;
+using RecycleApp.Helpers;
 using RecycleApp.Services;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 
 namespace RecycleApp.Pages
 {
@@ -11,12 +13,13 @@ namespace RecycleApp.Pages
 	public partial class AuthorizationPage : Page
 	{
 		private readonly IRecycleService _recycleService;
+		private readonly RegistrationPage _registrationPage;
 
-		public AuthorizationPage(IRecycleService recycleService)
+		public AuthorizationPage(IRecycleService recycleService, RegistrationPage registrationPage)
 		{
 			_recycleService = recycleService;
+			_registrationPage = registrationPage;
 			InitializeComponent();
-
 			//TODO: Удалить данные для быстрого входа
 			TXBEmail.Text = "info@p-w.ru";
 			PSboxPassword.Password = "123456";
@@ -55,6 +58,12 @@ namespace RecycleApp.Pages
 		{
 			TXBEmail.Text = email;
 			PSboxPassword.Password = "";
+		}
+
+		private void RegistrationLink_OnClick(object sender, RoutedEventArgs e)
+		{
+			_registrationPage.AuthorizationPage = this;
+			NavigationService.Navigate(_registrationPage);
 		}
 	}
 }

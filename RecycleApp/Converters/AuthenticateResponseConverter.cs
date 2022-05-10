@@ -17,9 +17,8 @@ namespace RecycleApp.Converters
 				name: source.Name,
 				middlename: source.Middlename,
 				surname: source.Surname,
-				username: source.Username,
 				token: source.Token,
-				roleId: source.RoleId
+				idRole: source.RoleId
 			);
 		}
 	}

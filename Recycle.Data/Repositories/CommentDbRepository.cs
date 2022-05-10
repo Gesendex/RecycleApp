@@ -22,6 +22,7 @@ namespace Recycle.Data.Repositories
             {
                 var res = await db.Comments
                     .AddAsync(comment);
+                await db.SaveChangesAsync();
 
                 return res.Entity;
             }

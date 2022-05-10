@@ -123,22 +123,28 @@ namespace Recycle.Data.Repositories
 							item.Id == point.IdCompany
 					);
 
-				if (pointForUpdate == null || company == null)
+				var typeSets = point.GarbageTypeSets;
+
+
+				if (pointForUpdate == null || company == null || typeSets == null)
 				{
 					return null;
 				}
+				
+				_db.GarbageTypeSets.RemoveRange(pointForUpdate.GarbageTypeSets);
 
 				pointForUpdate.Street = point.Street;
 				pointForUpdate.Building = point.Building;
 				pointForUpdate.IdCompany = point.IdCompany;
 				pointForUpdate.Image = point.Image;
 				pointForUpdate.Description = point.Description;
+				pointForUpdate.GarbageTypeSets = typeSets;
 
 				await _db.SaveChangesAsync();
 
 				return pointForUpdate.Id;
 			}
-			catch
+			catch(Exception e)
 			{
 				return null;
 			}

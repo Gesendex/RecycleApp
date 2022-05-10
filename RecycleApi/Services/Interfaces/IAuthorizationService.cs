@@ -7,7 +7,7 @@ namespace RecycleApi.Services.Interfaces
 {
     public interface IAuthorizationService
     {
-        public Task Registration(ApiClientDtoOut client);
+        public Task<ApiClientDtoOut> Registration(ApiClientDtoIn client);
 
         public Task<AuthenticateResponse> Authorize(AuthorizationBody credentials);
 

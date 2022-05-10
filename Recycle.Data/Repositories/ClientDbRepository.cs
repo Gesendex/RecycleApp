@@ -10,29 +10,33 @@ using Recycle.Models.AuthorizationModels;
 
 namespace Recycle.Data.Repositories
 {
-    public class ClientDbRepository : IClientRepository
-    {
-        private readonly RecycleContext _db;
-        public ClientDbRepository(RecycleContext db)
-        {
-            _db = db;
-        }
-        public async Task AddClientAsync(Client client) => await _db.Clients.AddAsync(client);
+	public class ClientDbRepository : IClientRepository
+	{
+		private readonly RecycleContext _db;
 
-        public async Task<Client> GetClientAsync(int id) => await _db.Clients.FirstOrDefaultAsync(p => p.Id == id);
+		public ClientDbRepository(RecycleContext db)
+		{
+			_db = db;
+		}
 
-        public async Task<Client> GetClientAsync(AuthorizationBody credentials)
-        {
-            return await Task.FromResult(
-                _db.Clients
-                .SingleOrDefault(
-                    client =>
-                    client.Email == credentials.Email &&
-                    client.Password == credentials.Password
-                ));
-        }
+		public async Task AddClientAsync(Client client)
+		{
+			await _db.Clients.AddAsync(client);
+			await _db.SaveChangesAsync();
+		}
 
-        public async Task<IEnumerable<Client>> GetClientsAsync() => await _db.Clients.ToListAsync();
-    }
+		public async Task<Client> GetClientAsync(int id) => await _db.Clients.FirstOrDefaultAsync(p => p.Id == id);
 
+		public async Task<Client> GetClientAsync(AuthorizationBody credentials)
+		{
+			return await _db.Clients
+				.SingleOrDefaultAsync(
+					client =>
+						client.Email == credentials.Email &&
+						client.Password == credentials.Password
+				);
+		}
+
+		public async Task<IEnumerable<Client>> GetClientsAsync() => await _db.Clients.ToListAsync();
+	}
 }

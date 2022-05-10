@@ -8,7 +8,7 @@ namespace RecycleApp.Handlers
 {
 	public class RecycleClientHandler : HttpClientHandler
 	{
-		private const string AuthorizationHeader = HeaderNames.Authorization;
+		private static readonly string AuthorizationHeader = HeaderNames.Authorization;
 
 		private const string AuthorizationScheme = "Bearer";
 

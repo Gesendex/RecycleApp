@@ -1,6 +1,6 @@
 ﻿namespace RecycleApp.Models
 {
-	public class CompanyDtoIn
+	public partial class CompanyDtoIn
 	{
 		public int Id { get; set; }
 		public string Name { get; set; }

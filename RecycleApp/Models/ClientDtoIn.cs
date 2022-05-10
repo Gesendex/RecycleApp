@@ -1,6 +1,6 @@
 ﻿namespace RecycleApp.Models
 {
-	public class ClientDtoIn
+	public partial class ClientDtoIn
 	{
 		public int Id { get; set; }
 
@@ -10,11 +10,7 @@
 
 		public string Surname { get; set; }
 
-		public string Username { get; set; }
-
 		public string Token { get; set; }
-
-		public int RoleId { get; set; }
 
 		public string Email { get; set; }
 
@@ -22,21 +18,18 @@
 
 		public string Password { get; set; }
 
-		public ClientDtoIn(int id, string name, string middlename, string surname, string username, string token,
-			int roleId)
+		public ClientDtoIn(int id, string name, string middlename, string surname, string token, int idRole)
 		{
 			Id = id;
 			Name = name;
 			Middlename = middlename;
 			Surname = surname;
-			Username = username;
 			Token = token;
-			RoleId = roleId;
+			IdRole = idRole;
 		}
 
 		public ClientDtoIn()
 		{
-			
 		}
 	}
 }

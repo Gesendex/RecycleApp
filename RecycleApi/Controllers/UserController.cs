@@ -36,28 +36,24 @@ namespace RecycleApi.Controllers
             return Ok(user);
         }
 
-        [ProducesResponseType(typeof(IEnumerable<ApiClientDtoOut>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiClientDtoOut), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [HttpPut("Registration")]
-        public async Task<ActionResult<ApiClientDtoOut>> Registration([FromBody] ApiClientDtoOut newClient)
+        public async Task<IActionResult> Registration([FromBody] ApiClientDtoIn newClient)
         {
-            /*if(newClient.Password == null || newClient.Email == null || 
-                (await db.Roles.FindAsync( newClient.IdRole).AsTask()) == null || 
-                newClient.Name == null)
-                return BadRequest();
-            newClient.Id = 0;
-            try
-            {
-                var a = await db.Clients.AddAsync(newClient);
-                await db.SaveChangesAsync();
-                return Ok(a.Entity);
-            }
-            catch (Exception)
+            if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
-            */
-            throw new NotImplementedException();
+
+            var user = await _authorizationService.Registration(newClient);
+
+            if (user == null)
+            {
+	            return BadRequest();
+            }
+
+            return Ok(user);
         }
     }
 }

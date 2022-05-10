@@ -12,7 +12,8 @@ namespace RecycleApp.Converters
 				Id = source.Id,
 				DateOfCreation = source.DateOfCreation,
 				IdClient = source.IdClient,
-				IdGarbageCollectionPoint = source.IdGarbageCollectionPoint
+				IdGarbageCollectionPoint = source.IdGarbageCollectionPoint,
+				Text = source.Text
 			};
 		}
 	}
