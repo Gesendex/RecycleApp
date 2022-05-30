@@ -162,6 +162,7 @@ namespace RecycleApi.Controllers
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+		[RecycleAuthorize()]
 		[HttpDelete("DeleteGCP/{id}")]
 		public async Task<IActionResult> DeleteGCP(int id)
 		{

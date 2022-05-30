@@ -34,5 +34,12 @@ namespace RecycleApi.Services
 
             return CompanyConverter.ToApi(result);
         }
+
+        public async Task<ApiCompanyDtoOut> GetByClientIdAsync(int id)
+        {
+	        var result = await _companyRepository.GetByClientIdAsync(id);
+
+	        return CompanyConverter.ToApi(result);
+        }
     }
 }

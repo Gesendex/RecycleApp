@@ -9,5 +9,7 @@ namespace RecycleApi.Services.Interfaces
         public Task<IList<ApiCompanyDtoOut>> GetAllAsync();
 
         public Task<ApiCompanyDtoOut> GetByIdAsync(int id);
+
+        public Task<ApiCompanyDtoOut> GetByClientIdAsync(int id);
     }
 }

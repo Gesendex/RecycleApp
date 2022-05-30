@@ -42,5 +42,15 @@ namespace RecycleApi.Controllers
 			var result = await _companyService.GetByIdAsync(id);
 			return Ok(result);
 		}
+
+		[ProducesResponseType(typeof(ApiCompanyDtoOut), StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+		[RecycleAuthorize()]
+		[HttpGet("GetByClientId/{id}")]
+		public async Task<IActionResult> GetByClientId(int id)
+		{
+			var result = await _companyService.GetByClientIdAsync(id);
+			return Ok(result);
+		}
 	}
 }

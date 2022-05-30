@@ -11,5 +11,6 @@ namespace Recycle.Interfaces.Repositories
     {
         public Task<IEnumerable<Company>> GetAllAsync();
         public Task<Company> GetByIdAsync(int id);
+        public Task<Company> GetByClientIdAsync(int id);
     }
 }

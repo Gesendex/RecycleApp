@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.VisualStudio.Web.CodeGeneration;
 using Recycle.Interfaces.Repositories;
 using Recycle.Models;
 using RecycleApi.Converter;
@@ -23,7 +25,7 @@ namespace RecycleApi.Services
 		public async Task<IList<ApiGarbageCollectionPointDtoOut>> GetAll(
 			ApiGarbageCollectionPointFilter apiGarbageCollectionPointFilter)
 		{
-			var filter =  ApiGarbageCollectionPointFilterConverter.ToRepository(apiGarbageCollectionPointFilter);
+			var filter = ApiGarbageCollectionPointFilterConverter.ToRepository(apiGarbageCollectionPointFilter);
 
 			var res = await _garbageCollectionPointRepository.GetAll(filter);
 
@@ -60,10 +62,12 @@ namespace RecycleApi.Services
 		public async Task<int?> CreateGarbageCollectionPoint(
 			ApiGarbageCollectionPointDtoIn model)
 		{
-			if (model.Building == null
-			    || model.Street == null
-			    || model.GarbageTypeIds == null
-			   )
+			if (
+				string.IsNullOrWhiteSpace(model.Building)
+				|| string.IsNullOrWhiteSpace(model.Street)
+				|| model.GarbageTypeIds == null
+				|| !model.GarbageTypeIds.Any()
+			)
 			{
 				return null;
 			}
@@ -78,16 +82,17 @@ namespace RecycleApi.Services
 
 		public async Task<int?> UpdateGarbageCollectionPoint(ApiGarbageCollectionPointDtoIn model)
 		{
-			if (model.Building == null
-			    || model.Street == null
-			    || model.GarbageTypeIds == null
+			if (
+				string.IsNullOrWhiteSpace(model.Building)
+				|| string.IsNullOrWhiteSpace(model.Street)
+				|| model.GarbageTypeIds == null
+				|| !model.GarbageTypeIds.Any()
 			   )
 			{
 				return null;
 			}
 
 			var point = ApiGarbageCollectionPointDtoInConverter.ToRepository(model);
-
 
 			var res = await _garbageCollectionPointRepository.UpdateGarbageCollectionPoint(point);
 

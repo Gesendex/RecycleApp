@@ -10,7 +10,7 @@ namespace RecycleApi.Models
 
 		public int IdGarbageCollectionPoint { get; set; }
 
-		public int IdClient { get; }
+		public int IdClient { get; set; }
 
 		public ApiClientDtoOut Client { get; set; }
 

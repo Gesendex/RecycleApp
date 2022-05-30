@@ -27,5 +27,12 @@ namespace Recycle.Data.Repositories
             var result = await db.Companies.FirstOrDefaultAsync(p => p.Id == id);
             return result;
         }
+
+        public async Task<Company> GetByClientIdAsync(int id)
+        {
+	        var result = await db.Companies.FirstOrDefaultAsync(p => p.ClientId == id);
+
+	        return result;
+        }
     }
 }
