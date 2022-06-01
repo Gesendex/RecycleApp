@@ -42,6 +42,7 @@ namespace RecycleApp.Pages
 		{
 			if (!FieldValidation())
 			{
+				MessageBox.Show("Обязательные поля пусты или заполнены некорректными данными", "Ошибка");
 				return;
 			}
 

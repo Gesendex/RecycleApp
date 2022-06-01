@@ -1,4 +1,7 @@
-﻿using System.Windows.Media;
+﻿using System;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using Castle.Core.Internal;
 
 namespace RecycleApp.Converters
 {
@@ -6,9 +9,10 @@ namespace RecycleApp.Converters
 	{
 		public static ImageSource ToImageSource(byte[] source)
 		{
-			return source != null
-				? new ImageSourceConverter().ConvertFrom(source) as ImageSource
-				: null;
+
+			return source.IsNullOrEmpty()
+				? new BitmapImage(new Uri("pack://application:,,,/Images/" + "Mock.png"))
+				: new ImageSourceConverter()?.ConvertFrom(source) as ImageSource;
 		}
 	}
 }

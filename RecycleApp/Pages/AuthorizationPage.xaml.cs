@@ -36,7 +36,7 @@ namespace RecycleApp.Pages
 
 			if (model == null)
 			{
-				MessageBox.Show("Некорректный логин или пароль", "");
+				MessageBox.Show("Отсутствует логин или пароль", "Ошибка");
 				this.IsEnabled = true;
 				return;
 			}
@@ -45,12 +45,15 @@ namespace RecycleApp.Pages
 
 			App.CurrentUser = response;
 
-			if (response != null)
+			if (response == null)
 			{
-				App.GetNewWindow().Show();
-				App.AppAuthorizationWindow.Visibility = Visibility.Collapsed;
+				MessageBox.Show("Некорректный логин или пароль", "Ошибка");
+				this.IsEnabled = true;
+				return;
 			}
 
+			App.GetNewWindow().Show();
+			App.AppAuthorizationWindow.Visibility = Visibility.Collapsed;
 			this.IsEnabled = true;
 		}
 

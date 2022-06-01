@@ -101,6 +101,7 @@ namespace RecycleApp.Pages
 
 			if (!RequiredFieldsCheck())
 			{
+				MessageBox.Show("Обязательные поля пусты или заполнены некорректными данными", "Ошибка");
 				this.IsEnabled = true;
 				return;
 			}

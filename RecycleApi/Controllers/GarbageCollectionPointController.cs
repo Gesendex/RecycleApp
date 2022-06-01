@@ -75,34 +75,6 @@ namespace RecycleApi.Controllers
 		[HttpPost("Update")]
 		public async Task<IActionResult> Update([FromBody] ApiGarbageCollectionPointDtoIn model)
 		{
-			//if (string.IsNullOrWhiteSpace(model.Street)
-			//    || string.IsNullOrWhiteSpace(model.Building)
-			//    || await db.Companies.FindAsync(model.IdCompany) == null
-			//)
-			//{
-			//	return BadRequest();
-			//}
-
-			//var fromDB = await db.GarbageCollectionPoints.FirstOrDefaultAsync(p => p.Id == model.Id);
-			//if (fromDB == null)
-			//	return NotFound();
-			//try
-			//{
-			//	db.GarbageTypeSets.RemoveRange(db.GarbageTypeSets.Where(p => p.IdGarbageCollectionPoint == model.Id));
-			//	await db.SaveChangesAsync();
-			//	fromDB.GarbageTypeSets = model.GarbageTypeSets;
-			//	fromDB.IdCompany = model.IdCompany;
-			//	fromDB.Image = model.Image;
-			//	fromDB.Street = model.Street;
-			//	fromDB.Building = model.Building;
-			//	fromDB.Description = model.Description;
-			//	await db.SaveChangesAsync();
-			//	return Ok();
-			//}
-			//catch (Exception)
-			//{
-			//	return BadRequest();
-			//}
 			if (!ModelState.IsValid)
 			{
 				return BadRequest();
@@ -125,25 +97,6 @@ namespace RecycleApi.Controllers
 		[HttpPut("CreateGCP")]
 		public async Task<IActionResult> CreateGCP([FromBody] ApiGarbageCollectionPointDtoIn model)
 		{
-			//if (gcp == null)
-			//	return BadRequest();
-			//if (await db.Companies.FindAsync(gcp.IdCompany) == null || string.IsNullOrWhiteSpace(gcp.Street)
-			//                                                        || string.IsNullOrWhiteSpace(gcp.Building))
-			//{
-			//	return BadRequest();
-			//}
-
-			//try
-			//{
-			//	gcp.Id = 0;
-			//	var newField = await db.GarbageCollectionPoints.AddAsync(gcp);
-			//	await db.SaveChangesAsync();
-			//	return (newField.Entity);
-			//}
-			//catch (Exception)
-			//{
-			//	return BadRequest();
-			//}
 			if (!ModelState.IsValid)
 			{
 				return BadRequest();
